@@ -1,0 +1,137 @@
+.final-review-page {
+    width: min(760px, 92%);
+    margin: 52px auto 84px;
+}
+
+.preview-stage,
+.preview-summary {
+    position: relative;
+}
+
+.preview-stage .preview-header {
+    margin-bottom: 16px;
+}
+
+.preview-header h1 {
+    margin: 8px 0 0;
+    color: #943765;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1;
+}
+
+.preview-intro {
+    max-width: 560px;
+    margin: 14px auto 0;
+    color: #866172;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.final-review-page .preview-container {
+    top: 0;
+    padding: 30px;
+    text-align: center;
+}
+
+.final-review-page .figure-area {
+    min-height: 520px;
+    margin-top: 24px;
+}
+
+.final-review-page .figure-viewer {
+    height: 520px;
+}
+
+.eyebrow {
+    color: #b65a87;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.review-card {
+    margin-top: 18px;
+    padding: 22px;
+    border-radius: 22px;
+    border: 2px solid #ead7e5;
+    background: linear-gradient(145deg, #fff8fc, #f4ecff);
+    box-shadow: 0 5px 0 rgba(183, 131, 165, 0.12);
+}
+
+.review-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(162, 74, 120, 0.18);
+    color: #8a5870;
+}
+
+.review-row:last-child {
+    border-bottom: 0;
+}
+
+.review-row span {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.review-row strong {
+    text-align: right;
+    font-size: 12px;
+    color: #7b355b;
+}
+
+.review-row.total-row {
+    margin-top: 8px;
+    padding-top: 14px;
+    border-top: 2px solid rgba(162, 74, 120, 0.15);
+    border-bottom: 0;
+}
+
+.preview-status {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: #fff0f7;
+    border: 1px dashed #e2a5c3;
+    color: #8b5270;
+    font-size: 12px;
+}
+
+.preview-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.preview-actions .secondary-button,
+.preview-actions .main-button {
+    flex: 1 1 180px;
+    margin-top: 0;
+}
+
+@media (max-width: 900px) {
+    .final-review-page {
+        margin-top: 28px;
+    }
+
+    .final-review-page .preview-container {
+        padding: 20px;
+    }
+
+    .final-review-page .figure-area,
+    .final-review-page .figure-viewer {
+        min-height: 420px;
+        height: 420px;
+    }
+
+    .preview-actions .secondary-button,
+    .preview-actions .main-button {
+        flex-basis: 100%;
+    }
+}

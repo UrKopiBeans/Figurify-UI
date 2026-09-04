@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clay and Stuff — Our Collection</title>
+  <link rel="stylesheet" href="collection.css" />
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+  <a href="../Home/Home.html" class="brand">
+    <div class="brand-photo">
+      <img src="../Image/Clay and Stuff- Logo.jpg" alt="Clay and Stuff">
+    </div>
+    <span>Clay and Stuff</span>
+  </a>
+
+  <div class="nav-links">
+    <a href="../Home/Home.html">OVERVIEW</a>
+    <a href="collection.html" class="active">COLLECTIONS</a>
+    <a href="../Commission/commission.html">COMMISSION</a>
+<a href="../Login/Login.html" class="profile" aria-label="Account">
+      <img src="../Image/Profile Icon.png" alt="Profile">
+    </a>
+  </div>
+</nav>
+
+<!-- ================= PAGE ================= -->
+<main class="page-container">
+
+  <header class="top-bar">
+      <div class="top-bar-text">
+        <p class="eyebrow">✦ Crafted with Love ✦</p>
+        <h1>Made for You</h1>
+      </div>
+      <div class="top-bar-actions">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="searchInput" placeholder="Search a figure...">
+        </div>
+        <button class="icon-btn" aria-label="Cart">🛒</button>
+      </div>
+    </header>
+
+<section class="filter-section">
+      <div class="pill-row" id="tagFilters">
+        <div class="sort-dropdown">
+    <button class="pill active sort-button" id="sortButton">
+        All Collections 
+    </button>
+
+    <div class="sort-menu" id="sortMenu">
+        <button type="button" data-sort="random">
+            Random
+        </button>
+
+        <button type="button" data-sort="size-asc">
+            Size: Small to Large
+        </button>
+
+        <button type="button" data-sort="size-desc">
+            Size: Large to Small
+        </button>
+
+        <button type="button" data-sort="price-asc">
+            Price: Low to High
+        </button>
+
+        <button type="button" data-sort="price-desc">
+            Price: High to Low
+        </button>
+    </div>
+</div>  
+        <button class="pill" data-filter="bestseller">Best Sellers</button>
+        <button class="pill" data-filter="chibi">Chibi</button>
+        <button class="pill" data-filter="hirono">Hirono</button>
+        <button class="pill" data-filter="funko">Funko Pop</button>
+        <button class="pill" data-filter="pet">Pet</button>
+        <button class="pill" data-filter="custom">Custom Box</button>
+      </div>
+    </section>
+
+    <!-- Normal Figures -->
+    <section class="collection-block" id="normal">
+      <div class="block-heading">
+        <p class="eyebrow">♡ Our little clay family ♡</p>
+        <h2>Normal Figures</h2>
+        <p class="subtitle">Choose a figure and make it uniquely yours!</p>
+      </div>
+
+      <div class="card-grid">
+
+<article class="card" data-filter="normal chibi">
+          <div class="card-thumb"><img src="../Image/Chibi Head.jpg" alt="2 Inches Half-body"></div>
+          <div class="card-body">
+            <h3>2 Inches Half-body</h3>
+            <p class="desc">mini cute little version</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="normal chibi">
+          <div class="card-thumb"><img src="../Image/Chibi Head- Spiderman.jpg" alt="2 inches in Frame"></div>
+          <div class="card-body">
+            <h3>2 inches in Frame</h3>
+            <p class="desc">a charming custom piece</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="normal chibi couple">
+          <div class="card-thumb"><img src="../Image/Hirono-Couple.jpg" alt="2 inches Couple"></div>
+          <div class="card-body">
+            <h3>2 inches Couple</h3>
+            <p class="desc">made for two hearts</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="normal chibi">
+          <div class="card-thumb"><img src="../Image/3.5” Customize Hirono Standee.jpg" alt="4 inches Waist-up"></div>
+          <div class="card-body">
+            <h3>4 inches Waist-up</h3>
+            <p class="desc">more room for details</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="normal chibi">
+          <div class="card-thumb"><img src="../Image/3.5” Customize Hirono Inspired Standee.jpg" alt="4 inches in Frame"></div>
+          <div class="card-body">
+            <h3>4 inches in Frame</h3>
+            <p class="desc">a tiny scene to treasure</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="normal chibi bestseller">
+          <span class="badge">Best Seller</span>
+          <div class="card-thumb"><img src="../Image/Hirono.jpg" alt="4 inches Full-body"></div>
+          <div class="card-body">
+            <h3>4 inches Full-body</h3>
+            <p class="desc">your favorite look in clay</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+<article class="card" data-filter="normal hirono">
+          <div class="card-thumb"><img src="../Image/Hirono.jpg" alt="2 inches Hirono"></div>
+          <div class="card-body">
+            <h3>2 inches Hirono</h3>
+            <p class="price">Base Price: ₱600</p>
+            <a href="../Commission/commission.html#commission" class="card-btn filled">Customize</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="normal hirono bestseller">
+          <span class="badge">Best Seller</span>
+          <div class="card-thumb"><img src="../Image/3.5” Customize Hirono Standee.jpg" alt="3.5 inches Hirono"></div>
+          <div class="card-body">
+            <h3>3.5 inches Hirono</h3>
+            <p class="price">Base Price: ₱750</p>
+            <a href="../Commission/commission.html#commission" class="card-btn filled">Customize</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="normal hirono couple">
+          <div class="card-thumb"><img src="../Image/Hirono-Couple.jpg" alt="3.5 inches Couple Hirono"></div>
+          <div class="card-body">
+            <h3>3.5 inches Couple Hirono</h3>
+            <p class="price">Base Price: ₱1,800</p>
+            <a href="../Commission/commission.html#commission" class="card-btn filled">Customize</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="funko">
+          <div class="card-thumb"><img src="../Image/3.5” Customize Hirono Inspired Standee.jpg" alt="5 inches Funko Pop"></div>
+          <div class="card-body">
+            <h3>5 inches Funko Pop</h3>
+            <p class="price">Base Price: ₱600</p>
+            <a href="../Commission/commission.html#commission" class="card-btn filled">Customize</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="normal hirono">
+          <div class="card-thumb"><img src="../Image/3.5” Customize Hirono With Blind Box Set.jpg" alt="3.5 inches Hirono"></div>
+          <div class="card-body">
+            <h3>3.5 inches Hirono</h3>
+            <p class="price">Base Price: ₱800</p>
+            <a href="../Commission/commission.html#commission" class="card-btn filled">Customize</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="funko bestseller">
+          <span class="badge">Best Seller</span>
+          <div class="card-thumb"><img src="../Image/3.5” Customize Hirono Standee.jpg" alt="4 inches Funko Pop"></div>
+          <div class="card-body">
+            <h3>4 inches Funko Pop</h3>
+            <p class="price">Base Price: ₱1,000</p>
+            <a href="../Commission/commission.html#commission" class="card-btn filled">Customize</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Pet Figures -->
+    <section class="collection-block" id="pet">
+      <div class="block-heading">
+        <p class="eyebrow">♡ For the furry family ♡</p>
+        <h2>Pet Figures</h2>
+        <p class="subtitle">Because pets deserve a little clay portrait too.</p>
+      </div>
+
+      <div class="card-grid">
+
+        <article class="card" data-filter="pet">
+          <div class="card-thumb">
+            <img src="../Image/Customized Pet.jpg" alt="Customized Pet">
+          </div>
+          <div class="card-body">
+            <h3>Cat Pet</h3>
+            <p class="desc">mini cute little version</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="pet bestseller">
+          <span class="badge">Best Seller</span>
+           <div class="card-thumb">
+            <img src="../Image/Customized Pet.jpg" alt="Customized Pet">
+          </div>
+          <div class="card-body">
+         <p class="desc">made from your photo</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="pet">
+          <div class="card-thumb">
+            <img src="../Image/Customized Pet.jpg" alt="Customized Pet">
+          </div>
+          <div class="card-body">
+          <h3>Dog Pet</h3>
+            <p class="desc">tiny best friend</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Special Figures -->
+    <section class="collection-block" id="special">
+      <div class="block-heading">
+        <p class="eyebrow">✦ There is no limit to imagination ✦</p>
+        <h2>Special Figures</h2>
+        <p class="subtitle">For the people, places, and moments you want to remember.</p>
+      </div>
+
+      <div class="card-grid">
+
+        <article class="card" data-filter="special funko">
+          <div class="card-thumb">🎭</div>
+          <div class="card-body">
+            <h3>Solo / Funko Pop</h3>
+            <p class="desc">customize any character</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="special">
+          <div class="card-thumb">🌟</div>
+          <div class="card-body">
+            <h3>Pop Culture Style</h3>
+            <p class="desc">your favorite version</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+        <article class="card" data-filter="custom special">
+          <div class="card-thumb">🎁</div>
+          <div class="card-body">
+            <h3>Regular 3D Box</h3>
+            <p class="desc">made for display</p>
+            <a href="../Commission/commission.html#commission" class="card-btn outline">View details</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+<p class="empty-state" id="emptyState" hidden>No figures match your search just yet — try another category 🤍</p>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footer-brand">
+    <strong>Clay and Stuff</strong>
+    <p>Made with little bits of joy.</p>
+  </div>
+
+  <div class="footer-links">
+    <div>
+      <b>Quick Links</b>
+      <a href="../Home/Home.html">Overview</a>
+      <a href="collection.html">Collection</a>
+      <a href="../Commission/commission.html">Commission</a>
+    </div>
+    <div>
+      <b>Commission</b>
+      <a href="../Commission/commission.html">Figure Customizer</a>
+      <a href="../Commission/commission.html">Custom Request</a>
+    </div>
+    <div>
+      <b>Contact</b>
+      <span>Calamba City, Laguna</span>
+      <span>09XX XXX XXXX</span>
+      <span>clayandstuff@gmail.com</span>
+    </div>
+  </div>
+
+<div class="copyright">© 2026 Clay and Stuff. All Rights Reserved.</div>
+</footer>
+
+<script>
+const pills = document.querySelectorAll('.pill:not(.sort-button)');
+  const cards = document.querySelectorAll('.card');
+  const blocks = document.querySelectorAll('.collection-block');
+  const searchInput = document.getElementById('searchInput');
+  const emptyState = document.getElementById('emptyState');
+
+  // Sort dropdown elements
+  const sortDrop = document.querySelector('.sort-dropdown');
+  const sortButton = document.getElementById('sortButton');
+  const sortMenuButtons = document.querySelectorAll('.sort-menu button');
+
+  let activeFilter = 'all';
+  let activeSort = 'random';
+
+  function setActive(group, clicked) {
+    group.forEach(btn => btn.classList.remove('active'));
+    clicked.classList.add('active');
+  }
+
+  // Toggle the sort dropdown
+  sortButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    sortDrop.classList.toggle('open');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!sortDrop.contains(e.target)) {
+      sortDrop.classList.remove('open');
+    }
+  });
+
+  // Get a card's size number (e.g. "3.5 inches" -> 3.5)
+  function getCardSize(card) {
+    const text = card.querySelector('h3').textContent;
+    const match = text.match(/([\d.]+)\s*inches/i);
+    return match ? parseFloat(match[1]) : 0;
+  }
+
+  // Get a card's price number (e.g. "Base Price: ₱600" -> 600)
+  function getCardPrice(card) {
+    const priceEl = card.querySelector('.price');
+    if (!priceEl) return 0;
+    const match = priceEl.textContent.match(/([\d,]+)/);
+    return match ? parseFloat(match[1].replace(/,/g, '')) : 0;
+  }
+
+  // Sort the cards inside each collection block
+  function applySort() {
+    blocks.forEach(block => {
+      const grid = block.querySelector('.card-grid');
+      const cardsInBlock = [...grid.querySelectorAll('.card')];
+
+      cardsInBlock.sort((a, b) => {
+        switch (activeSort) {
+          case 'size-asc':
+            return getCardSize(a) - getCardSize(b);
+          case 'size-desc':
+            return getCardSize(b) - getCardSize(a);
+          case 'price-asc':
+            return getCardPrice(a) - getCardPrice(b);
+          case 'price-desc':
+            return getCardPrice(b) - getCardPrice(a);
+          case 'random':
+          default:
+            return Math.random() - 0.5;
+        }
+      });
+
+      cardsInBlock.forEach(card => grid.appendChild(card));
+    });
+  }
+
+  // Handle sort menu clicks
+  sortMenuButtons.forEach(btn => btn.addEventListener('click', () => {
+    setActive(sortMenuButtons, btn);
+    activeSort = btn.dataset.sort;
+    sortButton.innerHTML = 'All Collections';
+    sortDrop.classList.remove('open');
+    applySort();
+    applyFilters();
+  }));
+
+  function applyFilters() {
+    const term = searchInput.value.trim().toLowerCase();
+    let anyVisible = false;
+
+    cards.forEach(card => {
+      const tags = card.dataset.filter.split(' ');
+      const matchesFilter = activeFilter === 'all' || tags.includes(activeFilter);
+      const name = card.querySelector('h3').textContent.toLowerCase();
+      const matchesSearch = name.includes(term);
+      const visible = matchesFilter && matchesSearch;
+      card.style.display = visible ? '' : 'none';
+      if (visible) anyVisible = true;
+    });
+
+    blocks.forEach(block => {
+      const hasVisible = [...block.querySelectorAll('.card')]
+        .some(c => c.style.display !== 'none');
+      block.style.display = hasVisible ? '' : 'none';
+    });
+
+    emptyState.hidden = anyVisible;
+  }
+
+  pills.forEach(btn => btn.addEventListener('click', () => {
+    setActive(pills, btn);
+    activeFilter = btn.dataset.filter;
+    applyFilters();
+  }));
+
+  searchInput.addEventListener('input', applyFilters);
+</script>
+
+</body>
+</html>

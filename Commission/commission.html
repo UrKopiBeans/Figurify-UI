@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Clay and Stuff — Commission</title>
+
+    <link
+        rel="stylesheet"
+        href="commission.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <a
+        href="../Home/Home.html"
+        class="brand"
+    >
+
+        <div class="brand-photo">
+
+            <img
+                src="../Image/Clay and Stuff- Logo.jpg"
+                alt="Clay and Stuff"
+            >
+
+        </div>
+
+        <span>
+            Clay and Stuff
+        </span>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="../Home/Home.html">
+            OVERVIEW
+        </a>
+
+        <a href="../Collection/collection.html">
+            COLLECTIONS
+        </a>
+
+        <a
+            href="commission.html"
+            class="active"
+        >
+            COMMISSION
+        </a>
+
+
+        <button type="button" class="notification-button" id="notificationButton" aria-label="Order notifications">
+            <span aria-hidden="true">&#128276;</span>
+            <b class="notification-badge hidden" id="notificationBadge">0</b>
+        </button>
+        <div class="notification-popover hidden" id="notificationPopover">
+            <strong>Order updates</strong>
+            <p id="notificationText">No new order updates.</p>
+        </div>
+
+        <a
+            href="../Login/Login.html"
+            class="profile"
+            aria-label="Account"
+        >
+
+            <img
+                src="../Image/Profile Icon.png"
+                alt="Profile"
+            >
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<header class="commission-hero">
+
+    <div class="hero-decoration left">
+        ✦
+    </div>
+
+
+    <div class="hero-content">
+
+        <span class="small-title">
+            LET'S MAKE SOMETHING PERSONAL
+        </span>
+
+
+        <h1>
+
+            Commission a Figure,
+
+            <br>
+
+            Made Just for You
+
+        </h1>
+
+
+        <p>
+
+            Turn your ideas, memories, and favorite people
+            into a little clay masterpiece.
+
+        </p>
+
+    </div>
+
+
+    <div class="hero-decoration right">
+        ♡
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="page-container">
+
+
+
+<!-- =====================================================
+     STEP 01 — CREATION METHOD
+===================================================== -->
+
+<section
+    class="commission-section"
+    id="creationSection"
+>
+
+
+    <div class="section-title">
+
+        <span class="decor">
+            ✦
+        </span>
+
+
+        <div>
+
+            <span class="label">
+                STEP 01
+            </span>
+
+
+            <h2>
+                How Would You Like To Create It?
+            </h2>
+
+
+            <p>
+                Choose how you want us to create your figure.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="method-grid">
+
+
+        <!-- =================================================
+             CREATE & STYLE
+             
+             NEW FLOW:
+             Create & Style
+                  ↓
+             Order Type
+                  ↓
+             Calendar
+        ================================================== -->
+
+        <button
+            type="button"
+            class="method-card"
+            data-method="create"
+            onclick="selectCreationMethod('create')"
+        >
+
+            <div class="method-picture">
+                ✨
+            </div>
+
+
+            <div class="method-content">
+
+                <span class="method-label">
+                    AUTOMATIC PRICING
+                </span>
+
+
+                <h3>
+                    Create &amp; Style
+                </h3>
+
+
+                <p>
+                    Create your figure using the Dress-Up
+                    Customizer. Choose this option to design
+                    your figure in 3D before continuing to
+                    your order schedule.
+                </p>
+
+
+                <strong>
+                    Opens the Dress-Up Customizer
+                </strong>
+
+            </div>
+
+        </button>
+
+
+
+        <!-- =================================================
+             CUSTOMER REFERENCE
+             
+             THIS FLOW IS NOT CHANGED.
+        ================================================== -->
+
+        <button
+            type="button"
+            class="method-card"
+            data-method="reference"
+            onclick="selectCreationMethod('reference')"
+        >
+
+            <div class="method-picture">
+                📷
+            </div>
+
+
+            <div class="method-content">
+
+                <span class="method-label">
+                    STAFF QUOTATION
+                </span>
+
+
+                <h3>
+                    Custom Reference
+                </h3>
+
+
+                <p>
+                    Send us your reference image and
+                    describe what you want us to create.
+                    You will receive an estimated subtotal
+                    before staff determines the final price.
+                </p>
+
+
+                <strong>
+                    Final price after review
+                </strong>
+
+            </div>
+
+        </button>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CREATE & STYLE — DIRECT SCHEDULE MESSAGE
+
+     Kept as a lightweight bridge section in case the
+     Create & Style flow needs an on-page explanation.
+===================================================== -->
+
+<section
+    class="commission-section hidden"
+    id="createSection"
+>
+
+
+    <div class="section-title">
+
+        <span class="decor">
+            ♡
+        </span>
+
+
+        <div>
+
+            <span class="label">
+                CREATE &amp; STYLE
+            </span>
+
+
+            <h2>
+                Choose Your Order Schedule
+            </h2>
+
+
+            <p>
+                Continue to choose between Rush and Non-Rush
+                after saving your Dress-Up design.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="create-next-card">
+
+        <div class="create-next-icon">
+            ✨
+        </div>
+
+
+        <h3>
+            Create &amp; Style Selected
+        </h3>
+
+
+        <p>
+            Open the Dress-Up customizer first, then review
+            your completed design before choosing Rush or
+            Non-Rush and booking a date.
+        </p>
+
+    </div>
+
+
+    <button
+        class="main-button"
+        type="button"
+        onclick="continueFromCreation('create')"
+    >
+
+        OPEN DRESS-UP CUSTOMIZER
+
+        <span>
+            →
+        </span>
+
+    </button>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CUSTOMER REFERENCE
+     
+     UNCHANGED
+===================================================== -->
+
+<section
+    class="commission-section hidden"
+    id="referenceSection"
+>
+
+
+    <div class="section-title">
+
+        <span class="decor">
+            ✦
+        </span>
+
+
+        <div>
+
+            <span class="label">
+                CUSTOM REFERENCE
+            </span>
+
+
+            <h2>
+                Send Us Your Idea
+            </h2>
+
+
+            <p>
+                Describe what you want and upload your
+                reference image for our staff to review.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="request-box">
+
+
+        <div class="request-fields">
+
+
+            <!-- =============================================
+                 FIGURE TYPE
+            ============================================== -->
+
+            <label>
+
+                Figure Type
+
+                <select
+                    class="field"
+                    id="requestType"
+                    onchange="calculateRequestSubtotal()"
+                >
+
+                    <option value="300">
+                        Half-body — ₱300
+                    </option>
+
+                    <option value="500">
+                        Waist-up — ₱500
+                    </option>
+
+                    <option value="700">
+                        Full-body — ₱700
+                    </option>
+
+                    <option value="1000">
+                        Couple — ₱1,000
+                    </option>
+
+                    <option value="400">
+                        Pet — ₱400
+                    </option>
+
+                </select>
+
+            </label>
+
+
+
+            <!-- =============================================
+                 SIZE
+            ============================================== -->
+
+            <label>
+
+                Size
+
+                <select
+                    class="field"
+                    id="requestSize"
+                    onchange="calculateRequestSubtotal()"
+                >
+
+                    <option value="0">
+                        2 inches
+                    </option>
+
+                    <option value="150">
+                        4 inches — +₱150
+                    </option>
+
+                    <option value="300">
+                        6 inches — +₱300
+                    </option>
+
+                </select>
+
+            </label>
+
+
+
+            <!-- =============================================
+                 STYLE
+            ============================================== -->
+
+            <label>
+
+                Ordering Style
+
+                <select
+                    class="field"
+                    id="requestStyle"
+                    onchange="calculateRequestSubtotal()"
+                >
+
+                    <option value="0">
+                        Basic Style — ₱0
+                    </option>
+
+                    <option value="100">
+                        Chibi Style — +₱100
+                    </option>
+
+                    <option value="200">
+                        Detailed Style — +₱200
+                    </option>
+
+                </select>
+
+            </label>
+
+
+
+            <!-- =============================================
+                 DESCRIPTION
+            ============================================== -->
+
+            <label>
+
+                Describe Your Idea
+
+                <textarea
+                    class="field textarea"
+                    id="requestDescription"
+                    rows="5"
+                    placeholder="Tell us about the pose, outfit, details, and what you want us to create..."
+                ></textarea>
+
+            </label>
+
+
+
+            <!-- =============================================
+                 IMAGE
+            ============================================== -->
+
+            <label>
+
+                Reference Image
+
+                <input
+                    class="field file"
+                    type="file"
+                    id="referenceImage"
+                    accept="image/*"
+                    onchange="previewReferenceImage(event)"
+                >
+
+            </label>
+
+
+
+            <!-- =============================================
+                 IMAGE PREVIEW
+            ============================================== -->
+
+            <div
+                class="image-preview hidden"
+                id="imagePreviewContainer"
+            >
+
+                <span>
+                    REFERENCE PREVIEW
+                </span>
+
+
+                <img
+                    id="referencePreview"
+                    alt="Reference preview"
+                >
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             ESTIMATED PRICE
+        ============================================== -->
+
+        <div class="request-price">
+
+            <span class="summary-title">
+                ESTIMATED PRICE
+            </span>
+
+
+            <div>
+
+                <span>
+                    Estimated subtotal
+                </span>
+
+                <b id="requestSubtotal">
+                    ₱300
+                </b>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Rush fee
+                </span>
+
+                <b id="requestRushFee">
+                    ₱0
+                </b>
+
+            </div>
+
+
+            <div class="summary-total">
+
+                <span>
+                    Estimated total
+                </span>
+
+                <b id="requestEstimatedTotal">
+                    ₱300
+                </b>
+
+            </div>
+
+
+
+            <div class="quotation-note">
+
+                <strong>
+                    Estimated Price Only
+                </strong>
+
+
+                <p>
+
+                    This is only an estimated subtotal based
+                    on your selected figure type, size, and style.
+                    The final price will be determined by our
+                    staff after reviewing your reference image.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <button
+        class="main-button"
+        type="button"
+        onclick="continueFromReference()"
+    >
+
+        CONTINUE TO ORDER TYPE
+
+        <span>
+            →
+        </span>
+
+    </button>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     STEP 02 — ORDER TYPE
+===================================================== -->
+
+<section
+    class="commission-section hidden"
+    id="designDetailsSection"
+>
+    <div class="section-title">
+        <span class="decor">&#9825;</span>
+        <div>
+            <span class="label">STEP 02</span>
+            <h2>Confirm Your Figure Details</h2>
+            <p>Review your selected design, then choose the size and packaging.</p>
+        </div>
+    </div>
+
+    <div class="customization-summary design-review-card">
+        <div class="summary-header">
+            <div>
+                <span class="label">SELECTED DESIGN</span>
+                <h3 id="designDetailsTitle">Your customized figure</h3>
+            </div>
+            <button type="button" class="secondary-button" id="editDesignDetailsBtn">EDIT DESIGN</button>
+        </div>
+        <img class="design-preview-image hidden" id="designDetailsPreview" alt="Preview of your customized figure">
+        <div class="summary-tags" id="designDetailsTags"></div>
+    </div>
+
+    <form id="designDetailsForm" class="design-details-form">
+        <div class="detail-choice-grid">
+            <label>
+                Figure size
+                <select class="field" id="designSize" required>
+                    <option value="500" data-size-label="3 inches">3 inches - PHP 500</option>
+                    <option value="650" data-size-label="4 inches">4 inches - PHP 650</option>
+                    <option value="800" data-size-label="5 inches">5 inches - PHP 800</option>
+                </select>
+            </label>
+            <fieldset class="choice-fieldset">
+                <legend>Box</legend>
+                <label class="choice-option"><input type="radio" name="boxOption" value="without" checked> Without box</label>
+                <label class="choice-option"><input type="radio" name="boxOption" value="with"> With box (+PHP 100)</label>
+            </fieldset>
+            <label class="box-name-field hidden" id="boxNameField">
+                Figure/design name for the box
+                <input class="field" type="text" id="boxFigureName" placeholder="Name your figure">
+            </label>
+            <fieldset class="choice-fieldset hidden" id="photoCardField">
+                <legend>Photo card</legend>
+                <label class="choice-option"><input type="radio" name="photoCardOption" value="without" checked> Without photo card</label>
+                <label class="choice-option"><input type="radio" name="photoCardOption" value="with"> With photo card (+PHP 50)</label>
+            </fieldset>
+        </div>
+        <div class="design-price-summary">
+            <span>Design add-ons</span><b id="designBasePrice">PHP 0</b>
+            <span>Size and options</span><b id="designOptionsPrice">PHP 500</b>
+            <strong>Estimated total</strong><strong id="designEstimatedPrice">PHP 500</strong>
+        </div>
+        <button class="main-button" type="submit">CONTINUE TO ORDER TYPE <span>&rarr;</span></button>
+    </form>
+</section>
+
+<section
+    class="commission-section hidden"
+    id="orderTypeSection"
+>
+
+
+    <div class="section-title">
+
+        <span class="decor">
+            ♡
+        </span>
+
+
+        <div>
+
+            <span class="label">
+                STEP 02
+            </span>
+
+
+            <h2>
+                Choose Your Order Type
+            </h2>
+
+
+            <p id="orderTypeInstruction">
+
+                Choose whether you need your figure sooner
+                or prefer our regular schedule.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div
+        class="customization-summary hidden"
+        id="customizationSummary"
+    >
+
+        <div class="summary-header">
+
+            <div>
+
+                <span class="label">
+                    SAVED DRESS-UP DESIGN
+                </span>
+
+                <h3 id="customizationSummaryTitle">
+                    Your design is ready
+                </h3>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="secondary-button"
+                id="editCustomizationBtn"
+            >
+                EDIT CUSTOMIZATION
+            </button>
+
+        </div>
+
+
+        <div
+            class="summary-tags"
+            id="customizationSummaryTags"
+        ></div>
+
+
+        <p
+            class="summary-price"
+            id="customizationSummaryPrice"
+        >
+            Estimated customization total will appear here.
+        </p>
+
+    </div>
+
+
+    <div class="order-type-grid">
+
+
+        <!-- =============================================
+             RUSH ORDER
+        ============================================== -->
+
+        <button
+            type="button"
+            class="order-card"
+            data-order="rush"
+            onclick="selectOrderType('rush')"
+        >
+
+            <div class="card-decoration">
+                ✦
+            </div>
+
+
+            <div class="order-icon">
+                ⚡
+            </div>
+
+
+            <h3>
+                Rush Order
+            </h3>
+
+
+            <p>
+
+                Your order will have a 7-day processing period.
+                Rush orders have an additional ₱500 fee.
+
+            </p>
+
+
+            <div class="order-price">
+                + ₱500
+            </div>
+
+
+            <span class="card-select">
+                SELECT RUSH ORDER →
+            </span>
+
+        </button>
+
+
+
+        <!-- =============================================
+             NON-RUSH ORDER
+        ============================================== -->
+
+        <button
+            type="button"
+            class="order-card"
+            data-order="nonrush"
+            onclick="selectOrderType('nonrush')"
+        >
+
+            <div class="card-decoration">
+                ♡
+            </div>
+
+
+            <div class="order-icon">
+                🌷
+            </div>
+
+
+            <h3>
+                Non-Rush Order
+            </h3>
+
+
+            <p>
+
+                No additional rush fee. Your order will be
+                scheduled for the last day of the month.
+
+            </p>
+
+
+            <div class="order-price">
+                No additional fee
+            </div>
+
+
+            <span class="card-select">
+                SELECT NON-RUSH →
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     STEP 03 — CALENDAR
+===================================================== -->
+
+<section
+    class="commission-section hidden"
+    id="calendarSection"
+>
+
+
+    <div class="section-title">
+
+        <span class="decor">
+            ♡
+        </span>
+
+
+        <div>
+
+            <span class="label">
+                STEP 03
+            </span>
+
+
+            <h2>
+                Choose Your Booking Date
+            </h2>
+
+
+            <p id="calendarInstruction">
+
+                Select an available booking date.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="calendar-card">
+
+
+        <!-- =============================================
+             CALENDAR HEADER
+        ============================================== -->
+
+        <div class="calendar-top">
+
+            <button
+                type="button"
+                onclick="changeMonth(-1)"
+                id="previousMonth"
+            >
+                ‹
+            </button>
+
+
+            <h3 id="calendarMonth">
+                Calendar
+            </h3>
+
+
+            <button
+                type="button"
+                onclick="changeMonth(1)"
+                id="nextMonth"
+            >
+                ›
+            </button>
+
+        </div>
+
+
+
+        <!-- =============================================
+             WEEKDAYS
+        ============================================== -->
+
+        <div class="calendar-weekdays">
+
+            <span>
+                SUN
+            </span>
+
+            <span>
+                MON
+            </span>
+
+            <span>
+                TUE
+            </span>
+
+            <span>
+                WED
+            </span>
+
+            <span>
+                THU
+            </span>
+
+            <span>
+                FRI
+            </span>
+
+            <span>
+                SAT
+            </span>
+
+        </div>
+
+
+
+        <!-- =============================================
+             CALENDAR DAYS
+        ============================================== -->
+
+        <div
+            class="calendar-days"
+            id="calendarDays"
+        ></div>
+
+
+
+        <!-- =============================================
+             CALENDAR LEGEND
+        ============================================== -->
+
+        <div class="calendar-legend">
+
+            <span>
+
+                <i class="legend available"></i>
+
+                Available
+
+            </span>
+
+
+            <span>
+
+                <i class="legend unavailable"></i>
+
+                Unavailable
+
+            </span>
+
+
+            <span>
+
+                <i class="legend selected"></i>
+
+                Selected
+
+            </span>
+
+
+            <span>
+
+                <i class="legend reserved"></i>
+
+                Reserved
+
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div
+        class="schedule-message"
+        id="scheduleInfo"
+    >
+
+        Select an order type first.
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     WAITING FOR STAFF QUOTATION
+===================================================== -->
+
+<section
+    class="commission-section hidden"
+    id="quotationWaitingSection"
+>
+
+
+    <div class="success-card">
+
+
+        <div class="success-symbol">
+            ₱
+        </div>
+
+
+        <span class="label">
+            STAFF QUOTATION
+        </span>
+
+
+        <h2>
+            Reference Submitted
+        </h2>
+
+
+        <p>
+
+            Your reference image and order details have been
+            submitted to our staff for review.
+
+        </p>
+
+
+
+        <div class="status-box">
+
+            <span>
+                ESTIMATED SUBTOTAL
+            </span>
+
+
+            <strong id="waitingEstimatedPrice">
+                ₱0
+            </strong>
+
+        </div>
+
+
+
+        <p id="waitingScheduleText">
+
+            Your selected order schedule has been recorded.
+            The final price will be provided by our staff.
+
+        </p>
+
+
+
+        <div class="quotation-note">
+
+            <strong>
+                Important
+            </strong>
+
+
+            <p>
+
+                The estimated amount is not your final price.
+                Please wait for the staff quotation before
+                proceeding with payment.
+
+            </p>
+
+        </div>
+
+
+
+        <!--
+            DEMO BUTTON
+
+            This is only for testing the frontend.
+            In the actual system, STAFF will enter
+            the quotation from the staff dashboard.
+        -->
+
+        <button
+            type="button"
+            class="main-button"
+            onclick="showDemoQuotation()"
+        >
+
+            DEMO: VIEW STAFF QUOTATION
+
+            <span>
+                →
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL QUOTATION
+===================================================== -->
+
+<section
+    class="commission-section hidden"
+    id="quotationSection"
+>
+
+
+    <div class="success-card">
+
+
+        <div class="success-symbol">
+            ₱
+        </div>
+
+
+        <span class="label">
+            STAFF QUOTATION
+        </span>
+
+
+        <h2>
+            Your Request Has Been Reviewed
+        </h2>
+
+
+        <p>
+
+            Our staff has reviewed your reference image.
+            Please review the final quotation below.
+
+        </p>
+
+
+
+        <div class="status-box">
+
+            <span>
+                FINAL PRICE
+            </span>
+
+
+            <strong id="staffFinalPrice">
+                ₱0
+            </strong>
+
+        </div>
+
+
+
+        <p>
+
+            If you accept the quotation, you may continue
+            with your order and proceed to payment.
+
+        </p>
+
+
+
+        <div class="quotation-actions">
+
+
+            <button
+                type="button"
+                class="main-button"
+                onclick="acceptQuotation()"
+            >
+
+                ACCEPT QUOTATION
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                class="secondary-button"
+                onclick="declineQuotation()"
+            >
+
+                DECLINE QUOTATION
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL DETAILS
+===================================================== -->
+
+<section
+    class="commission-section hidden"
+    id="customerSection"
+>
+
+
+    <div class="section-title">
+
+        <span class="decor">
+            ♡
+        </span>
+
+
+        <div>
+
+            <span class="label">
+                FINAL DETAILS
+            </span>
+
+
+            <h2>
+                Your Information
+            </h2>
+
+
+            <p>
+
+                Fill in your personal information and
+                payment details.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <form id="customerForm">
+
+
+        <div class="form-grid">
+
+
+            <!-- =============================================
+                 NAME
+            ============================================== -->
+
+            <label>
+
+                Full Name
+
+                <input
+                    class="field"
+                    type="text"
+                    id="customerName"
+                    placeholder="Your name"
+                    required
+                >
+
+            </label>
+
+
+
+            <!-- =============================================
+                 EMAIL
+            ============================================== -->
+
+            <label>
+
+                Email Address
+
+                <input
+                    class="field"
+                    type="email"
+                    id="customerEmail"
+                    placeholder="you@email.com"
+                    required
+                >
+
+            </label>
+
+
+
+            <!-- =============================================
+                 PHONE
+            ============================================== -->
+
+            <label>
+
+                Contact Number
+
+                <input
+                    class="field"
+                    type="tel"
+                    id="customerPhone"
+                    placeholder="09XXXXXXXXX"
+                    required
+                >
+
+            </label>
+
+
+
+            <!-- =============================================
+                 CONTACT METHOD
+            ============================================== -->
+
+            <label>
+
+                Preferred Contact Method
+
+                <select
+                    class="field"
+                    id="contactMethod"
+                    required
+                >
+
+                    <option value="">
+                        Choose
+                    </option>
+
+                    <option value="Email">
+                        Email
+                    </option>
+
+                    <option value="Messenger">
+                        Messenger
+                    </option>
+
+                    <option value="SMS">
+                        SMS
+                    </option>
+
+                </select>
+
+            </label>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             ADDRESS
+        ============================================== -->
+
+        <label>
+
+            Complete Address
+
+            <textarea
+                class="field textarea"
+                id="customerAddress"
+                rows="4"
+                placeholder="Your complete address"
+                required
+            ></textarea>
+
+        </label>
+
+
+
+        <!-- =============================================
+             ORDER SUMMARY
+        ============================================== -->
+
+        <div class="customer-order-summary" id="customerOrderSummary">
+            <span class="label">ORDER SUMMARY</span>
+            <h3>Your customized figure</h3>
+            <div class="order-summary-content">
+                <img class="order-summary-preview hidden" id="customerSummaryPreview" alt="Customized figure preview">
+                <div class="summary-tags" id="customerSummaryTags"></div>
+            </div>
+            <strong class="customer-summary-total" id="customerSummaryTotal">Estimated total: PHP 0</strong>
+        </div>
+
+        <!-- =============================================
+             PAYMENT
+        ============================================== -->
+
+        <div class="form-grid">
+            <label>
+                Shipping Method
+                <select class="field" id="shippingMethod" required>
+                    <option value="">Choose</option>
+                    <option value="LBC">LBC</option>
+                    <option value="Lalamove">Lalamove</option>
+                </select>
+            </label>
+            <label>
+                Payment Method
+                <select class="field" id="paymentMethod" required>
+                    <option value="GCash">GCash</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="payment-box">
+
+
+            <span class="label">
+                PAYMENT
+            </span>
+
+
+            <h3>
+                Payment Information
+            </h3>
+
+
+            <p id="paymentInstruction">
+
+                Please send your payment using our available
+                payment method and upload your receipt.
+
+            </p>
+
+
+
+            <div class="gcash">
+
+                <strong>
+                    GCASH
+                </strong>
+
+
+                <span>
+                    09XX XXX XXXX
+                </span>
+
+            </div>
+
+
+
+            <label>
+
+                Payment Receipt
+
+                <input
+                    class="field file"
+                    type="file"
+                    id="paymentReceipt"
+                    accept="image/*"
+                    required
+                >
+
+            </label>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             SUBMIT
+        ============================================== -->
+
+        <button
+            class="main-button"
+            type="submit"
+        >
+
+            SUBMIT ORDER
+
+            <span>
+                →
+            </span>
+
+        </button>
+
+
+    </form>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     PAYMENT VERIFICATION
+===================================================== -->
+
+<section class="commission-section hidden" id="paymentVerificationSection">
+    <div class="success-card">
+        <div class="success-symbol">&#8987;</div>
+        <span class="label">PAYMENT VERIFICATION</span>
+        <h2>Waiting for Staff Confirmation</h2>
+        <p>Your order details and proof of payment have been received. Staff will confirm the payment before the order is submitted.</p>
+        <div class="status-box">
+            <span>CURRENT STATUS</span>
+            <strong id="paymentVerificationStatus">PAYMENT PENDING REVIEW</strong>
+        </div>
+        <button type="button" class="main-button" id="confirmPaymentDemoBtn">DEMO: STAFF CONFIRM PAYMENT <span>&rarr;</span></button>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     SUCCESS
+===================================================== -->
+
+<section
+    class="commission-section hidden"
+    id="successSection"
+>
+
+
+    <div class="success-card">
+
+
+        <div class="success-symbol">
+            ✓
+        </div>
+
+
+        <span class="label">
+            ORDER SUBMITTED
+        </span>
+
+
+        <h2>
+            Thank You!
+        </h2>
+
+
+        <p id="successMessage">
+
+            Your order has been submitted successfully.
+
+        </p>
+
+        <div class="submitted-order-details" id="submittedOrderDetails">
+            <span class="label">ORDER DETAILS</span>
+            <p id="submittedOrderSummary">Your order details will appear here.</p>
+        </div>
+
+        <button type="button" class="main-button" id="trackOrderBtn">TRACK YOUR ORDER <span>&rarr;</span></button>
+
+
+
+        <div class="status-box">
+
+            <span>
+                CURRENT STATUS
+            </span>
+
+
+            <strong>
+                PENDING STAFF REVIEW
+            </strong>
+
+        </div>
+
+
+
+        <p>
+
+            Your order is not officially booked yet.
+            Our staff will first check your order details
+            and payment receipt. After verification,
+            it will be sent to the owner/admin for approval.
+
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+<section class="commission-section hidden" id="trackOrderSection">
+    <div class="success-card tracking-card">
+        <span class="label">ORDER STATUS</span>
+        <h2>Track Your Order</h2>
+        <p id="trackingOrderName">Your order is being reviewed by our team.</p>
+        <div class="tracking-statuses">
+            <div class="tracking-status active"><b>01</b><span>For approval</span></div>
+            <div class="tracking-status"><b>02</b><span>Processing</span></div>
+            <div class="tracking-status"><b>03</b><span>For delivery</span></div>
+        </div>
+        <a class="main-button" href="../Home/Home.html">BACK TO HOMEPAGE <span>&rarr;</span></a>
+    </div>
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+
+    <div class="footer-brand">
+
+        <strong>
+            Clay and Stuff
+        </strong>
+
+
+        <p>
+            Made with little bits of joy.
+        </p>
+
+    </div>
+
+
+
+    <div class="footer-links">
+
+
+        <!-- QUICK LINKS -->
+
+        <div>
+
+            <b>
+                Quick Links
+            </b>
+
+
+            <a href="../Home/Home.html">
+                Overview
+            </a>
+
+
+            <a href="../Collection/collection.html">
+                Collection
+            </a>
+
+
+            <a href="commission.html">
+                Commission
+            </a>
+
+        </div>
+
+
+
+        <!-- COMMISSION -->
+
+        <div>
+
+            <b>
+                Commission
+            </b>
+
+
+            <span>
+                Create &amp; Style
+            </span>
+
+
+            <span>
+                Custom Reference
+            </span>
+
+        </div>
+
+
+
+        <!-- CONTACT -->
+
+        <div>
+
+            <b>
+                Contact
+            </b>
+
+
+            <span>
+                Calamba City, Laguna
+            </span>
+
+
+            <span>
+                09XX XXX XXXX
+            </span>
+
+
+            <span>
+                clayandstuff@gmail.com
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="copyright">
+
+        © 2026 Clay and Stuff. All Rights Reserved.
+
+    </div>
+
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="commission.js"></script>
+
+
+</body>
+
+</html>

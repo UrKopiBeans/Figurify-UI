@@ -1,0 +1,372 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.login-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            #ffd9f1 0 7%,
+            transparent 8%
+        ),
+
+        radial-gradient(
+            circle at 85% 80%,
+            #ddd0ff 0 8%,
+            transparent 9%
+        ),
+
+        #fffdf8;
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background-decoration::before,
+.background-decoration::after {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    border-radius: 50%;
+
+    opacity: 0.35;
+}
+
+
+.background-decoration::before {
+    background: #ffb8df;
+
+    top: -150px;
+    left: -120px;
+}
+
+
+.background-decoration::after {
+    background: #cbb8ff;
+
+    right: -150px;
+    bottom: -150px;
+}
+
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.login-card {
+
+    width: min(430px, 90%);
+
+    padding: 42px 42px 35px;
+
+    background: #f6b3df;
+
+    border-radius: 28px;
+
+    position: relative;
+
+    z-index: 2;
+
+    box-shadow:
+        0 18px 45px rgba(93, 57, 82, 0.20);
+
+    text-align: center;
+}
+
+
+.signup-card {
+    padding-top: 35px;
+}
+
+
+/* =========================
+   CLOSE
+========================= */
+
+.close-btn {
+
+    position: absolute;
+
+    right: 20px;
+    top: 15px;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 26px;
+
+    color: #6b3f5c;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fff5fb;
+
+    color: #e77fbd;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 5px 12px rgba(70, 40, 60, 0.12);
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+h1 {
+
+    color: #653b59;
+
+    font-family: Georgia, serif;
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
+}
+
+
+.subtitle {
+
+    color: #7b526c;
+
+    font-size: 13px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+form {
+    text-align: left;
+}
+
+
+label {
+
+    display: block;
+
+    color: #653b59;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    margin: 13px 0 6px;
+}
+
+
+input {
+
+    width: 100%;
+
+    height: 43px;
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 9px;
+
+    padding: 0 13px;
+
+    background: white;
+
+    color: #593c50;
+
+    font-size: 13px;
+}
+
+
+input:focus {
+
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.45);
+}
+
+
+/* =========================
+   PASSWORD
+========================= */
+
+.password-box {
+
+    position: relative;
+}
+
+
+.password-box input {
+
+    padding-right: 45px;
+}
+
+
+.password-box button {
+
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   FORGOT
+========================= */
+
+.forgot {
+
+    text-align: right;
+
+    margin: 8px 0 20px;
+}
+
+
+.forgot a {
+
+    color: #734e67;
+
+    font-size: 11px;
+
+    text-decoration: none;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.login-btn {
+
+    width: 100%;
+
+    height: 44px;
+
+    border: none;
+
+    border-radius: 25px;
+
+    background: #b9a0ef;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 10px rgba(104, 75, 150, 0.15);
+
+    transition: 0.2s;
+}
+
+
+.login-btn:hover {
+
+    transform: translateY(-2px);
+
+    background: #a88be5;
+}
+
+
+/* =========================
+   SIGNUP TEXT
+========================= */
+
+.signup-text {
+
+    margin-top: 22px;
+
+    font-size: 11px;
+
+    color: #714d65;
+}
+
+
+.signup-text a {
+
+    color: #633c55;
+
+    font-weight: bold;
+
+    text-decoration: underline;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 500px) {
+
+    .login-card {
+
+        padding: 35px 25px 28px;
+
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clay and Stuff - Final Design Preview</title>
+    <link rel="stylesheet" href="dressup.css">
+    <link rel="stylesheet" href="final-preview.css">
+</head>
+<body data-page="preview">
+    <nav class="navbar">
+        <a href="../../Home/Home.html" class="brand">
+            <div class="brand-photo">
+                <img src="../../Image/Clay and Stuff- Logo.jpg" alt="Clay and Stuff">
+            </div>
+            <span>Clay and Stuff</span>
+        </a>
+        <div class="nav-links">
+            <a href="../../Home/Home.html">OVERVIEW</a>
+            <a href="../../Collection/collection.html">COLLECTIONS</a>
+            <a href="../commission.html" class="active">COMMISSION</a>
+            <a href="../../Login/Login.html" class="profile" aria-label="Account">
+                <img src="../../Image/Profile Icon.png" alt="Profile">
+            </a>
+        </div>
+    </nav>
+    <main class="final-review-page">
+        <section class="preview-container preview-stage">
+            <div class="preview-header">
+                <p class="eyebrow">Review before confirming</p>
+                <h1>Your Final Design</h1>
+                <p class="preview-intro">Here is the 3D figure you customized. Confirm it when you are ready to choose your order schedule.</p>
+            </div>
+            <div class="figure-area">
+                <canvas id="figureViewer" class="figure-viewer"></canvas>
+            </div>
+            <p class="preview-status" id="previewStatus">Your design is ready for confirmation.</p>
+            <div class="preview-actions">
+                <button type="button" class="secondary-button" id="editDesignBtn">Edit Design</button>
+                <button type="button" class="main-button" id="confirmDesignBtn">
+                    Confirm Design <span aria-hidden="true">&rarr;</span>
+                </button>
+            </div>
+        </section>
+    </main>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="dressup.js"></script>
+    <script type="module" src="final-preview.js"></script>
+</body>
+</html>

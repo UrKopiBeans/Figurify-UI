@@ -1,0 +1,851 @@
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fdf0f7;
+    color: #222;
+}
+
+
+/* =====================================================
+   LAYOUT
+===================================================== */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    width: 215px;
+    min-height: 100vh;
+
+    background: #f58fc4;
+
+    padding: 24px 16px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    overflow-y: auto;
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.sidebar-logo {
+    width: 130px;
+    height: 130px;
+
+    margin: 0 auto 25px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: white;
+
+    border: 5px solid white;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+.sidebar-logo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* =====================================================
+   SIDEBAR NAVIGATION
+===================================================== */
+
+.sidebar-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+/* MAIN DASHBOARD BUTTON */
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    text-decoration: none;
+
+    color: #ffffff;
+
+    font-weight: 700;
+
+    padding: 10px 12px;
+
+    border-radius: 18px;
+
+    transition: 0.2s ease;
+}
+
+
+.sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+
+.sidebar-item.active {
+    background: #fffce9;
+    color: #7d315b;
+}
+
+
+/* =====================================================
+   SIDEBAR ICON
+===================================================== */
+
+.sidebar-icon {
+    width: 20px;
+
+    display: inline-flex;
+
+    justify-content: center;
+
+    font-size: 17px;
+}
+
+
+/* =====================================================
+   GROUP
+===================================================== */
+
+.sidebar-group {
+    margin-top: 12px;
+}
+
+
+.sidebar-heading {
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 4px;
+}
+
+
+.sidebar-subitem {
+    display: block;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    padding: 4px 10px 4px 30px;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+}
+
+
+.sidebar-subitem:hover {
+    background: rgba(255,255,255,0.20);
+}
+
+
+/* =====================================================
+   OTHER SIDEBAR LINKS
+===================================================== */
+
+.sidebar-main-link {
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    font-size: 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 6px;
+
+    margin-top: 10px;
+
+    transition: 0.2s;
+}
+
+
+.sidebar-main-link:hover {
+    opacity: 0.75;
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.sidebar-bottom {
+    margin-top: auto;
+
+    padding-top: 20px;
+}
+
+
+.logout-link {
+    color: #ffffff;
+
+    text-decoration: underline;
+
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 6px;
+}
+
+
+/* =====================================================
+   MAIN CONTENT
+===================================================== */
+
+.dashboard-content {
+    margin-left: 215px;
+
+    width: calc(100% - 215px);
+
+    min-height: 100vh;
+
+    padding: 28px 35px;
+
+    background: #fff4fa;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.dashboard-header {
+    margin-bottom: 25px;
+}
+
+
+.dashboard-label {
+    display: block;
+
+    color: #81305d;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+
+    margin-bottom: 12px;
+}
+
+
+.dashboard-header h1 {
+    font-size: 23px;
+
+    margin-bottom: 4px;
+
+    color: #171717;
+}
+
+
+.dashboard-header p {
+    font-size: 16px;
+
+    color: #444;
+}
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+
+.stat-card {
+    min-height: 90px;
+
+    border-radius: 16px;
+
+    padding: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.12);
+
+    color: white;
+}
+
+
+.stat-card.purple {
+    background:
+        linear-gradient(
+            135deg,
+            #9a62e7,
+            #c9b2f4
+        );
+}
+
+
+.stat-card.blue {
+    background:
+        linear-gradient(
+            135deg,
+            #eff4a5,
+            #8fcaff
+        );
+}
+
+
+.stat-card.pink {
+    background:
+        linear-gradient(
+            135deg,
+            #efa4df,
+            #a979e7
+        );
+}
+
+
+.stat-title {
+    display: block;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+}
+
+
+.stat-card strong {
+    font-size: 28px;
+}
+
+
+.stat-icon {
+    font-size: 30px;
+
+    opacity: 0.55;
+}
+
+
+/* =====================================================
+   LOWER GRID
+===================================================== */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(500px, 1.5fr)
+        minmax(300px, 0.8fr);
+
+    gap: 18px;
+
+    align-items: start;
+}
+
+
+/* =====================================================
+   GENERAL CARD
+===================================================== */
+
+.dashboard-card {
+    background: white;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.16);
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   CALENDAR
+===================================================== */
+
+.calendar-card {
+    padding: 14px 18px 20px;
+}
+
+
+.card-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+
+.card-header h2 {
+    font-size: 27px;
+
+    font-weight: 800;
+}
+
+
+.card-header button {
+    border: none;
+
+    background: transparent;
+
+    font-size: 32px;
+
+    cursor: pointer;
+
+    color: #555;
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+}
+
+
+.card-header button:hover {
+    background: #f8d8eb;
+}
+
+
+/* =====================================================
+   WEEKDAYS
+===================================================== */
+
+.calendar-weekdays {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    margin-bottom: 7px;
+}
+
+
+.calendar-weekdays span {
+    text-align: center;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #333;
+}
+
+
+.calendar-weekdays span:first-child {
+    color: #e66b6b;
+}
+
+
+/* =====================================================
+   CALENDAR DAYS
+===================================================== */
+
+.calendar-days {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 4px;
+}
+
+
+.calendar-day {
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+
+.calendar-day:hover {
+    background: #f8d8eb;
+}
+
+
+.calendar-day.empty {
+    cursor: default;
+}
+
+
+.calendar-day.sunday {
+    color: #df6d6d;
+}
+
+
+/* BOOKING */
+
+.calendar-day.booking {
+    background: #f5b7dd;
+}
+
+
+/* RUSH */
+
+.calendar-day.rush {
+    background: #b89be9;
+
+    color: white;
+}
+
+
+/* RESERVED */
+
+.calendar-day.reserved {
+    background: #9ed7f2;
+
+    color: white;
+
+    cursor: not-allowed;
+}
+
+
+/* TODAY */
+
+.calendar-day.today {
+    border: 2px solid #9d4777;
+
+    font-weight: 800;
+}
+
+
+/* =====================================================
+   LEGEND
+===================================================== */
+
+.calendar-legend {
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 18px;
+
+    flex-wrap: wrap;
+
+    font-size: 12px;
+}
+
+
+.calendar-legend span {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+.legend {
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+}
+
+
+.legend.booking {
+    background: #f5b7dd;
+}
+
+
+.legend.rush {
+    background: #b89be9;
+}
+
+
+.legend.reserved {
+    background: #9ed7f2;
+}
+
+
+/* =====================================================
+   QUOTATIONS
+===================================================== */
+
+.quotation-card {
+    min-height: 390px;
+
+    padding: 17px;
+}
+
+
+.quotation-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+
+.quotation-header h2 {
+    color: #81305d;
+
+    font-size: 20px;
+}
+
+
+.quotation-header a {
+    color: #81305d;
+
+    font-size: 12px;
+
+    text-decoration: none;
+
+    font-weight: 700;
+}
+
+
+.quotation-header a:hover {
+    text-decoration: underline;
+}
+
+
+/* =====================================================
+   QUOTATION ITEM
+===================================================== */
+
+.quotation-item {
+    background: #fffdf0;
+
+    border-radius: 7px;
+
+    padding: 12px;
+
+    margin-bottom: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-left: 4px solid #f5c6df;
+}
+
+
+.quotation-number {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.quotation-number strong {
+    font-size: 12px;
+
+    color: #222;
+}
+
+
+.quotation-number span {
+    font-size: 10px;
+
+    color: #555;
+}
+
+
+.quotation-button {
+    width: 28px;
+    height: 28px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f5b7dd;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+
+.quotation-button:hover {
+    background: #d975ae;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.quotation-empty {
+    text-align: center;
+
+    color: #999;
+
+    font-size: 12px;
+
+    margin-top: 25px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .dashboard-content {
+        margin-left: 190px;
+
+        width: calc(100% - 190px);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        width: 70px;
+
+        padding: 15px 8px;
+    }
+
+    .sidebar-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .sidebar-item span:not(.sidebar-icon),
+    .sidebar-heading,
+    .sidebar-subitem,
+    .sidebar-main-link,
+    .logout-link {
+        font-size: 0;
+    }
+
+    .sidebar-icon {
+        font-size: 18px;
+    }
+
+    .dashboard-content {
+        margin-left: 70px;
+
+        width: calc(100% - 70px);
+
+        padding: 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-content {
+        padding: 15px;
+    }
+
+    .calendar-card {
+        padding: 10px;
+    }
+
+    .calendar-day {
+        height: 38px;
+
+        font-size: 13px;
+    }
+
+}
