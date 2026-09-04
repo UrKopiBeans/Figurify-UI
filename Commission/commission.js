@@ -22,7 +22,6 @@ const CUSTOMIZATION_STORAGE_KEY = "figurifyCustomization";
 const COMMISSION_RETURN_KEY = "figurifyCommissionReturn";
 const COMMISSION_ORDER_TYPE_KEY = "figurifyCommissionOrderType";
 const COMMISSION_DESIGN_DETAILS_KEY = "figurifyCommissionDesignDetails";
-const COMMISSION_NOTIFICATIONS_KEY = "figurifyCommissionNotifications";
 
 let designDetails = {
     size: "3 inches",
@@ -198,9 +197,17 @@ function calculateDesignDetailsTotal() {
     const baseElement = document.getElementById("designBasePrice");
     const optionsElement = document.getElementById("designOptionsPrice");
     const totalElement = document.getElementById("designEstimatedPrice");
+    const summarySize = document.getElementById("designDetailsSummarySize");
+    const summaryBox = document.getElementById("designDetailsSummaryBox");
+    const summaryTotal = document.getElementById("designDetailsSummaryTotal");
     if (baseElement) baseElement.textContent = formatPrice(basePrice);
     if (optionsElement) optionsElement.textContent = formatPrice(optionsPrice);
     if (totalElement) totalElement.textContent = formatPrice(total);
+    if (summarySize) summarySize.textContent = designDetails.size;
+    if (summaryBox) summaryBox.textContent = box?.value === "with"
+        ? `With box${designDetails.boxName ? ` (${designDetails.boxName})` : ""}`
+        : "Without box";
+    if (summaryTotal) summaryTotal.textContent = formatPrice(total);
     return total;
 }
 
@@ -229,10 +236,14 @@ function renderDesignDetails() {
 }
 
 function renderCustomerOrderSummary() {
+    restoreDesignDetails();
+
     const data = getCustomizationState();
     const tags = document.getElementById("customerSummaryTags");
     const preview = document.getElementById("customerSummaryPreview");
     const total = document.getElementById("customerSummaryTotal");
+    const summarySize = document.getElementById("customerSummarySize");
+    const summaryBox = document.getElementById("customerSummaryBox");
     if (!data || !tags) return;
     tags.innerHTML = "";
     [
@@ -251,6 +262,12 @@ function renderCustomerOrderSummary() {
     if (preview && data.previewImage) {
         preview.src = data.previewImage;
         preview.classList.remove("hidden");
+    }
+    if (summarySize) summarySize.textContent = designDetails.size || "3 inches";
+    if (summaryBox) {
+        summaryBox.textContent = designDetails.box === "with"
+            ? `With box${designDetails.boxName ? ` (${designDetails.boxName})` : ""}`
+            : "Without box";
     }
     if (total) total.textContent = `Estimated total: ${formatPrice(designDetails.total)}`;
 }
@@ -281,6 +298,7 @@ function updateDesignDetailsFields() {
 
 
 function renderCustomizationSummary() {
+    restoreDesignDetails();
 
     const summaryCard =
         document.getElementById("customizationSummary");
@@ -1249,32 +1267,27 @@ function continueAfterCalendar() {
 }
 
 function updateCustomerPaymentInstruction() {
+    restoreDesignDetails();
+
     const instruction = document.getElementById("paymentInstruction");
     if (instruction) {
         instruction.textContent = `Estimated total: ${formatPrice(designDetails.total)}. Please send your payment and upload your receipt.`;
     }
 }
 
-function addOrderNotification(message) {
-    let notifications = readJsonFromStorage(COMMISSION_NOTIFICATIONS_KEY);
-    if (!Array.isArray(notifications)) notifications = [];
-    notifications.unshift({ message, date: new Date().toISOString(), unread: true });
-    try {
-        localStorage.setItem(COMMISSION_NOTIFICATIONS_KEY, JSON.stringify(notifications.slice(0, 10)));
-    } catch (error) {
-        console.warn("Unable to save notification:", error);
+function addOrderNotification(message, stage = "For approval") {
+    if (window.ClayStuffNotifications) {
+        window.ClayStuffNotifications.add({
+            message,
+            stage
+        });
     }
 }
 
 function renderNotifications() {
-    const badge = document.getElementById("notificationBadge");
-    if (!badge) return;
-    const notifications = readJsonFromStorage(COMMISSION_NOTIFICATIONS_KEY) || [];
-    const unread = notifications.filter(item => item.unread).length;
-    badge.textContent = unread;
-    badge.classList.toggle("hidden", unread === 0);
-    const text = document.getElementById("notificationText");
-    if (text) text.textContent = notifications[0]?.message || "No new order updates.";
+    if (window.ClayStuffNotifications) {
+        window.ClayStuffNotifications.refresh();
+    }
 }
 
 
@@ -1879,18 +1892,6 @@ document.querySelectorAll("#designSize, input[name=boxOption], input[name=photoC
 const editDesignDetailsBtn = document.getElementById("editDesignDetailsBtn");
 if (editDesignDetailsBtn) editDesignDetailsBtn.addEventListener("click", openDressUpCustomizer);
 
-const notificationButton = document.getElementById("notificationButton");
-if (notificationButton) {
-    notificationButton.addEventListener("click", () => {
-        const notifications = readJsonFromStorage(COMMISSION_NOTIFICATIONS_KEY) || [];
-        notifications.forEach(item => item.unread = false);
-        localStorage.setItem(COMMISSION_NOTIFICATIONS_KEY, JSON.stringify(notifications));
-        renderNotifications();
-        document.getElementById("notificationPopover")?.classList.toggle("hidden");
-    });
-}
-
-
 /* =========================================================
    CUSTOMER FORM
 ========================================================= */
@@ -1985,7 +1986,7 @@ function confirmPaymentDemo() {
     const successMessage = document.getElementById("successMessage");
     if (status) status.textContent = "PAYMENT CONFIRMED BY STAFF";
     if (successMessage) successMessage.textContent = "Your Create & Style order has been submitted successfully after staff confirmed your payment.";
-    addOrderNotification("Staff confirmed your payment and your order was submitted.");
+    addOrderNotification("Staff confirmed your payment and your order was submitted.", "Processing");
     renderNotifications();
     showSection("successSection");
 }

@@ -616,7 +616,7 @@ body {
 }
 
 .top-color-white {
-    background: #ffffff;
+    background: #FFFFFF;
 }
 
 .top-color-black {
@@ -1017,16 +1017,20 @@ body {
         inset 0 2px 5px rgba(255, 255, 255, 0.35);
 }
 
-.skin-white {
-    background: #F3E4D7;
+.skin-light {
+    background: #E7D2C0;
 }
 
-.skin-black {
-    background: #4A2E24;
+.skin-tan {
+    background: #B9957D;
 }
 
 .skin-brown {
-    background: #8B5A3C;
+    background: #876545;
+}
+
+.skin-deep {
+    background: #6B5A55;
 }
 
 .skin-name {

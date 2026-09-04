@@ -2552,7 +2552,7 @@ async function renderCurrentCategory() {
             )
         ) {
             applySkinColor(
-                "#F3E4D7"
+                "#E7D2C0"
             );
         }
 
@@ -2973,11 +2973,11 @@ function selectColor(card) {
     if (currentObject) {
         if (
             category === "funko" &&
-            accessorySlot === "bottom"
+            (accessorySlot === "bottom" || slot === "bottomColor")
         ) {
             applyBottomPartColors(
                 currentObject,
-                stateForCategory.pantsColor && stateForCategory.pantsColor.color
+                item.color
             );
         }
         else {

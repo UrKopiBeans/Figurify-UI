@@ -16,6 +16,10 @@
         rel="stylesheet"
         href="commission.css"
     >
+    <link
+        rel="stylesheet"
+        href="../shared-notifications.css"
+    >
 
 </head>
 
@@ -67,14 +71,16 @@
             COMMISSION
         </a>
 
-
-        <button type="button" class="notification-button" id="notificationButton" aria-label="Order notifications">
-            <span aria-hidden="true">&#128276;</span>
-            <b class="notification-badge hidden" id="notificationBadge">0</b>
-        </button>
-        <div class="notification-popover hidden" id="notificationPopover">
-            <strong>Order updates</strong>
-            <p id="notificationText">No new order updates.</p>
+        <div class="notification-shell" data-figurify-notification-root>
+            <button type="button" class="notification-button" data-figurify-notification-button aria-label="Order notifications">
+                <img src="../Image/Notification Icon.png" alt="">
+                <b class="notification-badge hidden" data-figurify-notification-badge>0</b>
+            </button>
+            <div class="notification-popover hidden" data-figurify-notification-popover>
+                <strong>Notification history</strong>
+                <div class="notification-history" data-figurify-notification-history></div>
+                <p class="notification-empty" data-figurify-notification-empty>No new order updates.</p>
+            </div>
         </div>
 
         <a
@@ -720,7 +726,23 @@
             </div>
             <button type="button" class="secondary-button" id="editDesignDetailsBtn">EDIT DESIGN</button>
         </div>
-        <img class="design-preview-image hidden" id="designDetailsPreview" alt="Preview of your customized figure">
+        <div class="design-review-layout">
+            <img class="design-preview-image hidden" id="designDetailsPreview" alt="Preview of your customized figure">
+            <div class="design-review-meta">
+                <div class="design-review-row">
+                    <span>Figure size</span>
+                    <strong id="designDetailsSummarySize">3 inches</strong>
+                </div>
+                <div class="design-review-row">
+                    <span>Box</span>
+                    <strong id="designDetailsSummaryBox">Without box</strong>
+                </div>
+                <div class="design-review-row total">
+                    <span>Estimated total price</span>
+                    <strong id="designDetailsSummaryTotal">PHP 0</strong>
+                </div>
+            </div>
+        </div>
         <div class="summary-tags" id="designDetailsTags"></div>
     </div>
 
@@ -1520,6 +1542,16 @@
             <h3>Your customized figure</h3>
             <div class="order-summary-content">
                 <img class="order-summary-preview hidden" id="customerSummaryPreview" alt="Customized figure preview">
+                <div class="customer-summary-meta">
+                    <div class="design-review-row">
+                        <span>Figure size</span>
+                        <strong id="customerSummarySize">3 inches</strong>
+                    </div>
+                    <div class="design-review-row">
+                        <span>Box</span>
+                        <strong id="customerSummaryBox">Without box</strong>
+                    </div>
+                </div>
                 <div class="summary-tags" id="customerSummaryTags"></div>
             </div>
             <strong class="customer-summary-total" id="customerSummaryTotal">Estimated total: PHP 0</strong>
@@ -1858,6 +1890,7 @@
 ===================================================== -->
 
 <script src="commission.js"></script>
+<script src="../shared-notifications.js"></script>
 
 
 </body>
