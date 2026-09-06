@@ -52,6 +52,7 @@ function fillField(id, value) {
 
 function populatePreview(snapshot) {
 
+<<<<<<< HEAD
     fillField("previewFigure", snapshot.figureModel || snapshot.figureCategory);
     fillField("previewSkin", snapshot.skin);
     fillField("previewHair", snapshot.hair);
@@ -64,6 +65,11 @@ function populatePreview(snapshot) {
             ? snapshot.accessories.join(", ")
             : "None"
     );
+=======
+    fillField("previewCategory", snapshot.figureCategory);
+    fillField("previewOrderType", snapshot.orderType);
+    fillField("previewBookingDate", snapshot.bookingDate);
+>>>>>>> b623464 (Update project files)
     fillField("previewPrice", formatMoney(snapshot.estimatedPrice));
 
     const status = document.getElementById("previewStatus");
@@ -88,7 +94,11 @@ function handleConfirm(snapshot) {
     writeCustomizationSnapshot(updatedSnapshot);
 
     try {
+<<<<<<< HEAD
         localStorage.setItem(COMMISSION_RETURN_KEY, "designDetailsSection");
+=======
+        localStorage.setItem(COMMISSION_RETURN_KEY, "customerSection");
+>>>>>>> b623464 (Update project files)
     }
     catch (error) {
         console.warn("Unable to set commission return step:", error);

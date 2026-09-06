@@ -34,6 +34,21 @@ const continueBtn =
 const COMMISSION_RETURN_KEY =
     "figurifyCommissionReturn";
 
+<<<<<<< HEAD
+=======
+const COMMISSION_ORDER_TYPE_KEY =
+    "figurifyCommissionOrderType";
+
+const COMMISSION_BOOKING_DATE_KEY =
+    "figurifyCommissionBookingDate";
+
+const COMMISSION_FIGURE_CATEGORY_KEY =
+    "figurifyCommissionFigureCategory";
+
+const CUSTOMIZATION_STORAGE_KEY =
+    "figurifyCustomization";
+
+>>>>>>> b623464 (Update project files)
 const pageMode =
     document.body.dataset.page || "editor";
 
@@ -72,8 +87,15 @@ const sectionIds = {
         hair: "funkoHairSection",
         girlHair: "funkoGirlHairSection",
         girlTop: "funkoGirlTopSection",
+<<<<<<< HEAD
         girlBottom: "funkoGirlBottomSection",
         bottomColor: "funkoGirlBottomColorSection",
+=======
+        girlTopColor: "funkoGirlTopColorSection",
+        girlBottom: "funkoGirlBottomSection",
+        girlBottomColor: "funkoGirlBottomColorSection",
+        bottomColor: "funkoBottomPantsColorSection",
+>>>>>>> b623464 (Update project files)
         hairColor: "funkoHairColorSection",
         top: "funkoTopSection",
         topColor: "funkoTopColorSection",
@@ -97,7 +119,13 @@ const sectionIds = {
     },
     chibi: {
         hair: "chibiHairSection",
+<<<<<<< HEAD
         girlHair: "chibiGirlHairSection"
+=======
+        girlHair: "chibiGirlHairSection",
+        hairColor: "chibiHairColorSection",
+        girlHairColor: "chibiGirlHairColorSection"
+>>>>>>> b623464 (Update project files)
     }
 };
 
@@ -109,6 +137,140 @@ const categoryPanels = {
 };
 
 
+<<<<<<< HEAD
+=======
+function getStorageValue(key) {
+
+    try {
+        return localStorage.getItem(key);
+    }
+    catch (error) {
+        console.warn("Unable to read storage key:", key, error);
+        return null;
+    }
+
+}
+
+
+function getCustomizationState() {
+
+    const raw =
+        getStorageValue(
+            CUSTOMIZATION_STORAGE_KEY
+        );
+
+
+    if (!raw) {
+        return null;
+    }
+
+
+    try {
+        return JSON.parse(raw);
+    }
+    catch (error) {
+        console.warn(
+            "Unable to parse customization state:",
+            error
+        );
+        return null;
+    }
+
+}
+
+
+function formatMoney(amount) {
+
+    return "₱" +
+        Number(amount || 0)
+            .toLocaleString("en-PH");
+
+}
+
+
+function formatBookingDate(value) {
+
+    if (!value) {
+        return "Not selected";
+    }
+
+    const date =
+        new Date(
+            `${value}T00:00:00`
+        );
+
+    if (Number.isNaN(date.getTime())) {
+        return "Not selected";
+    }
+
+    return date.toLocaleDateString(
+        "en-PH",
+        {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function getCommissionOrderTypeValue() {
+    return getStorageValue(COMMISSION_ORDER_TYPE_KEY);
+}
+
+
+function getCommissionOrderTypeLabel() {
+
+    const value =
+        getCommissionOrderTypeValue();
+
+    if (value === "rush") {
+        return "Rush Order";
+    }
+
+    if (value === "nonrush") {
+        return "Non-Rush Order";
+    }
+
+    return "Not selected";
+
+}
+
+
+function getCommissionRushFee() {
+    return getCommissionOrderTypeValue() === "rush" ? 500 : 0;
+}
+
+
+function getCommissionBookingDateValue() {
+    return getStorageValue(COMMISSION_BOOKING_DATE_KEY);
+}
+
+
+function getCommissionBookingDateLabel() {
+    return formatBookingDate(
+        getCommissionBookingDateValue()
+    );
+}
+
+
+function getCommissionFigureCategoryValue() {
+    return getStorageValue(COMMISSION_FIGURE_CATEGORY_KEY);
+}
+
+
+function getCommissionFigureCategoryLabel() {
+
+    const value =
+        getCommissionFigureCategoryValue();
+
+    return value || "Not selected";
+
+}
+
+
+>>>>>>> b623464 (Update project files)
 /* =========================================================
    STATE
 ========================================================= */
@@ -122,6 +284,10 @@ function createCategoryState() {
         hair: null,
         girlHair: null,
         hairColor: null,
+<<<<<<< HEAD
+=======
+        girlHairColor: null,
+>>>>>>> b623464 (Update project files)
         top: null,
         girlTop: null,
         topColor: null,
@@ -148,6 +314,10 @@ const state = {
 
 const ACCESSORY_COLOR_SLOT = {
     hair: "hairColor",
+<<<<<<< HEAD
+=======
+    girlHair: "girlHairColor",
+>>>>>>> b623464 (Update project files)
     girlBottom: "bottomColor",
     top: "topColor",
     outfit: "outfitColor",
@@ -322,6 +492,10 @@ let scene = null;
 let camera = null;
 let renderer = null;
 let controls = null;
+<<<<<<< HEAD
+=======
+let figureResizeObserver = null;
+>>>>>>> b623464 (Update project files)
 
 let bodyModel = null;
 
@@ -417,6 +591,29 @@ function getActiveSlotOrder() {
 
 function getSlotColorSlot(slot) {
 
+<<<<<<< HEAD
+=======
+    const category =
+        state.currentCategory;
+
+    if (
+        category === "funko" &&
+        isFunkoGirlModel(state.funko.model)
+    ) {
+        if (slot === "hairColor") {
+            return "girlHair";
+        }
+
+        if (slot === "topColor") {
+            return "girlTop";
+        }
+
+        if (slot === "bottomColor") {
+            return "girlBottom";
+        }
+    }
+
+>>>>>>> b623464 (Update project files)
     return ACCESSORY_COLOR_SLOT[slot] || null;
 
 }
@@ -1180,6 +1377,23 @@ function applyBottomPartColors(model, pantsColor) {
 
 function loadGLTF(path) {
 
+<<<<<<< HEAD
+=======
+    if (!path) {
+        const error =
+            new Error("Model path is missing.");
+
+        console.error(
+            "[Figurify 3D] Model path is missing.",
+            error
+        );
+
+        return Promise.reject(
+            error
+        );
+    }
+
+>>>>>>> b623464 (Update project files)
     return new Promise(
         function(resolve, reject) {
 
@@ -1192,6 +1406,14 @@ function loadGLTF(path) {
                 },
                 undefined,
                 function(error) {
+<<<<<<< HEAD
+=======
+                    console.error(
+                        `[Figurify 3D] Failed to load: ${path}`,
+                        error
+                    );
+
+>>>>>>> b623464 (Update project files)
                     reject(
                         error
                     );
@@ -1313,6 +1535,13 @@ function frameFigure() {
         center.z + distance * 1.35
     );
 
+<<<<<<< HEAD
+=======
+    camera.lookAt(
+        center
+    );
+
+>>>>>>> b623464 (Update project files)
 
     controls.target.copy(
         center
@@ -1366,6 +1595,21 @@ function resize3D() {
 }
 
 
+<<<<<<< HEAD
+=======
+function getCurrentOrderTotal(activeState) {
+
+    if (!activeState || !activeState.model) {
+        return 0;
+    }
+
+    return getActiveStateTotal(activeState) +
+        getCommissionRushFee();
+
+}
+
+
+>>>>>>> b623464 (Update project files)
 function updatePriceDisplay() {
 
     if (!totalPrice) {
@@ -1383,6 +1627,7 @@ function updatePriceDisplay() {
     }
 
 
+<<<<<<< HEAD
     let total = 0;
 
 
@@ -1408,10 +1653,128 @@ function updatePriceDisplay() {
         }
     );
 
+=======
+    const total =
+        getCurrentOrderTotal(
+            activeState
+        );
+>>>>>>> b623464 (Update project files)
 
     totalPrice.textContent =
         `₱${total}`;
 
+<<<<<<< HEAD
+=======
+    renderPreviewSummary();
+
+}
+
+
+function renderPreviewSummary() {
+
+    const data =
+        getCustomizationState();
+
+    const activeState =
+        getActiveState();
+
+    const figureCategory =
+        document.getElementById(
+            "summaryFigureCategory"
+        );
+
+    const orderType =
+        document.getElementById(
+            "summaryOrderType"
+        );
+
+    const bookingDate =
+        document.getElementById(
+            "summaryBookingDate"
+        );
+
+    const designTags =
+        document.getElementById(
+            "summaryDesignTags"
+        );
+
+    const categoryValue =
+        getFigureLabel(state.currentCategory) ||
+        data?.figureCategory ||
+        getCommissionFigureCategoryLabel();
+
+    const orderTypeValue =
+        data?.orderType ||
+        getCommissionOrderTypeLabel();
+
+    const bookingDateValue =
+        data?.bookingDateLabel ||
+        getCommissionBookingDateLabel();
+
+    if (figureCategory) {
+        figureCategory.textContent =
+            categoryValue;
+    }
+
+    if (orderType) {
+        orderType.textContent =
+            orderTypeValue;
+    }
+
+    if (bookingDate) {
+        bookingDate.textContent =
+            bookingDateValue;
+    }
+
+    if (designTags) {
+        designTags.innerHTML = "";
+
+        const selectedItems =
+            activeState
+                ? getActiveSlotOrder().map(
+                    function(slot) {
+                        return activeState[slot];
+                    }
+                ).filter(Boolean)
+                : [];
+
+        const values =
+            selectedItems.length
+                ? selectedItems.map(
+                    function(item) {
+                        return item.billable === false
+                            ? item.name
+                            : `${item.name} + ${formatMoney(item.price)}`;
+                    }
+                )
+                : (data?.selectedItems?.length
+                    ? data.selectedItems
+                    : ["No customization selected yet."]);
+
+        values.forEach(
+            function(value) {
+
+                const chip =
+                    document.createElement(
+                        "span"
+                    );
+
+                chip.className =
+                    "summary-chip";
+
+                chip.textContent =
+                    value;
+
+                designTags.appendChild(
+                    chip
+                );
+
+            }
+        );
+
+    }
+
+>>>>>>> b623464 (Update project files)
 }
 
 
@@ -1559,6 +1922,25 @@ function updateSectionVisibility() {
         return;
     }
 
+<<<<<<< HEAD
+=======
+    // The model picker is the entry point for every category. Keep it visible
+    // even though the dependent option sections are hidden until a model is
+    // selected.
+    [
+        "funkoModelSection",
+        "hironoModelSection",
+        "chibiModelSection"
+    ].forEach(
+        function(id) {
+            setVisibleById(
+                id,
+                id === `${activeCategory}ModelSection`
+            );
+        }
+    );
+
+>>>>>>> b623464 (Update project files)
 
     const activeState =
         state[activeCategory];
@@ -1581,6 +1963,21 @@ function updateSectionVisibility() {
     );
 
 
+<<<<<<< HEAD
+=======
+    const showSections = function(ids) {
+        ids.forEach(
+            function(id) {
+                setVisibleById(
+                    id,
+                    true
+                );
+            }
+        );
+    };
+
+
+>>>>>>> b623464 (Update project files)
     if (activeCategory === "funko") {
 
         if (activeState.model) {
@@ -1591,6 +1988,7 @@ function updateSectionVisibility() {
         }
 
 
+<<<<<<< HEAD
         if (activeState.skin) {
             setVisibleById(
                 isFunkoGirlModel(
@@ -1600,10 +1998,15 @@ function updateSectionVisibility() {
                     : sectionIds.funko.hair,
                 true
             );
+=======
+        if (!activeState.skin) {
+            return;
+>>>>>>> b623464 (Update project files)
         }
 
 
         if (isFunkoGirlModel(activeState.model)) {
+<<<<<<< HEAD
 
             if (activeState.girlHair) {
                 setVisibleById(
@@ -1670,6 +2073,30 @@ function updateSectionVisibility() {
                 );
             }
 
+=======
+            showSections(
+                [
+                    sectionIds.funko.girlHair,
+                    sectionIds.funko.hairColor,
+                    sectionIds.funko.girlTop,
+                    sectionIds.funko.girlTopColor,
+                    sectionIds.funko.girlBottom,
+                    sectionIds.funko.girlBottomColor
+                ]
+            );
+        }
+        else {
+            showSections(
+                [
+                    sectionIds.funko.hair,
+                    sectionIds.funko.hairColor,
+                    sectionIds.funko.top,
+                    sectionIds.funko.topColor,
+                    sectionIds.funko.bottom,
+                    sectionIds.funko.pantsColor
+                ]
+            );
+>>>>>>> b623464 (Update project files)
         }
 
         return;
@@ -1690,6 +2117,19 @@ function updateSectionVisibility() {
             );
         }
 
+<<<<<<< HEAD
+=======
+
+        if (activeState.hair) {
+            setVisibleById(
+                isChibiGirlModel(activeState.model)
+                    ? sectionIds.chibi.girlHairColor
+                    : sectionIds.chibi.hairColor,
+                true
+            );
+        }
+
+>>>>>>> b623464 (Update project files)
         return;
 
     }
@@ -1745,6 +2185,7 @@ function updateSectionVisibility() {
     }
 
 
+<<<<<<< HEAD
     if (activeState.skin) {
         setVisibleById(
             sectionIds.hirono.hair,
@@ -1799,6 +2240,36 @@ function updateSectionVisibility() {
             true
         );
     }
+=======
+    if (!activeState.skin) {
+        return;
+    }
+
+
+    if (hironoMode === "keychain") {
+        showSections(
+            [
+                sectionIds.hirono.keychainHair,
+                sectionIds.hirono.keychainHairColor,
+                sectionIds.hirono.keychainHat
+            ]
+        );
+        return;
+    }
+
+
+    showSections(
+        [
+            sectionIds.hirono.hair,
+            sectionIds.hirono.hairColor,
+            sectionIds.hirono.outfit,
+            sectionIds.hirono.pants,
+            sectionIds.hirono.pantsColor,
+            sectionIds.hirono.shoes,
+            sectionIds.hirono.shoesColor
+        ]
+    );
+>>>>>>> b623464 (Update project files)
 
 }
 
@@ -1908,6 +2379,179 @@ function buildItemFromCard(card) {
 }
 
 
+<<<<<<< HEAD
+=======
+function getColorAccessorySlot(category, slot) {
+
+    let accessorySlot = slot.replace("Color", "");
+
+
+    if (category === "funko" && slot === "pantsColor") {
+        accessorySlot = "bottom";
+    }
+    else if (
+        category === "funko" &&
+        slot === "hairColor" &&
+        isFunkoGirlModel(state[category].model)
+    ) {
+        accessorySlot = "girlHair";
+    }
+    else if (
+        category === "funko" &&
+        slot === "topColor" &&
+        isFunkoGirlModel(state[category].model)
+    ) {
+        accessorySlot = "girlTop";
+    }
+    else if (
+        category === "funko" &&
+        slot === "bottomColor" &&
+        isFunkoGirlModel(state[category].model)
+    ) {
+        accessorySlot = "girlBottom";
+    }
+
+
+    return accessorySlot;
+
+}
+
+
+function applyCustomColor(category, slot, color, input) {
+
+    const stateForCategory = state[category];
+    const accessorySlot = getColorAccessorySlot(category, slot);
+    const currentObject = getLoadedObject(accessorySlot);
+
+
+    stateForCategory[slot] = {
+        name: "Custom Color",
+        model: "",
+        color,
+        price: 0,
+        billable: false
+    };
+
+
+    if (currentObject) {
+        if (
+            category === "funko" &&
+            (accessorySlot === "bottom" || slot === "bottomColor")
+        ) {
+            applyBottomPartColors(currentObject, color);
+        }
+        else {
+            applyColorToModel(currentObject, color, {
+                clearTextureMaps: true,
+                skipMaterialFragments: ["design", "logo", "print"]
+            });
+        }
+    }
+
+
+    input.closest(".custom-color-control").querySelector("output").textContent = color;
+    state.currentCategory = category;
+    updateSectionVisibility();
+    updateSelectedItemsUI();
+    updatePriceDisplay();
+    saveCustomizationSnapshot(false, false);
+
+}
+
+
+function initializeCustomColorPickers() {
+
+    document.querySelectorAll(
+        ".top-color-picker"
+    ).forEach(
+        function(section) {
+            if (section.querySelector(".custom-color-control")) {
+                return;
+            }
+
+
+            const slotCard = section.querySelector("[data-slot]");
+            const slot =
+                (slotCard && slotCard.dataset.slot) ||
+                section.dataset.slot;
+
+            const category =
+                (slotCard && slotCard.dataset.figure) ||
+                section.dataset.figure;
+
+
+            if (!slot || !category) {
+                return;
+            }
+
+
+            const label = document.createElement("label");
+            label.className = "custom-color-control";
+            label.innerHTML = `Custom color <input type="color" value="#ffffff" aria-label="Choose custom ${slot} color"><output>#ffffff</output>`;
+
+
+            const input = label.querySelector("input");
+            input.addEventListener(
+                "input",
+                function() {
+                    applyCustomColor(category, slot, input.value, input);
+                }
+            );
+
+
+            section.appendChild(label);
+        }
+    );
+
+}
+
+
+function syncCustomColorPickers() {
+
+    document.querySelectorAll(
+        ".top-color-picker"
+    ).forEach(
+        function(section) {
+            const slotCard =
+                section.querySelector("[data-slot]");
+
+            const slot =
+                (slotCard && slotCard.dataset.slot) ||
+                section.dataset.slot;
+
+            const category =
+                (slotCard && slotCard.dataset.figure) ||
+                section.dataset.figure;
+
+            const input =
+                section.querySelector(
+                    ".custom-color-control input[type='color']"
+                );
+
+            const output =
+                section.querySelector(
+                    ".custom-color-control output"
+                );
+
+            const savedColor =
+                category && slot && state[category] && state[category][slot]
+                    ? state[category][slot].color
+                    : "";
+
+            if (input && /^#[0-9a-f]{6}$/i.test(savedColor || "")) {
+                input.value = savedColor;
+
+                if (output) {
+                    output.textContent = savedColor;
+                }
+            }
+        }
+    );
+
+}
+
+
+>>>>>>> b623464 (Update project files)
 function getFigureLabel(category) {
 
     if (category === "funko") {
@@ -2147,6 +2791,18 @@ function buildCustomizationSnapshot(isCompleted, isConfirmed) {
     const selectedItems =
         getSelectedItemNames(activeState);
 
+<<<<<<< HEAD
+=======
+    const orderTypeValue =
+        getCommissionOrderTypeValue();
+
+    const bookingDateValue =
+        getCommissionBookingDateValue();
+
+    const estimatedPrice =
+        getCurrentOrderTotal(activeState);
+
+>>>>>>> b623464 (Update project files)
 
     return {
         creationMethod: "create",
@@ -2154,6 +2810,13 @@ function buildCustomizationSnapshot(isCompleted, isConfirmed) {
         customizationConfirmed: Boolean(isConfirmed),
         currentCategory: state.currentCategory,
         figureCategory: getFigureLabel(state.currentCategory),
+<<<<<<< HEAD
+=======
+        orderType: getCommissionOrderTypeLabel(),
+        orderTypeValue: orderTypeValue || "",
+        bookingDate: getCommissionBookingDateLabel(),
+        bookingDateValue: bookingDateValue || "",
+>>>>>>> b623464 (Update project files)
         figureModel: getPrimarySelectionName(activeState),
         skin: activeState.skin ? activeState.skin.name : "",
         hair: activeState.hair ? activeState.hair.name : (activeState.girlHair ? activeState.girlHair.name : (activeState.keychainHair ? activeState.keychainHair.name : "")),
@@ -2163,7 +2826,12 @@ function buildCustomizationSnapshot(isCompleted, isConfirmed) {
         accessories: getAccessoryNames(activeState),
         selectedItems,
         previewImage: canvas ? canvas.toDataURL("image/png") : "",
+<<<<<<< HEAD
         estimatedPrice: getActiveStateTotal(activeState),
+=======
+        estimatedPrice,
+        rushFee: getCommissionRushFee(),
+>>>>>>> b623464 (Update project files)
         clothingColors: collectClothingColors(activeState),
         funko: state.funko,
         hirono: state.hirono,
@@ -2251,6 +2919,23 @@ function restoreCustomizationFromStorage() {
     }
 
 
+<<<<<<< HEAD
+=======
+    const selectedCommissionCategory =
+        getCommissionFigureCategoryValue();
+
+
+    // A new category selected on the commission page must not be replaced
+    // by an older customization saved for another category.
+    if (
+        selectedCommissionCategory &&
+        selectedCommissionCategory !== saved.currentCategory
+    ) {
+        return false;
+    }
+
+
+>>>>>>> b623464 (Update project files)
     Object.keys(
         categoryPanels
     ).forEach(
@@ -2277,6 +2962,12 @@ function restoreCustomizationFromStorage() {
         null;
 
 
+<<<<<<< HEAD
+=======
+    syncCustomColorPickers();
+
+
+>>>>>>> b623464 (Update project files)
     if (!state.currentCategory) {
         return true;
     }
@@ -2509,7 +3200,11 @@ async function renderCurrentCategory() {
 
 
     setFigurePromptVisible(
+<<<<<<< HEAD
         false
+=======
+        true
+>>>>>>> b623464 (Update project files)
     );
 
 
@@ -2538,6 +3233,13 @@ async function renderCurrentCategory() {
         // an optional accessory asset cannot be loaded.
         frameFigure();
 
+<<<<<<< HEAD
+=======
+        setFigurePromptVisible(
+            false
+        );
+
+>>>>>>> b623464 (Update project files)
 
         if (activeState.skin) {
             applySkinColor(
@@ -2552,7 +3254,11 @@ async function renderCurrentCategory() {
             )
         ) {
             applySkinColor(
+<<<<<<< HEAD
                 "#E7D2C0"
+=======
+                "#F2CCB7"
+>>>>>>> b623464 (Update project files)
             );
         }
 
@@ -2630,6 +3336,13 @@ async function renderCurrentCategory() {
             error
         );
 
+<<<<<<< HEAD
+=======
+        setFigurePromptVisible(
+            true
+        );
+
+>>>>>>> b623464 (Update project files)
     }
 
 
@@ -2646,10 +3359,31 @@ function selectCategory(category) {
         return;
     }
 
+<<<<<<< HEAD
+=======
+    try {
+        localStorage.setItem(
+            COMMISSION_FIGURE_CATEGORY_KEY,
+            category
+        );
+    }
+    catch (error) {
+        console.warn(
+            "Unable to persist figure category:",
+            error
+        );
+    }
+
+>>>>>>> b623464 (Update project files)
 
     state.currentCategory =
         category;
 
+<<<<<<< HEAD
+=======
+    syncCustomColorPickers();
+
+>>>>>>> b623464 (Update project files)
 
     styleCards.forEach(
         function(card) {
@@ -2720,6 +3454,11 @@ function selectModel(card) {
         category;
 
 
+<<<<<<< HEAD
+=======
+    syncCustomColorPickers();
+
+>>>>>>> b623464 (Update project files)
     updateSectionVisibility();
     updateSelectedItemsUI();
     updatePriceDisplay();
@@ -3052,6 +3791,11 @@ function handleCardClick(card) {
 
 function initializeInteractions() {
 
+<<<<<<< HEAD
+=======
+    initializeCustomColorPickers();
+
+>>>>>>> b623464 (Update project files)
     styleCards.forEach(
         function(card) {
             card.addEventListener(
@@ -3134,6 +3878,7 @@ function initializeInteractions() {
 
                 saveCustomizationSnapshot(
                     true,
+<<<<<<< HEAD
                     true
                 );
 
@@ -3154,6 +3899,13 @@ function initializeInteractions() {
 
                 window.location.href =
                     "../commission.html";
+=======
+                    false
+                );
+
+                window.location.href =
+                    "final-preview.html";
+>>>>>>> b623464 (Update project files)
 
             }
         );
@@ -3165,6 +3917,12 @@ function initializeInteractions() {
 function init3D() {
 
     if (!canvas) {
+<<<<<<< HEAD
+=======
+        console.error(
+            "[Figurify 3D] Canvas #figureViewer was not found."
+        );
+>>>>>>> b623464 (Update project files)
         return;
     }
 
@@ -3184,6 +3942,7 @@ function init3D() {
         4.5
     );
 
+<<<<<<< HEAD
     renderer = new THREE.WebGLRenderer(
         {
             canvas,
@@ -3191,6 +3950,27 @@ function init3D() {
             antialias: true
         }
     );
+=======
+    try {
+        renderer = new THREE.WebGLRenderer(
+            {
+                canvas,
+                alpha: true,
+                antialias: true
+            }
+        );
+    }
+    catch (error) {
+        console.error(
+            "[Figurify 3D] WebGL initialization failed.",
+            error
+        );
+        return;
+    }
+
+    renderer.outputColorSpace =
+        THREE.SRGBColorSpace;
+>>>>>>> b623464 (Update project files)
 
     renderer.setPixelRatio(
         Math.min(
@@ -3270,6 +4050,34 @@ function init3D() {
     );
 
     resize3D();
+<<<<<<< HEAD
+=======
+
+    if (figureResizeObserver) {
+        figureResizeObserver.disconnect();
+    }
+
+    if (
+        figureArea &&
+        typeof ResizeObserver !== "undefined"
+    ) {
+        figureResizeObserver =
+            new ResizeObserver(
+                function() {
+                    resize3D();
+                }
+            );
+
+        figureResizeObserver.observe(
+            figureArea
+        );
+    }
+
+    requestAnimationFrame(
+        resize3D
+    );
+
+>>>>>>> b623464 (Update project files)
     window.addEventListener(
         "resize",
         resize3D
@@ -3320,6 +4128,12 @@ init3D();
 const restoredCustomization =
     restoreCustomizationFromStorage();
 
+<<<<<<< HEAD
+=======
+const storedCommissionCategory =
+    getCommissionFigureCategoryValue();
+
+>>>>>>> b623464 (Update project files)
 
 if (
     isPreviewPage &&
@@ -3335,6 +4149,7 @@ else {
 
     if (!restoredCustomization) {
 
+<<<<<<< HEAD
         const defaultFunkoCard =
             document.querySelector(
                 '[data-figure="funko"][data-slot="model"][data-name="Funko Pop-Girl"]'
@@ -3345,6 +4160,43 @@ else {
             selectModel(
                 defaultFunkoCard
             );
+=======
+        if (
+            storedCommissionCategory &&
+            categoryPanels[storedCommissionCategory]
+        ) {
+            selectCategory(
+                storedCommissionCategory
+            );
+
+            // Start with the first model for the category selected on the
+            // commission page so the 3D preview is populated immediately.
+            const defaultModelCard =
+                document.querySelector(
+                    `[data-figure="${storedCommissionCategory}"][data-slot="model"]`
+                );
+
+            if (defaultModelCard) {
+                selectModel(
+                    defaultModelCard
+                );
+            }
+        }
+        else {
+
+            const defaultFunkoCard =
+                document.querySelector(
+                    '[data-figure="funko"][data-slot="model"][data-name="Funko Pop-Girl"]'
+                );
+
+
+            if (defaultFunkoCard) {
+                selectModel(
+                    defaultFunkoCard
+                );
+            }
+
+>>>>>>> b623464 (Update project files)
         }
 
     }
@@ -3352,4 +4204,7 @@ else {
     animate();
 
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> b623464 (Update project files)

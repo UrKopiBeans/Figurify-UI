@@ -256,6 +256,70 @@ body {
     cursor: grabbing;
 }
 
+<<<<<<< HEAD
+=======
+
+.preview-summary {
+    margin-top: 18px;
+    padding: 18px;
+    border: 1px solid #efd2e3;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fff7fb, #f4edff);
+}
+
+
+.summary-kicker {
+    color: #b65a87;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+}
+
+
+.preview-summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px dashed rgba(162, 74, 120, 0.18);
+    color: #8a5870;
+    font-size: 12px;
+}
+
+
+.preview-summary-row:last-of-type {
+    border-bottom: 0;
+}
+
+
+.preview-summary-row strong {
+    color: #7b355b;
+    text-align: right;
+}
+
+
+.summary-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+
+.summary-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .84);
+    border: 1px solid #e8c9db;
+    color: #8d526f;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+>>>>>>> b623464 (Update project files)
 /* =====================================================
    SELECTED ITEMS
 ===================================================== */
@@ -965,8 +1029,13 @@ body {
 }
 
 .skin-card {
+<<<<<<< HEAD
     width: 145px;
     min-height: 125px;
+=======
+    width: 100px;
+    min-height: 92px;
+>>>>>>> b623464 (Update project files)
 
     border: 2px solid #f1d5e5;
 
@@ -974,7 +1043,11 @@ body {
 
     border-radius: 15px;
 
+<<<<<<< HEAD
     padding: 14px 10px;
+=======
+    padding: 10px;
+>>>>>>> b623464 (Update project files)
 
     cursor: pointer;
 
@@ -1007,7 +1080,11 @@ body {
 
     display: block;
 
+<<<<<<< HEAD
     margin: 0 auto 10px;
+=======
+    margin: 0 auto;
+>>>>>>> b623464 (Update project files)
 
     border-radius: 50%;
 
@@ -1017,6 +1094,7 @@ body {
         inset 0 2px 5px rgba(255, 255, 255, 0.35);
 }
 
+<<<<<<< HEAD
 .skin-light {
     background: #E7D2C0;
 }
@@ -1033,6 +1111,8 @@ body {
     background: #6B5A55;
 }
 
+=======
+>>>>>>> b623464 (Update project files)
 .skin-name {
     display: block;
 
@@ -1041,6 +1121,81 @@ body {
     font-weight: bold;
 }
 
+<<<<<<< HEAD
+=======
+/* The model and skin controls share the first row on larger screens. */
+#funkoModelSection:not([hidden]),
+#funkoSkinSection:not([hidden]),
+#hironoModelSection:not([hidden]),
+#hironoSkinSection:not([hidden]) {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(50% - 12px);
+}
+
+#funkoModelSection:not([hidden]) .figure-model-card,
+#hironoModelSection:not([hidden]) .figure-model-card {
+    width: calc(50% - 10px);
+}
+
+#funkoSkinSection:not([hidden]) .skin-card,
+#hironoSkinSection:not([hidden]) .skin-card {
+    width: calc(50% - 10px);
+}
+
+.skin-light {
+    background: #F2CCB7;
+}
+
+.skin-dark {
+    background: #D19477;
+}
+
+.top-color-card {
+    display: none;
+}
+
+.custom-color-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 10px 12px;
+    border: 1px dashed #e3b8d0;
+    border-radius: 14px;
+    color: #7d4a66;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.custom-color-control input[type="color"] {
+    width: 42px;
+    height: 32px;
+    padding: 2px;
+    border: 1px solid #e3b8d0;
+    border-radius: 9px;
+    background: #fff;
+    cursor: pointer;
+}
+
+@media (max-width: 500px) {
+    #funkoModelSection:not([hidden]),
+    #funkoSkinSection:not([hidden]),
+    #hironoModelSection:not([hidden]),
+    #hironoSkinSection:not([hidden]) {
+        display: block;
+        width: 100%;
+    }
+
+    #funkoModelSection:not([hidden]) .figure-model-card,
+    #hironoModelSection:not([hidden]) .figure-model-card,
+    #funkoSkinSection:not([hidden]) .skin-card,
+    #hironoSkinSection:not([hidden]) .skin-card {
+        width: 145px;
+    }
+}
+
+>>>>>>> b623464 (Update project files)
 
 /* =====================================================
    DRESS UP THEME OVERRIDES
@@ -1165,11 +1320,23 @@ body {
 
 .customizer {
     width: min(1280px, 94%);
+<<<<<<< HEAD
     margin: 34px auto 72px;
     display: grid;
     grid-template-columns: minmax(320px, 420px) 1fr;
     gap: 24px;
     align-items: start;
+=======
+    margin: 24px auto 0;
+    display: grid;
+    grid-template-columns: minmax(320px, 420px) 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 24px;
+    align-items: stretch;
+    height: calc(100vh - 94px);
+    max-height: calc(100vh - 94px);
+    overflow: hidden;
+>>>>>>> b623464 (Update project files)
 }
 
 .back-link {
@@ -1189,11 +1356,69 @@ body {
 
 .preview-container {
     padding: 22px;
+<<<<<<< HEAD
     top: 18px;
+=======
+    top: 88px;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    align-self: stretch;
+    scrollbar-gutter: stable;
+}
+
+.preview-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.preview-container::-webkit-scrollbar-track {
+    background: #fff1f8;
+    border-radius: 999px;
+}
+
+.preview-container::-webkit-scrollbar-thumb {
+    background: #e6a4c8;
+    border: 2px solid #fff1f8;
+    border-radius: 999px;
+}
+
+.preview-container {
+    scrollbar-color: #e6a4c8 #fff1f8;
+    scrollbar-width: thin;
+>>>>>>> b623464 (Update project files)
 }
 
 .options-container {
     padding: 28px;
+<<<<<<< HEAD
+=======
+    min-height: 0;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+
+.options-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.options-container::-webkit-scrollbar-track {
+    background: #fff1f8;
+    border-radius: 999px;
+}
+
+.options-container::-webkit-scrollbar-thumb {
+    background: #e6a4c8;
+    border: 2px solid #fff1f8;
+    border-radius: 999px;
+}
+
+.options-container {
+    scrollbar-color: #e6a4c8 #fff1f8;
+    scrollbar-width: thin;
+>>>>>>> b623464 (Update project files)
 }
 
 .preview-header h2,
@@ -1336,11 +1561,32 @@ body {
 
     .customizer {
         grid-template-columns: 1fr;
+<<<<<<< HEAD
+=======
+        grid-template-rows: none;
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        margin: 24px auto 72px;
+>>>>>>> b623464 (Update project files)
     }
 
     .preview-container {
         position: relative;
         top: 0;
+<<<<<<< HEAD
+=======
+        align-self: auto;
+        height: auto;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .options-container {
+        height: auto;
+        overflow: visible;
+        overscroll-behavior: auto;
+>>>>>>> b623464 (Update project files)
     }
 }
 
