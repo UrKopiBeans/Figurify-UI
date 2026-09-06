@@ -21,11 +21,8 @@ let quotationPrice = 0;
 const CUSTOMIZATION_STORAGE_KEY = "figurifyCustomization";
 const COMMISSION_RETURN_KEY = "figurifyCommissionReturn";
 const COMMISSION_ORDER_TYPE_KEY = "figurifyCommissionOrderType";
-<<<<<<< HEAD
-=======
 const COMMISSION_BOOKING_DATE_KEY = "figurifyCommissionBookingDate";
 const COMMISSION_FIGURE_CATEGORY_KEY = "figurifyCommissionFigureCategory";
->>>>>>> b623464 (Update project files)
 const COMMISSION_DESIGN_DETAILS_KEY = "figurifyCommissionDesignDetails";
 
 let designDetails = {
@@ -70,8 +67,6 @@ function showSection(sectionId) {
 }
 
 
-<<<<<<< HEAD
-=======
 function showCreateStyleFlow(scrollToTop = true) {
 
     document
@@ -102,7 +97,6 @@ function showCreateStyleFlow(scrollToTop = true) {
 }
 
 
->>>>>>> b623464 (Update project files)
 /* =========================================================
    HELPER — MONEY
 ========================================================= */
@@ -187,8 +181,6 @@ function getCustomizationItems(data) {
 
 }
 
-<<<<<<< HEAD
-=======
 function formatBookingDate(value) {
 
     if (!value) {
@@ -307,7 +299,6 @@ function getCommissionOrderTypeLabel() {
 
 }
 
->>>>>>> b623464 (Update project files)
 function isHironoStandee(data) {
     return String(data?.figureCategory || "").toLowerCase().includes("hirono") &&
         !String(data?.figureModel || "").toLowerCase().includes("keychain");
@@ -395,29 +386,10 @@ function renderDesignDetails() {
 }
 
 function renderCustomerOrderSummary() {
-<<<<<<< HEAD
-    restoreDesignDetails();
-
-=======
->>>>>>> b623464 (Update project files)
     const data = getCustomizationState();
     const tags = document.getElementById("customerSummaryTags");
     const preview = document.getElementById("customerSummaryPreview");
     const total = document.getElementById("customerSummaryTotal");
-<<<<<<< HEAD
-    const summarySize = document.getElementById("customerSummarySize");
-    const summaryBox = document.getElementById("customerSummaryBox");
-    if (!data || !tags) return;
-    tags.innerHTML = "";
-    [
-        data.figureCategory,
-        data.figureModel,
-        ...(data.selectedItems || []) ,
-        designDetails.size,
-        designDetails.box === "with" ? `With box${designDetails.boxName ? ` (${designDetails.boxName})` : ""}` : "Without box",
-        ...(isHironoStandee(data) ? [designDetails.photoCard === "with" ? "With photo card" : "Without photo card"] : [])
-    ].filter(Boolean).forEach(value => {
-=======
     const category = document.getElementById("customerSummaryCategory");
     const orderTypeLabel = document.getElementById("customerSummaryOrderType");
     const bookingDate = document.getElementById("customerSummaryBookingDate");
@@ -439,29 +411,16 @@ function renderCustomerOrderSummary() {
             : getCustomizationItems(data).map(item => item.value);
 
     selectedItems.filter(Boolean).forEach(value => {
->>>>>>> b623464 (Update project files)
         const chip = document.createElement("span");
         chip.className = "summary-chip";
         chip.textContent = value;
         tags.appendChild(chip);
     });
-<<<<<<< HEAD
-=======
 
->>>>>>> b623464 (Update project files)
     if (preview && data.previewImage) {
         preview.src = data.previewImage;
         preview.classList.remove("hidden");
     }
-<<<<<<< HEAD
-    if (summarySize) summarySize.textContent = designDetails.size || "3 inches";
-    if (summaryBox) {
-        summaryBox.textContent = designDetails.box === "with"
-            ? `With box${designDetails.boxName ? ` (${designDetails.boxName})` : ""}`
-            : "Without box";
-    }
-    if (total) total.textContent = `Estimated total: ${formatPrice(designDetails.total)}`;
-=======
 
     if (category) {
         category.textContent = data.figureCategory || "Not selected";
@@ -476,7 +435,6 @@ function renderCustomerOrderSummary() {
     }
 
     if (total) total.textContent = formatMoney(Number(data.estimatedPrice || 0));
->>>>>>> b623464 (Update project files)
 }
 
 function openDesignDetails() {
@@ -606,9 +564,6 @@ function renderCustomizationSummary() {
 }
 
 
-<<<<<<< HEAD
-function openDressUpCustomizer() {
-=======
 function selectFigureCategory(category) {
 
     const label = getFigureCategoryLabel(category);
@@ -690,7 +645,6 @@ function openDressUpCustomizer(category) {
         COMMISSION_FIGURE_CATEGORY_KEY,
         figureCategory
     );
->>>>>>> b623464 (Update project files)
 
     window.location.href = "DressUp/dressup.html";
 
@@ -797,25 +751,14 @@ function selectCreationMethod(method) {
     /* =====================================================
        CREATE & STYLE
 
-<<<<<<< HEAD
-       THIS IS THE ONLY FLOW WE ARE CHANGING.
-
-       Create & Style now opens the Dress-Up
-       customizer before the final preview and
-       the existing order flow.
-=======
        This now opens the new Create & Style
        schedule flow before the Dress-Up customizer.
->>>>>>> b623464 (Update project files)
     ===================================================== */
 
     if (method === "create") {
 
         creationMethod = "create";
 
-<<<<<<< HEAD
-        openDressUpCustomizer();
-=======
         orderType = "";
         selectedDate = null;
 
@@ -834,7 +777,6 @@ function selectCreationMethod(method) {
         updateOrderTypeInstruction();
         updateCalendarExtrasVisibility();
         renderCustomizationSummary();
->>>>>>> b623464 (Update project files)
 
         return;
 
@@ -891,9 +833,6 @@ function continueFromCreation(method) {
 
         creationMethod = "create";
 
-<<<<<<< HEAD
-        openDressUpCustomizer();
-=======
         showSection(
             "orderTypeSection"
         );
@@ -904,7 +843,6 @@ function continueFromCreation(method) {
         restoreFigureCategorySelection();
         updateCalendarExtrasVisibility();
         renderCustomizationSummary();
->>>>>>> b623464 (Update project files)
 
         return;
 
@@ -952,10 +890,7 @@ function continueFromReference() {
     updateOrderTypeInstruction();
 
     restoreOrderTypeSelection();
-<<<<<<< HEAD
-=======
     updateCalendarExtrasVisibility();
->>>>>>> b623464 (Update project files)
 
     renderCustomizationSummary();
 
@@ -970,23 +905,17 @@ function continueFromReference() {
 function selectOrderType(type) {
 
     orderType = type;
-<<<<<<< HEAD
-=======
     selectedDate = null;
->>>>>>> b623464 (Update project files)
 
     try {
         localStorage.setItem(
             COMMISSION_ORDER_TYPE_KEY,
             type
         );
-<<<<<<< HEAD
-=======
 
         localStorage.removeItem(
             COMMISSION_BOOKING_DATE_KEY
         );
->>>>>>> b623464 (Update project files)
     }
     catch (error) {
         console.warn(
@@ -1067,17 +996,6 @@ function selectOrderType(type) {
         the order type.
     */
 
-<<<<<<< HEAD
-    setTimeout(() => {
-
-        showSection(
-            "calendarSection"
-        );
-
-        initializeCalendar();
-
-    }, 250);
-=======
     if (creationMethod === "create") {
         showCreateStyleFlow(false);
 
@@ -1097,7 +1015,6 @@ function selectOrderType(type) {
     updateCalendarMessage(
         "Choose an available booking date."
     );
->>>>>>> b623464 (Update project files)
 
 }
 
@@ -1153,13 +1070,6 @@ function updateOrderTypeInstruction() {
 function initializeCalendar() {
 
     /*
-<<<<<<< HEAD
-        Start calendar on current month.
-    */
-
-    currentCalendarDate =
-        new Date();
-=======
         Restore the saved booking month when
         available, otherwise start on the
         current month.
@@ -1178,7 +1088,6 @@ function initializeCalendar() {
         currentCalendarDate =
             new Date();
     }
->>>>>>> b623464 (Update project files)
 
 
     currentCalendarDate.setDate(1);
@@ -1189,8 +1098,6 @@ function initializeCalendar() {
 }
 
 
-<<<<<<< HEAD
-=======
 function restoreBookingDateSelection() {
 
     const savedDate =
@@ -1300,7 +1207,6 @@ function updateCalendarExtrasVisibility() {
 }
 
 
->>>>>>> b623464 (Update project files)
 /* =========================================================
    CALENDAR RENDER
 ========================================================= */
@@ -1663,14 +1569,11 @@ function selectCalendarDate(date) {
         0
     );
 
-<<<<<<< HEAD
-=======
     saveCommissionValue(
         COMMISSION_BOOKING_DATE_KEY,
         formatDateForStorage(selectedDate)
     );
 
->>>>>>> b623464 (Update project files)
 
     renderCalendar();
 
@@ -1700,18 +1603,6 @@ function selectCalendarDate(date) {
     }
 
 
-<<<<<<< HEAD
-    /*
-        Continue automatically
-        after selecting a valid date.
-    */
-
-    setTimeout(() => {
-
-        continueAfterCalendar();
-
-    }, 300);
-=======
     if (creationMethod === "reference") {
 
         setTimeout(() => {
@@ -1736,7 +1627,6 @@ function selectCalendarDate(date) {
         // Reveal the notes and figure category after a valid date is chosen.
         updateCalendarExtrasVisibility();
     }
->>>>>>> b623464 (Update project files)
 
 }
 
@@ -1802,32 +1692,6 @@ function continueAfterCalendar() {
 }
 
 function updateCustomerPaymentInstruction() {
-<<<<<<< HEAD
-    restoreDesignDetails();
-
-    const instruction = document.getElementById("paymentInstruction");
-    if (instruction) {
-        instruction.textContent = `Estimated total: ${formatPrice(designDetails.total)}. Please send your payment and upload your receipt.`;
-    }
-}
-
-function addOrderNotification(message, stage = "For approval") {
-    if (window.ClayStuffNotifications) {
-        window.ClayStuffNotifications.add({
-            message,
-            stage
-        });
-    }
-}
-
-function renderNotifications() {
-    if (window.ClayStuffNotifications) {
-        window.ClayStuffNotifications.refresh();
-    }
-}
-
-
-=======
     const instruction = document.getElementById("paymentInstruction");
     const data = getCustomizationState();
     if (instruction) {
@@ -1836,7 +1700,6 @@ function renderNotifications() {
     }
 }
 
->>>>>>> b623464 (Update project files)
 /* =========================================================
    PREPARE SCHEDULE INFORMATION
 ========================================================= */
@@ -2508,11 +2371,6 @@ if (customerForm) {
                 );
 
 
-<<<<<<< HEAD
-            addOrderNotification("Your proof of payment was received and is pending staff confirmation.");
-            renderNotifications();
-=======
->>>>>>> b623464 (Update project files)
             renderSubmittedOrderDetails();
 
             if (creationMethod === "create") {
@@ -2533,19 +2391,12 @@ if (customerForm) {
 function confirmPaymentDemo() {
     const status = document.getElementById("paymentVerificationStatus");
     const successMessage = document.getElementById("successMessage");
-<<<<<<< HEAD
-    if (status) status.textContent = "PAYMENT CONFIRMED BY STAFF";
-    if (successMessage) successMessage.textContent = "Your Create & Style order has been submitted successfully after staff confirmed your payment.";
-    addOrderNotification("Staff confirmed your payment and your order was submitted.", "Processing");
-    renderNotifications();
-=======
     const successStatus = document.getElementById("successStatus");
     const trackingMessage = document.getElementById("trackingOrderName");
     if (status) status.textContent = "ORDER CONFIRMED BY STAFF";
     if (successMessage) successMessage.textContent = "Your final details and payment have been confirmed by staff.";
     if (successStatus) successStatus.textContent = "STAFF CONFIRMED";
     if (trackingMessage) trackingMessage.textContent = "Your order has been confirmed and is ready for tracking.";
->>>>>>> b623464 (Update project files)
     showSection("successSection");
 }
 
@@ -2557,12 +2408,8 @@ function renderSubmittedOrderDetails() {
     const data = getCustomizationState();
     if (!element || !data) return;
     const shipping = document.getElementById("shippingMethod")?.value || "Not selected";
-<<<<<<< HEAD
-    element.textContent = `${data.figureCategory || "Figure"} - ${data.figureModel || "Customized design"} | ${designDetails.size} | ${designDetails.box === "with" ? "With box" : "Without box"} | ${shipping} | ${formatPrice(designDetails.total)}`;
-=======
     const bookingDate = getSelectedBookingDateLabel();
     element.textContent = `${data.figureCategory || "Figure"} - ${data.figureModel || "Customized design"} | ${getCommissionOrderTypeLabel()} | ${bookingDate} | ${shipping} | ${formatMoney(Number(data.estimatedPrice || 0))}`;
->>>>>>> b623464 (Update project files)
 }
 
 const trackOrderBtn = document.getElementById("trackOrderBtn");
@@ -2582,30 +2429,15 @@ document.addEventListener(
                 COMMISSION_RETURN_KEY
             );
 
-<<<<<<< HEAD
-
-        if (returnStep === "designDetailsSection" || returnStep === "orderTypeSection") {
-=======
         if (
             returnStep === "customerSection"
         ) {
->>>>>>> b623464 (Update project files)
 
             localStorage.removeItem(
                 COMMISSION_RETURN_KEY
             );
 
             creationMethod = "create";
-<<<<<<< HEAD
-            if (returnStep === "designDetailsSection") {
-                openDesignDetails();
-            } else {
-                showSection("orderTypeSection");
-                updateOrderTypeInstruction();
-                restoreOrderTypeSelection();
-                renderCustomizationSummary();
-            }
-=======
             showSection("customerSection");
             restoreOrderTypeSelection();
             restoreBookingDateSelection();
@@ -2613,19 +2445,15 @@ document.addEventListener(
             updateCalendarExtrasVisibility();
             renderCustomerOrderSummary();
             updateCustomerPaymentInstruction();
->>>>>>> b623464 (Update project files)
 
         }
         else {
 
-<<<<<<< HEAD
-=======
             localStorage.removeItem(
                 COMMISSION_RETURN_KEY
             );
 
             creationMethod = "";
->>>>>>> b623464 (Update project files)
             /*
                 Keep only the first section
                 visible when the page loads.
@@ -2666,10 +2494,5 @@ document.addEventListener(
         }
 
         restoreDesignDetails();
-<<<<<<< HEAD
-        renderNotifications();
-
-=======
->>>>>>> b623464 (Update project files)
     }
 );

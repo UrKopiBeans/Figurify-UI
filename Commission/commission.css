@@ -498,8 +498,6 @@ button {
 }
 
 
-<<<<<<< HEAD
-=======
 .order-card::after {
     content: "✓";
     position: absolute;
@@ -527,7 +525,6 @@ button {
 }
 
 
->>>>>>> b623464 (Update project files)
 .card-decoration {
     position: absolute;
 
@@ -817,8 +814,6 @@ button {
 }
 
 
-<<<<<<< HEAD
-=======
 .calendar-note {
     margin-top: 18px;
     padding: 16px 18px;
@@ -934,7 +929,6 @@ button {
 }
 
 
->>>>>>> b623464 (Update project files)
 /* =====================================================
    METHOD
 ===================================================== */
@@ -1986,13 +1980,10 @@ footer {
         grid-template-columns: 1fr;
     }
 
-<<<<<<< HEAD
-=======
     .figure-category-grid {
         grid-template-columns: 1fr;
     }
 
->>>>>>> b623464 (Update project files)
     .method-picture {
         width: 100px;
     }
@@ -2055,8 +2046,6 @@ footer {
         font-size: 11px;
     }
 
-<<<<<<< HEAD
-=======
     .figure-category-card {
         min-height: 160px;
     }
@@ -2065,7 +2054,6 @@ footer {
         height: 118px;
     }
 
->>>>>>> b623464 (Update project files)
     .footer-links {
         grid-template-columns: 1fr;
     }

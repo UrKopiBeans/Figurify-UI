@@ -9,20 +9,13 @@
 }
 
 .preview-stage .preview-header {
-<<<<<<< HEAD
-=======
     display: block;
->>>>>>> b623464 (Update project files)
     margin-bottom: 16px;
 }
 
 .preview-header h1 {
-<<<<<<< HEAD
-    margin: 8px 0 0;
-=======
     margin: 8px auto 0;
     max-width: 520px;
->>>>>>> b623464 (Update project files)
     color: #943765;
     font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(2.2rem, 5vw, 4rem);
@@ -39,19 +32,6 @@
 
 .final-review-page .preview-container {
     top: 0;
-<<<<<<< HEAD
-    padding: 30px;
-    text-align: center;
-}
-
-.final-review-page .figure-area {
-    min-height: 520px;
-    margin-top: 24px;
-}
-
-.final-review-page .figure-viewer {
-    height: 520px;
-=======
     padding: 42px;
     text-align: center;
     border: 1px solid #efc8df;
@@ -69,7 +49,6 @@
 
 .final-review-page .figure-viewer {
     height: 500px;
->>>>>>> b623464 (Update project files)
 }
 
 .eyebrow {
@@ -87,10 +66,7 @@
     border: 2px solid #ead7e5;
     background: linear-gradient(145deg, #fff8fc, #f4ecff);
     box-shadow: 0 5px 0 rgba(183, 131, 165, 0.12);
-<<<<<<< HEAD
-=======
     text-align: left;
->>>>>>> b623464 (Update project files)
 }
 
 .review-row {
@@ -146,8 +122,6 @@
 .preview-actions .main-button {
     flex: 1 1 180px;
     margin-top: 0;
-<<<<<<< HEAD
-=======
     min-height: 52px;
     padding: 14px 24px;
     border: 0;
@@ -178,7 +152,6 @@
 .preview-actions .secondary-button:active,
 .preview-actions .main-button:active {
     transform: translateY(2px);
->>>>>>> b623464 (Update project files)
 }
 
 @media (max-width: 900px) {
@@ -187,22 +160,13 @@
     }
 
     .final-review-page .preview-container {
-<<<<<<< HEAD
-        padding: 20px;
-=======
         padding: 22px 16px 26px;
->>>>>>> b623464 (Update project files)
     }
 
     .final-review-page .figure-area,
     .final-review-page .figure-viewer {
-<<<<<<< HEAD
-        min-height: 420px;
-        height: 420px;
-=======
         min-height: 390px;
         height: 390px;
->>>>>>> b623464 (Update project files)
     }
 
     .preview-actions .secondary-button,

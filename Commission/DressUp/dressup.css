@@ -256,8 +256,6 @@ body {
     cursor: grabbing;
 }
 
-<<<<<<< HEAD
-=======
 
 .preview-summary {
     margin-top: 18px;
@@ -319,7 +317,6 @@ body {
     font-weight: 700;
 }
 
->>>>>>> b623464 (Update project files)
 /* =====================================================
    SELECTED ITEMS
 ===================================================== */
@@ -1029,13 +1026,8 @@ body {
 }
 
 .skin-card {
-<<<<<<< HEAD
-    width: 145px;
-    min-height: 125px;
-=======
     width: 100px;
     min-height: 92px;
->>>>>>> b623464 (Update project files)
 
     border: 2px solid #f1d5e5;
 
@@ -1043,11 +1035,7 @@ body {
 
     border-radius: 15px;
 
-<<<<<<< HEAD
-    padding: 14px 10px;
-=======
     padding: 10px;
->>>>>>> b623464 (Update project files)
 
     cursor: pointer;
 
@@ -1080,11 +1068,7 @@ body {
 
     display: block;
 
-<<<<<<< HEAD
-    margin: 0 auto 10px;
-=======
     margin: 0 auto;
->>>>>>> b623464 (Update project files)
 
     border-radius: 50%;
 
@@ -1094,25 +1078,6 @@ body {
         inset 0 2px 5px rgba(255, 255, 255, 0.35);
 }
 
-<<<<<<< HEAD
-.skin-light {
-    background: #E7D2C0;
-}
-
-.skin-tan {
-    background: #B9957D;
-}
-
-.skin-brown {
-    background: #876545;
-}
-
-.skin-deep {
-    background: #6B5A55;
-}
-
-=======
->>>>>>> b623464 (Update project files)
 .skin-name {
     display: block;
 
@@ -1121,8 +1086,6 @@ body {
     font-weight: bold;
 }
 
-<<<<<<< HEAD
-=======
 /* The model and skin controls share the first row on larger screens. */
 #funkoModelSection:not([hidden]),
 #funkoSkinSection:not([hidden]),
@@ -1195,7 +1158,6 @@ body {
     }
 }
 
->>>>>>> b623464 (Update project files)
 
 /* =====================================================
    DRESS UP THEME OVERRIDES
@@ -1320,13 +1282,6 @@ body {
 
 .customizer {
     width: min(1280px, 94%);
-<<<<<<< HEAD
-    margin: 34px auto 72px;
-    display: grid;
-    grid-template-columns: minmax(320px, 420px) 1fr;
-    gap: 24px;
-    align-items: start;
-=======
     margin: 24px auto 0;
     display: grid;
     grid-template-columns: minmax(320px, 420px) 1fr;
@@ -1336,7 +1291,6 @@ body {
     height: calc(100vh - 94px);
     max-height: calc(100vh - 94px);
     overflow: hidden;
->>>>>>> b623464 (Update project files)
 }
 
 .back-link {
@@ -1356,9 +1310,6 @@ body {
 
 .preview-container {
     padding: 22px;
-<<<<<<< HEAD
-    top: 18px;
-=======
     top: 88px;
     height: 100%;
     max-height: 100%;
@@ -1386,13 +1337,10 @@ body {
 .preview-container {
     scrollbar-color: #e6a4c8 #fff1f8;
     scrollbar-width: thin;
->>>>>>> b623464 (Update project files)
 }
 
 .options-container {
     padding: 28px;
-<<<<<<< HEAD
-=======
     min-height: 0;
     height: 100%;
     overflow-y: auto;
@@ -1418,7 +1366,6 @@ body {
 .options-container {
     scrollbar-color: #e6a4c8 #fff1f8;
     scrollbar-width: thin;
->>>>>>> b623464 (Update project files)
 }
 
 .preview-header h2,
@@ -1561,21 +1508,16 @@ body {
 
     .customizer {
         grid-template-columns: 1fr;
-<<<<<<< HEAD
-=======
         grid-template-rows: none;
         height: auto;
         max-height: none;
         overflow: visible;
         margin: 24px auto 72px;
->>>>>>> b623464 (Update project files)
     }
 
     .preview-container {
         position: relative;
         top: 0;
-<<<<<<< HEAD
-=======
         align-self: auto;
         height: auto;
         max-height: none;
@@ -1586,7 +1528,6 @@ body {
         height: auto;
         overflow: visible;
         overscroll-behavior: auto;
->>>>>>> b623464 (Update project files)
     }
 }
 
