@@ -705,6 +705,138 @@ body {
    CONTINUE BUTTON
 ===================================================== */
 
+.product-details-panel {
+    margin-top: 28px;
+    padding: 22px;
+    border: 1px dashed #e49ec3;
+    border-radius: 22px;
+    background: linear-gradient(180deg, #fff8fc 0%, #f8efff 100%);
+}
+
+.product-details-panel .section-title {
+    margin-bottom: 18px;
+}
+
+.details-kicker {
+    color: #bd5c8d;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.product-detail-group {
+    margin-top: 18px;
+}
+
+.detail-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #9b3f72;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.detail-label small,
+.detail-hint {
+    color: #a5748e;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.size-choice-grid,
+.box-choice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.box-choice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-choice-card {
+    min-height: 58px;
+    padding: 12px;
+    border: 1px solid #e8c9db;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .82);
+    color: #8c3764;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.detail-choice-card:hover,
+.detail-choice-card.selected {
+    border-color: #df65a6;
+    background: #ffe4f2;
+    box-shadow: 0 0 0 3px #f8c5df;
+}
+
+.detail-choice-card span {
+    display: block;
+    margin-top: 3px;
+    color: #a05b7f;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.product-detail-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e8c9db;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .9);
+    color: #75445e;
+    outline: none;
+}
+
+.product-detail-input:focus {
+    border-color: #df65a6;
+    box-shadow: 0 0 0 3px #f8c5df;
+}
+
+.detail-hint {
+    display: block;
+    margin-top: 5px;
+}
+
+.box-detail-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.box-detail-fields label:last-child {
+    grid-column: 1 / -1;
+}
+
+#hironoAddonGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#hironoBoxFields label:nth-child(3) {
+    grid-column: 1 / -1;
+}
+
+#hironoBoxFields label:last-child {
+    grid-column: auto;
+}
+
+.product-detail-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #ecd6e3;
+    color: #8c3764;
+    font-size: 13px;
+}
+
+.product-detail-total strong {
+    color: #bd5c8d;
+}
+
 .continue-btn {
 
     width: 100%;
@@ -1026,16 +1158,16 @@ body {
 }
 
 .skin-card {
-    width: 100px;
-    min-height: 92px;
+    width: 54px;
+    min-height: 54px;
 
     border: 2px solid #f1d5e5;
 
     background: #fffaff;
 
-    border-radius: 15px;
+    border-radius: 50%;
 
-    padding: 10px;
+    padding: 4px;
 
     cursor: pointer;
 
@@ -1063,8 +1195,8 @@ body {
 }
 
 .skin-swatch {
-    width: 68px;
-    height: 68px;
+    width: 42px;
+    height: 42px;
 
     display: block;
 
@@ -1079,11 +1211,7 @@ body {
 }
 
 .skin-name {
-    display: block;
-
-    font-size: 13px;
-
-    font-weight: bold;
+    display: none;
 }
 
 /* The model and skin controls share the first row on larger screens. */
@@ -1115,6 +1243,27 @@ body {
 }
 
 .top-color-card {
+    display: inline-flex;
+    width: 58px;
+    min-height: 58px;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.top-color-picker .top-color-grid {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.top-color-swatch {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+}
+
+.top-color-name {
     display: none;
 }
 
@@ -1123,20 +1272,22 @@ body {
     align-items: center;
     gap: 10px;
     margin-top: 12px;
-    padding: 10px 12px;
+    padding: 6px;
     border: 1px dashed #e3b8d0;
-    border-radius: 14px;
+    border-radius: 50%;
     color: #7d4a66;
     font-size: 12px;
     font-weight: 700;
+    vertical-align: middle;
+    margin-left: 8px;
 }
 
 .custom-color-control input[type="color"] {
-    width: 42px;
-    height: 32px;
-    padding: 2px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
     border: 1px solid #e3b8d0;
-    border-radius: 9px;
+    border-radius: 50%;
     background: #fff;
     cursor: pointer;
 }
@@ -1283,6 +1434,7 @@ body {
 .customizer {
     width: min(1280px, 94%);
     margin: 24px auto 0;
+    padding: 26px;
     display: grid;
     grid-template-columns: minmax(320px, 420px) 1fr;
     grid-template-rows: auto minmax(0, 1fr);
@@ -1291,25 +1443,64 @@ body {
     height: calc(100vh - 94px);
     max-height: calc(100vh - 94px);
     overflow: hidden;
+    border: 1px solid rgba(235, 198, 221, .95);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, .9);
+    box-shadow: 0 14px 34px rgba(129, 72, 103, .12);
+}
+
+#funkoPanel {
+    display: flex;
+    flex-direction: column;
+}
+
+#funkoPanel:has(#funkoGirlHairSection:not([hidden])) #funkoGirlHairSection {
+    order: 1;
+}
+
+#funkoPanel:has(#funkoGirlHairSection:not([hidden])) #funkoHairColorSection {
+    order: 2;
+}
+
+#funkoPanel:has(#funkoGirlHairSection:not([hidden])) #funkoGirlTopSection {
+    order: 3;
+}
+
+#funkoPanel:has(#funkoGirlHairSection:not([hidden])) #funkoGirlTopColorSection {
+    order: 4;
+}
+
+#funkoPanel:has(#funkoGirlHairSection:not([hidden])) #funkoGirlBottomSection {
+    order: 5;
+}
+
+#funkoPanel:has(#funkoGirlHairSection:not([hidden])) #funkoGirlBottomColorSection {
+    order: 6;
 }
 
 .back-link {
     grid-column: 1 / -1;
     margin-bottom: 4px;
+    padding: 9px 14px;
+    border: 1px solid #edb4d1;
+    border-radius: 999px;
+    background: #fff1f8;
     color: #9f3d73;
+    width: fit-content;
+    font-weight: 800;
 }
 
 .preview-container,
 .options-container {
-    border: 1px solid rgba(235, 198, 221, .95);
-    border-radius: 28px;
-    background: rgba(255, 255, 255, .88);
-    box-shadow: 0 12px 30px rgba(129, 72, 103, .09);
-    backdrop-filter: blur(6px);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
 }
 
 .preview-container {
-    padding: 22px;
+    padding: 0 22px 0 0;
     top: 88px;
     height: 100%;
     max-height: 100%;
@@ -1340,7 +1531,7 @@ body {
 }
 
 .options-container {
-    padding: 28px;
+    padding: 0 0 0 22px;
     min-height: 0;
     height: 100%;
     overflow-y: auto;
@@ -1545,6 +1736,7 @@ body {
     }
 
     .customizer {
+        padding: 18px;
         width: 95%;
         margin: 18px auto 56px;
     }
@@ -1557,5 +1749,15 @@ body {
 
     .page-title h1 {
         font-size: 28px;
+    }
+
+    .size-choice-grid,
+    .box-choice-grid,
+    .box-detail-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .box-detail-fields label:last-child {
+        grid-column: auto;
     }
 }

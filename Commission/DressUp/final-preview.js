@@ -53,9 +53,28 @@ function fillField(id, value) {
 function populatePreview(snapshot) {
 
     fillField("previewCategory", snapshot.figureCategory);
+    fillField("previewFigureSize", snapshot.figureSize || "No size requirement");
+    fillField("previewFigureName", snapshot.figureName || "Not provided");
     fillField("previewOrderType", snapshot.orderType);
     fillField("previewBookingDate", snapshot.bookingDate);
     fillField("previewPrice", formatMoney(snapshot.estimatedPrice));
+
+    const boxLabels = {
+        none: "Without box",
+        solo: "Solo Box",
+        couple: "Couple Box",
+        display: "Display Box",
+        keychain: "Keychain Box",
+        custom: "Custom Box"
+    };
+
+    const hironoBox = snapshot.blindBox === "set"
+        ? "Blind Box Set"
+        : snapshot.currentCategory === "hirono"
+            ? "Regular Blind Box"
+            : null;
+
+    fillField("previewBox", hironoBox || boxLabels[snapshot.boxType] || "Without box");
 
     const status = document.getElementById("previewStatus");
 

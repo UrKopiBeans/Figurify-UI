@@ -41,7 +41,7 @@ let designDetails = {
 function showSection(sectionId) {
 
     document
-        .querySelectorAll(".commission-section")
+        .querySelectorAll(".commission-section, .create-style-flow-container")
         .forEach(section => {
 
             section.classList.add("hidden");
@@ -54,6 +54,13 @@ function showSection(sectionId) {
 
 
     if (section) {
+
+        const flowContainer =
+            section.closest(".create-style-flow-container");
+
+        if (flowContainer) {
+            flowContainer.classList.remove("hidden");
+        }
 
         section.classList.remove("hidden");
 
@@ -70,13 +77,19 @@ function showSection(sectionId) {
 function showCreateStyleFlow(scrollToTop = true) {
 
     document
-        .querySelectorAll(".commission-section")
+        .querySelectorAll(".commission-section, .create-style-flow-container")
         .forEach(section => {
             section.classList.add("hidden");
         });
 
+    const flowContainer =
+        document.getElementById("createStyleFlowContainer");
+
+    if (flowContainer) {
+        flowContainer.classList.remove("hidden");
+    }
+
     [
-        "creationSection",
         "orderTypeSection",
         "calendarSection"
     ].forEach(sectionId => {
@@ -86,6 +99,20 @@ function showCreateStyleFlow(scrollToTop = true) {
             section.classList.remove("hidden");
         }
     });
+
+    const creationSection =
+        document.getElementById("creationSection");
+
+    if (creationSection) {
+        creationSection.classList.remove("hidden");
+    }
+
+    // Render the current month as soon as the combined flow is displayed.
+    if (typeof initializeCalendar === "function") {
+        initializeCalendar();
+    } else if (typeof renderCalendar === "function") {
+        renderCalendar();
+    }
 
     if (scrollToTop) {
         window.scrollTo({
@@ -833,9 +860,7 @@ function continueFromCreation(method) {
 
         creationMethod = "create";
 
-        showSection(
-            "orderTypeSection"
-        );
+        showCreateStyleFlow(false);
 
         updateOrderTypeInstruction();
         restoreOrderTypeSelection();
@@ -1183,8 +1208,7 @@ function updateCalendarExtrasVisibility() {
         creationMethod === "create";
 
     const showFigureCategory =
-        showExtras &&
-        Boolean(selectedDate);
+        showExtras;
 
     document
         .querySelectorAll(".calendar-note")

@@ -28,7 +28,7 @@
 
         <a href="../../Home/Home.html" class="brand">
             <div class="brand-photo">
-                <img src="../../Image/figurify-background.png" alt="Figurify">
+                <img src="../../Image/Clay and Stuff- Logo.jpg" alt="Clay and Stuff">
             </div>
             <span>Figurify</span>
         </a>
@@ -49,7 +49,7 @@
 
     <main class="customizer">
 
-        <a class="back-link" href="../commission.html">Back to Commission</a>
+        <a class="back-link" href="../commission.html">&larr; Back to Commission</a>
 
 
         <!-- ================= LEFT PREVIEW ================= -->
@@ -1081,11 +1081,57 @@
 
                 <div
                     class="option-section"
-                    id="chibiModelSection"
+                    id="chibiTypeSection"
                 >
 
                     <div class="section-title">
-                        <h2>CHIBI STANDEE</h2>
+                        <h2>CHIBI TYPE</h2>
+                        <span>Choose one</span>
+                    </div>
+
+
+                    <div class="option-grid">
+
+                        <button
+                            type="button"
+                            class="option-card chibi-type-card"
+                            data-figure="chibi"
+                            data-slot="chibiType"
+                            data-product-type="standee"
+                            data-name="Full Body Standee"
+                            data-price="0"
+                            data-billable="false"
+                        >
+                            <span>Full Body Standee</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="option-card chibi-type-card"
+                            data-figure="chibi"
+                            data-slot="chibiType"
+                            data-product-type="keychain"
+                            data-name="Full Body Keychain"
+                            data-price="0"
+                            data-billable="false"
+                        >
+                            <span>Full Body Keychain</span>
+                            <small>2 inches</small>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="option-section"
+                    id="chibiModelSection"
+                    hidden
+                >
+
+                    <div class="section-title">
+                        <h2>CHIBI GENDER</h2>
                         <span>Choose one</span>
                     </div>
 
@@ -1097,6 +1143,7 @@
                             class="figure-model-card"
                             data-figure="chibi"
                             data-slot="model"
+                            data-product-type="standee"
                             data-name="Chibi Boy"
                             data-model="GLB_files/Chibi Default.glb"
                             data-image="images/Chibi Boy.png"
@@ -1109,7 +1156,7 @@
                                     alt="Chibi Boy"
                                 >
                             </div>
-                            <span class="figure-model-name">Chibi Boy</span>
+                            <span class="figure-model-name">Boy</span>
                             <small>Chibi Default.glb</small>
                         </button>
 
@@ -1119,6 +1166,7 @@
                             class="figure-model-card"
                             data-figure="chibi"
                             data-slot="model"
+                            data-product-type="standee"
                             data-name="Chibi Girl"
                             data-model="GLB_files/Chibi Girl.glb"
                             data-image="images/Chibi Girl.png"
@@ -1131,8 +1179,94 @@
                                     alt="Chibi Girl"
                                 >
                             </div>
-                            <span class="figure-model-name">Chibi Girl</span>
+                            <span class="figure-model-name">Girl</span>
                             <small>Chibi Girl.glb</small>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="figure-model-card"
+                            data-figure="chibi"
+                            data-slot="model"
+                            data-product-type="keychain"
+                            data-name="Chibi Boy Keychain"
+                            data-model="GLB_files/Chibi Default.glb"
+                            data-image="images/Chibi Boy.png"
+                            data-price="0"
+                            data-billable="false"
+                        >
+                            <div class="option-image">
+                                <img src="images/Chibi Boy.png" alt="Chibi Boy Keychain">
+                            </div>
+                            <span class="figure-model-name">Boy</span>
+                            <small>Chibi Default.glb</small>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="figure-model-card"
+                            data-figure="chibi"
+                            data-slot="model"
+                            data-product-type="keychain"
+                            data-name="Chibi Girl Keychain"
+                            data-model="GLB_files/Chibi Girl.glb"
+                            data-image="images/Chibi Girl.png"
+                            data-price="0"
+                            data-billable="false"
+                        >
+                            <div class="option-image">
+                                <img src="images/Chibi Girl.png" alt="Chibi Girl Keychain">
+                            </div>
+                            <span class="figure-model-name">Girl</span>
+                            <small>Chibi Girl.glb</small>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="option-section skin-section"
+                    id="chibiSkinSection"
+                    hidden
+                >
+
+                    <div class="section-title">
+                        <h2>CHIBI SKIN COLOR</h2>
+                        <span>Choose one</span>
+                    </div>
+
+
+                    <div class="skin-grid">
+
+                        <button
+                            type="button"
+                            class="skin-card"
+                            data-figure="chibi"
+                            data-slot="skin"
+                            data-name="Light"
+                            data-color="#F2CCB7"
+                            data-price="0"
+                            data-billable="false"
+                        >
+                            <span class="skin-swatch skin-light"></span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="skin-card"
+                            data-figure="chibi"
+                            data-slot="skin"
+                            data-name="Dark"
+                            data-color="#D19477"
+                            data-price="0"
+                            data-billable="false"
+                        >
+                            <span class="skin-swatch skin-dark"></span>
                         </button>
 
                     </div>
@@ -1498,7 +1632,30 @@
                             data-figure="hirono"
                             data-slot="model"
                             data-mode="keychain"
-                            data-name="Hirono Keychain"
+                            data-name="Hirono Full Body Keychain"
+                            data-model="GLB_files/Hirono default.glb"
+                            data-image="images/Hirono Standee.png"
+                            data-price="0"
+                            data-billable="false"
+                        >
+                            <div class="option-image">
+                                <img
+                                    src="images/Hirono Standee.png"
+                                    alt="Hirono Full Body Keychain"
+                                >
+                            </div>
+                            <span class="figure-model-name">Hirono Full Body Keychain</span>
+                            <small>2 inches</small>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="figure-model-card"
+                            data-figure="hirono"
+                            data-slot="model"
+                            data-mode="headKeychain"
+                            data-name="Hirono Head Keychain"
                             data-model="GLB_files/Hirono KeyChain model.glb"
                             data-image="images/Hirono KeyChain.png"
                             data-price="0"
@@ -1507,11 +1664,11 @@
                             <div class="option-image">
                                 <img
                                     src="images/Hirono KeyChain.png"
-                                    alt="Hirono Keychain"
+                                    alt="Hirono Head Keychain"
                                 >
                             </div>
-                            <span class="figure-model-name">Hirono Keychain</span>
-                            <small>Hirono keychain model.glb</small>
+                            <span class="figure-model-name">Hirono Head Keychain</span>
+                            <small>No size option</small>
                         </button>
 
                     </div>
@@ -2179,6 +2336,75 @@
                 </div>
 
             </div>
+
+
+            <section
+                class="product-details-panel"
+                id="productDetailsPanel"
+                hidden
+            >
+
+                <div class="section-title">
+                    <div>
+                        <span class="details-kicker">FIGURE DETAILS</span>
+                        <h2 id="productDetailsTitle">Choose Your Figure Details</h2>
+                        <p id="productDetailsDescription">Choose the size and box for your selected product.</p>
+                    </div>
+                </div>
+
+                <div class="product-detail-group">
+                    <label class="detail-label">Size</label>
+                    <div class="size-choice-grid" id="sizeChoiceGrid"></div>
+                </div>
+
+                <label class="product-detail-group">
+                    <span class="detail-label">Figure Name <small>(optional)</small></span>
+                    <input class="product-detail-input" id="figureNameInput" type="text" maxlength="40" placeholder="Example: Omar123">
+                    <small class="detail-hint">PHP 50 if you add a name</small>
+                </label>
+
+                <div class="product-detail-group" id="boxChoiceGroup">
+                    <span class="detail-label">Box</span>
+                    <div class="box-choice-grid" id="boxChoiceGrid"></div>
+                </div>
+
+                <div class="box-detail-fields" id="boxDetailFields" hidden>
+                    <label>
+                        <span class="detail-label">Name to print on box <small>(optional)</small></span>
+                        <input class="product-detail-input" id="boxNameInput" data-detail-field="boxName" type="text" maxlength="40" placeholder="Example: Omar">
+                    </label>
+                    <label>
+                        <span class="detail-label">Box Number <small>(optional)</small></span>
+                        <input class="product-detail-input" id="boxNumberInput" data-detail-field="boxNumber" type="text" maxlength="20" placeholder="Example: 001">
+                    </label>
+                    <label>
+                        <span class="detail-label">Box Color <small>(optional)</small></span>
+                        <input class="product-detail-input" id="boxColorInput" data-detail-field="boxColor" type="text" maxlength="30" placeholder="Example: Pastel Pink">
+                    </label>
+                </div>
+
+                <div class="hirono-detail-fields" id="hironoDetailFields" hidden>
+                    <div class="product-detail-group">
+                        <span class="detail-label">Blind Box Type</span>
+                        <div class="box-choice-grid" id="hironoBlindBoxGrid"></div>
+                    </div>
+                    <div class="product-detail-group">
+                        <span class="detail-label">Optional Extras</span>
+                        <div class="box-choice-grid" id="hironoAddonGrid"></div>
+                    </div>
+                    <div class="product-detail-group">
+                        <span class="detail-label">Box Design</span>
+                        <div class="box-choice-grid" id="hironoBoxDesignGrid"></div>
+                    </div>
+                    <div class="box-detail-fields" id="hironoBoxFields"></div>
+                </div>
+
+                <div class="product-detail-total">
+                    <span>Details add-ons</span>
+                    <strong id="productDetailsPrice">PHP 0</strong>
+                </div>
+
+            </section>
 
 
             <a

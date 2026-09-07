@@ -431,6 +431,29 @@ button {
 }
 
 
+.create-style-flow-container {
+    padding: 28px;
+
+    border: 1px solid #ead1e1;
+
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, .78);
+
+    box-shadow: 6px 8px 0 rgba(220, 180, 206, .24);
+}
+
+
+.create-style-flow-container > .commission-section {
+    margin-bottom: 42px;
+}
+
+
+.create-style-flow-container > .commission-section:last-child {
+    margin-bottom: 0;
+}
+
+
 /* =====================================================
    ORDER TYPE
 ===================================================== */
@@ -440,7 +463,7 @@ button {
 
     grid-template-columns: repeat(2, 1fr);
 
-    gap: 22px;
+    gap: 16px;
 }
 
 
@@ -455,7 +478,7 @@ button {
 
     outline: 1px solid #e6c9db;
 
-    border-radius: 25px;
+    border-radius: 20px;
 
     background:
         linear-gradient(
@@ -464,12 +487,12 @@ button {
             #fffef0
         );
 
-    padding: 30px;
+    padding: 18px 20px 16px;
 
     color: var(--text);
 
     box-shadow:
-        5px 7px 0 rgba(220, 180, 206, .35);
+        4px 6px 0 rgba(220, 180, 206, .28);
 
     transition: .2s;
 }
@@ -486,7 +509,7 @@ button {
 
 
 .order-card:hover {
-    transform: translateY(-4px) rotate(-.5deg);
+    transform: translateY(-3px) rotate(-.35deg);
 }
 
 
@@ -501,17 +524,17 @@ button {
 .order-card::after {
     content: "✓";
     position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 22px;
-    height: 22px;
+    top: 10px;
+    right: 10px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background: #f4a4ca;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
     opacity: 0;
     transform: scale(.75);
@@ -528,49 +551,51 @@ button {
 .card-decoration {
     position: absolute;
 
-    right: 18px;
+    right: 14px;
 
-    top: 12px;
+    top: 10px;
 
     color: #f0bd50;
 
-    font-size: 30px;
+    font-size: 22px;
 }
 
 
 .order-icon {
-    font-size: 36px;
+    font-size: 28px;
 
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 
 
 .order-card h3 {
     font-family: Georgia, serif;
 
-    font-size: 25px;
+    font-size: 19px;
 
     color: #893a65;
 
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 
 .order-card p {
     color: #936c80;
 
-    font-size: 13px;
+    font-size: 11.5px;
 
-    max-width: 500px;
+    line-height: 1.45;
+
+    max-width: 360px;
 }
 
 
 .order-price {
-    margin: 18px 0;
+    margin: 12px 0 10px;
 
     color: #a53f72;
 
-    font-size: 18px;
+    font-size: 14px;
 
     font-weight: 900;
 }
@@ -583,11 +608,11 @@ button {
 
     color: white;
 
-    border-radius: 20px;
+    border-radius: 16px;
 
-    padding: 8px 15px;
+    padding: 6px 12px;
 
-    font-size: 10px;
+    font-size: 9px;
 
     font-weight: 900;
 }
@@ -844,8 +869,8 @@ button {
 
 
 .figure-category-section {
-    margin-top: 18px;
-    padding-top: 8px;
+    margin-top: 14px;
+    padding-top: 0;
 }
 
 

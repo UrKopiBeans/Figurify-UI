@@ -31,6 +31,27 @@ const resetBtn =
 const continueBtn =
     document.getElementById("continueBtn");
 
+const productDetailsPanel =
+    document.getElementById("productDetailsPanel");
+
+const sizeChoiceGrid =
+    document.getElementById("sizeChoiceGrid");
+
+const boxChoiceGrid =
+    document.getElementById("boxChoiceGrid");
+
+const figureNameInput =
+    document.getElementById("figureNameInput");
+
+const boxNameInput =
+    document.getElementById("boxNameInput");
+
+const boxNumberInput =
+    document.getElementById("boxNumberInput");
+
+const boxColorInput =
+    document.getElementById("boxColorInput");
+
 const COMMISSION_RETURN_KEY =
     "figurifyCommissionReturn";
 
@@ -110,6 +131,8 @@ const sectionIds = {
         keychainHat: "hironoKeychainHatSection"
     },
     chibi: {
+        type: "chibiTypeSection",
+        skin: "chibiSkinSection",
         hair: "chibiHairSection",
         girlHair: "chibiGirlHairSection",
         hairColor: "chibiHairColorSection",
@@ -264,6 +287,7 @@ function createCategoryState() {
 
     return {
         mode: null,
+        productType: null,
         model: null,
         skin: null,
         hair: null,
@@ -291,6 +315,93 @@ const state = {
     funko: createCategoryState(),
     hirono: createCategoryState(),
     chibi: createCategoryState()
+};
+
+
+const PRODUCT_DETAIL_CONFIGS = {
+    funkoBoy: {
+        title: "Funko Pop Boy Details",
+        description: "Full body standee sizes and custom Funko box.",
+        sizes: ["3 inches", "4 inches", "5 inches"],
+        boxes: [
+            { id: "none", label: "Without box", price: 0 },
+            { id: "with", label: "With box", price: 500, details: true }
+        ],
+        boxLabel: "Custom Funko Box"
+    },
+    funkoGirl: {
+        title: "Funko Pop Girl Details",
+        description: "Full body standee sizes and custom Funko box.",
+        sizes: ["3 inches", "4 inches", "5 inches"],
+        boxes: [
+            { id: "none", label: "Without box", price: 0 },
+            { id: "with", label: "With box", price: 500, details: true }
+        ],
+        boxLabel: "Custom Funko Box"
+    },
+    hironoStandee: {
+        title: "Hirono Standee Details",
+        description: "Full body standee with blind box options and add-ons.",
+        sizes: ["2 inches", "3.5 inches"],
+        boxes: [],
+        hirono: true
+    },
+    hironoKeychain: {
+        title: "Hirono Keychain Details",
+        description: "Keychain with blind box options and add-ons.",
+        sizes: ["2 inches"],
+        boxes: [],
+        hirono: true
+    },
+    hironoHeadKeychain: {
+        title: "Hirono Head Keychain Details",
+        description: "Head-only keychain with blind box options and add-ons.",
+        sizes: [],
+        boxes: [],
+        hirono: true
+    },
+    chibiBoy: {
+        title: "Chibi Boy Details",
+        description: "Full body standee sizes. Chibi figures do not have box choices.",
+        sizes: ["2 inches", "3 inches", "4 inches", "5 inches"],
+        boxes: []
+    },
+    chibiBoyKeychain: {
+        title: "Chibi Boy Keychain Details",
+        description: "Full body keychain. Chibi keychains do not have box choices.",
+        sizes: ["2 inches"],
+        boxes: []
+    },
+    chibiGirl: {
+        title: "Chibi Girl Details",
+        description: "Full body standee sizes. Chibi figures do not have box choices.",
+        sizes: ["2 inches", "3 inches", "4 inches", "5 inches"],
+        boxes: []
+    },
+    chibiGirlKeychain: {
+        title: "Chibi Girl Keychain Details",
+        description: "Full body keychain. Chibi keychains do not have box choices.",
+        sizes: ["2 inches"],
+        boxes: []
+    }
+};
+
+
+let productDetails = {
+    productKey: "",
+    size: "",
+    figureName: "",
+    box: "none",
+    boxName: "",
+    boxNumber: "",
+    boxColor: "",
+    blindBox: "regular",
+    hironoAddons: [],
+    boxDesign: "checkered",
+    boxNickname: "",
+    boxLetter: "",
+    boxDateMonth: "",
+    boxDateDay: ""
 };
 
 
@@ -326,10 +437,12 @@ const SLOT_ORDER = {
     ],
     chibiBoy: [
         "model",
+        "skin",
         "hair"
     ],
     chibiGirl: [
         "model",
+        "skin",
         "girlHair"
     ],
     hironoStandee: [
@@ -344,6 +457,17 @@ const SLOT_ORDER = {
         "shoesColor"
     ],
     hironoKeychain: [
+        "model",
+        "skin",
+        "hair",
+        "hairColor",
+        "outfit",
+        "pants",
+        "pantsColor",
+        "shoes",
+        "shoesColor"
+    ],
+    hironoHeadKeychain: [
         "model",
         "skin",
         "keychainHair",
@@ -538,6 +662,10 @@ function getHironoMode() {
 function getActiveSlotOrder() {
 
     if (state.currentCategory === "hirono") {
+        if (getHironoMode() === "headKeychain") {
+            return SLOT_ORDER.hironoHeadKeychain;
+        }
+
         return getHironoMode() === "keychain"
             ? SLOT_ORDER.hironoKeychain
             : SLOT_ORDER.hironoStandee;
@@ -617,6 +745,285 @@ function isChibiGirlModel(modelItem) {
         )
     );
 
+}
+
+
+function getProductDetailsKey() {
+
+    if (state.currentCategory === "hirono") {
+        if (getHironoMode() === "headKeychain") {
+            return "hironoHeadKeychain";
+        }
+
+        return getHironoMode() === "keychain"
+            ? "hironoKeychain"
+            : "hironoStandee";
+    }
+
+    if (state.currentCategory === "funko") {
+        return isFunkoGirlModel(state.funko.model)
+            ? "funkoGirl"
+            : "funkoBoy";
+    }
+
+    if (state.currentCategory === "chibi") {
+        if (state.chibi.productType === "keychain") {
+            return isChibiGirlModel(state.chibi.model)
+                ? "chibiGirlKeychain"
+                : "chibiBoyKeychain";
+        }
+
+        return isChibiGirlModel(state.chibi.model)
+            ? "chibiGirl"
+            : "chibiBoy";
+    }
+
+    return "";
+}
+
+
+function getProductDetailsConfig() {
+    return PRODUCT_DETAIL_CONFIGS[getProductDetailsKey()] || null;
+}
+
+
+function getProductDetailsAddon() {
+
+    const config = getProductDetailsConfig();
+
+    if (!config) {
+        return 0;
+    }
+
+    const selectedBox =
+        config.boxes.find(box => box.id === productDetails.box);
+
+    if (config.hirono) {
+        const blindBoxPrice = productDetails.blindBox === "set" ? 350 : 150;
+        const addonPrices = {
+            tearPaper: 50,
+            pouch: 50,
+            digitalArt: 150
+        };
+
+        return (productDetails.figureName.trim() ? 50 : 0) +
+            blindBoxPrice +
+            productDetails.hironoAddons.reduce(
+                (total, addon) => total + (addonPrices[addon] || 0),
+                0
+            );
+    }
+
+    return (productDetails.figureName.trim() ? 50 : 0) +
+        (selectedBox ? selectedBox.price : 0);
+}
+
+
+function saveProductDetails() {
+    saveCustomizationSnapshot(false, false);
+    updatePriceDisplay();
+}
+
+
+function renderProductDetailsPanel() {
+
+    if (!productDetailsPanel || !sizeChoiceGrid || !boxChoiceGrid) {
+        return;
+    }
+
+    const activeState = getActiveState();
+    const config = getProductDetailsConfig();
+    const productKey = getProductDetailsKey();
+
+    if (!activeState || !activeState.model || !activeState.skin || !config) {
+        productDetailsPanel.hidden = true;
+        return;
+    }
+
+    productDetailsPanel.hidden = false;
+
+    if (productDetails.productKey !== productKey) {
+        productDetails = {
+            productKey,
+            size: "",
+            figureName: "",
+            box: "none",
+            boxName: "",
+            boxNumber: "",
+            boxColor: "",
+            blindBox: "regular",
+            hironoAddons: [],
+            boxDesign: "checkered",
+            boxNickname: "",
+            boxLetter: "",
+            boxDateMonth: "",
+            boxDateDay: ""
+        };
+    }
+
+    if (!config.sizes.includes(productDetails.size)) {
+        productDetails.size = config.sizes[0];
+    }
+
+    if (config.boxes.length && !config.boxes.some(box => box.id === productDetails.box)) {
+        productDetails.box = config.boxes[0].id;
+    }
+
+    const title = document.getElementById("productDetailsTitle");
+    const description = document.getElementById("productDetailsDescription");
+
+    if (title) title.textContent = config.title;
+    if (description) description.textContent = config.description;
+
+    sizeChoiceGrid.innerHTML = config.sizes.length
+        ? config.sizes.map(size => `
+        <button type="button" class="detail-choice-card${productDetails.size === size ? " selected" : ""}" data-size="${size}">
+            ${size.replace(" inches", "\"")}
+        </button>
+    `).join("")
+        : `<p class="detail-hint">No size requirement for this product type.</p>`;
+
+    boxChoiceGrid.innerHTML = config.boxes.map(box => `
+        <button type="button" class="detail-choice-card box-choice-card${productDetails.box === box.id ? " selected" : ""}" data-box="${box.id}">
+            <strong>${box.label}</strong>
+            <span>${box.price ? `PHP ${box.price}` : "No additional fee"}</span>
+        </button>
+    `).join("");
+
+    const boxChoiceGroup = document.getElementById("boxChoiceGroup");
+    if (boxChoiceGroup) {
+        boxChoiceGroup.hidden = config.hirono || !config.boxes.length;
+        const boxLabel = boxChoiceGroup.querySelector(".detail-label");
+        if (boxLabel) {
+            boxLabel.textContent = config.boxLabel || "Box";
+        }
+    }
+
+    const boxDetailFields = document.getElementById("boxDetailFields");
+    const selectedBox = config.boxes.find(box => box.id === productDetails.box);
+    if (boxDetailFields) {
+        boxDetailFields.hidden = config.hirono || !selectedBox?.details;
+    }
+
+    const hironoFields = document.getElementById("hironoDetailFields");
+    const hironoBlindBoxGrid = document.getElementById("hironoBlindBoxGrid");
+    const hironoAddonGrid = document.getElementById("hironoAddonGrid");
+    const hironoBoxDesignGrid = document.getElementById("hironoBoxDesignGrid");
+    const hironoBoxFields = document.getElementById("hironoBoxFields");
+
+    if (hironoFields) hironoFields.hidden = !config.hirono;
+
+    if (config.hirono && hironoBlindBoxGrid && hironoAddonGrid && hironoBoxDesignGrid && hironoBoxFields) {
+        hironoBlindBoxGrid.innerHTML = [
+            { id: "regular", label: "Regular Blind Box", price: 150 },
+            { id: "set", label: "Blind Box Set", price: 350 }
+        ].map(({ id, label, price }) => `
+            <button type="button" class="detail-choice-card box-choice-card${productDetails.blindBox === id ? " selected" : ""}" data-blind-box="${id}">
+                <strong>${label}</strong>
+                <span>PHP ${price}</span>
+            </button>
+        `).join("");
+
+        const addons = [
+            { id: "tearPaper", label: "Tear Blind Paper", price: 50 },
+            { id: "pouch", label: "Pouch", price: 50 },
+            { id: "digitalArt", label: "Digital Art (Soft Copy) w/ Photo Card", price: 150 }
+        ];
+
+        hironoAddonGrid.innerHTML = addons.map(({ id, label, price }) => `
+            <button type="button" class="detail-choice-card box-choice-card${productDetails.hironoAddons.includes(id) ? " selected" : ""}" data-addon="${id}">
+                <strong>${label}</strong>
+                <span>PHP ${price}</span>
+            </button>
+        `).join("");
+
+        hironoBoxDesignGrid.innerHTML = [
+            { id: "checkered", label: "Checkered" },
+            { id: "peek", label: "Hirono Peek" }
+        ].map(({ id, label }) => `
+            <button type="button" class="detail-choice-card box-choice-card${productDetails.boxDesign === id ? " selected" : ""}" data-box-design="${id}">
+                <strong>${label}</strong>
+                <span>Choose box design</span>
+            </button>
+        `).join("");
+
+        const colorField = productDetails.boxDesign === "peek"
+            ? `<select class="product-detail-input" data-detail-field="boxColor"><option value="">Select Box Color</option><option value="Wood">Wood</option><option value="Black & White">Black &amp; White</option></select>`
+            : `<input class="product-detail-input" data-detail-field="boxColor" value="${productDetails.boxColor}" maxlength="30" placeholder="Example: Cream White">`;
+
+        hironoBoxFields.innerHTML = `
+            <label><span class="detail-label">Box Color</span>${colorField}</label>
+            <label><span class="detail-label">Nickname</span><input class="product-detail-input" data-detail-field="boxNickname" value="${productDetails.boxNickname}" maxlength="30" placeholder="Example: Bubbles"></label>
+            <label><span class="detail-label">Letter (Short Love Letter)</span><textarea class="product-detail-input" data-detail-field="boxLetter" rows="4" maxlength="180" placeholder="Write a short love letter/message here...">${productDetails.boxLetter}</textarea></label>
+            <label><span class="detail-label">Date (Month)</span><select class="product-detail-input" data-detail-field="boxDateMonth"><option value="">Month</option>${Array.from({ length: 12 }, (_, index) => `<option value="${index + 1}" ${productDetails.boxDateMonth === String(index + 1) ? "selected" : ""}>${index + 1}</option>`).join("")}</select></label>
+            <label><span class="detail-label">Date (Day)</span><select class="product-detail-input" data-detail-field="boxDateDay"><option value="">Day</option>${Array.from({ length: 31 }, (_, index) => `<option value="${index + 1}" ${productDetails.boxDateDay === String(index + 1) ? "selected" : ""}>${index + 1}</option>`).join("")}</select></label>
+        `;
+
+        hironoAddonGrid.querySelectorAll("[data-addon]").forEach(button => {
+            button.addEventListener("click", () => {
+                const addon = button.dataset.addon;
+                productDetails.hironoAddons = productDetails.hironoAddons.includes(addon)
+                    ? productDetails.hironoAddons.filter(item => item !== addon)
+                    : [...productDetails.hironoAddons, addon];
+                renderProductDetailsPanel();
+                saveProductDetails();
+            });
+        });
+
+        hironoBlindBoxGrid.querySelectorAll("[data-blind-box]").forEach(button => {
+            button.addEventListener("click", () => {
+                productDetails.blindBox = button.dataset.blindBox;
+                renderProductDetailsPanel();
+                saveProductDetails();
+            });
+        });
+
+        hironoBoxDesignGrid.querySelectorAll("[data-box-design]").forEach(button => {
+            button.addEventListener("click", () => {
+                productDetails.boxDesign = button.dataset.boxDesign;
+                if (productDetails.boxDesign === "peek" && !["Wood", "Black & White"].includes(productDetails.boxColor)) {
+                    productDetails.boxColor = "";
+                }
+                renderProductDetailsPanel();
+                saveProductDetails();
+            });
+        });
+    }
+
+    sizeChoiceGrid.querySelectorAll("[data-size]").forEach(button => {
+        button.addEventListener("click", () => {
+            productDetails.size = button.dataset.size;
+            renderProductDetailsPanel();
+            saveProductDetails();
+        });
+    });
+
+    boxChoiceGrid.querySelectorAll("[data-box]").forEach(button => {
+        button.addEventListener("click", () => {
+            productDetails.box = button.dataset.box;
+            renderProductDetailsPanel();
+            saveProductDetails();
+        });
+    });
+
+    if (figureNameInput) figureNameInput.value = productDetails.figureName;
+    if (boxNameInput) boxNameInput.value = productDetails.boxName;
+    if (boxNumberInput) boxNumberInput.value = productDetails.boxNumber;
+    if (boxColorInput) boxColorInput.value = productDetails.boxColor;
+
+    productDetailsPanel.querySelectorAll("[data-detail-field]").forEach(input => {
+        input.value = productDetails[input.dataset.detailField] || "";
+        input.oninput = () => {
+            productDetails[input.dataset.detailField] = input.value;
+            saveProductDetails();
+        };
+        input.onchange = input.oninput;
+    });
+
+    const detailsPrice = document.getElementById("productDetailsPrice");
+    if (detailsPrice) {
+        detailsPrice.textContent = `PHP ${getProductDetailsAddon()}`;
+    }
 }
 
 
@@ -1566,6 +1973,7 @@ function getCurrentOrderTotal(activeState) {
     }
 
     return getActiveStateTotal(activeState) +
+        getProductDetailsAddon() +
         getCommissionRushFee();
 
 }
@@ -1949,6 +2357,31 @@ function updateSectionVisibility() {
 
     if (activeCategory === "chibi") {
 
+        setVisibleById(
+            sectionIds.chibi.type,
+            true
+        );
+
+        if (!activeState.productType) {
+            return;
+        }
+
+        setVisibleById(
+            "chibiModelSection",
+            true
+        );
+
+        if (activeState.model) {
+            setVisibleById(
+                sectionIds.chibi.skin,
+                true
+            );
+        }
+
+        if (!activeState.skin) {
+            return;
+        }
+
         if (activeState.model) {
             setVisibleById(
                 isChibiGirlModel(
@@ -1979,6 +2412,33 @@ function updateSectionVisibility() {
         getHironoMode();
 
 
+    if (hironoMode === "headKeychain") {
+
+        if (activeState.model) {
+            setVisibleById(
+                sectionIds.hirono.skin,
+                true
+            );
+        }
+
+
+        if (!activeState.skin) {
+            return;
+        }
+
+
+        showSections(
+            [
+                sectionIds.hirono.keychainHair,
+                sectionIds.hirono.keychainHairColor,
+                sectionIds.hirono.keychainHat
+            ]
+        );
+        return;
+
+    }
+
+
     if (hironoMode === "keychain") {
 
         if (activeState.model) {
@@ -1989,28 +2449,22 @@ function updateSectionVisibility() {
         }
 
 
-        if (activeState.skin) {
-            setVisibleById(
-                sectionIds.hirono.keychainHair,
-                true
-            );
+        if (!activeState.skin) {
+            return;
         }
 
 
-        if (activeState.keychainHair) {
-            setVisibleById(
-                sectionIds.hirono.keychainHairColor,
-                true
-            );
-        }
-
-
-        if (activeState.keychainHairColor) {
-            setVisibleById(
-                sectionIds.hirono.keychainHat,
-                true
-            );
-        }
+        showSections(
+            [
+                sectionIds.hirono.hair,
+                sectionIds.hirono.hairColor,
+                sectionIds.hirono.outfit,
+                sectionIds.hirono.pants,
+                sectionIds.hirono.pantsColor,
+                sectionIds.hirono.shoes,
+                sectionIds.hirono.shoesColor
+            ]
+        );
 
         return;
 
@@ -2234,6 +2688,7 @@ function applyCustomColor(category, slot, color, input) {
     state.currentCategory = category;
     updateSectionVisibility();
     updateSelectedItemsUI();
+    renderProductDetailsPanel();
     updatePriceDisplay();
     saveCustomizationSnapshot(false, false);
 
@@ -2601,6 +3056,20 @@ function buildCustomizationSnapshot(isCompleted, isConfirmed) {
         selectedItems,
         previewImage: canvas ? canvas.toDataURL("image/png") : "",
         estimatedPrice,
+        productKey: productDetails.productKey,
+        figureSize: productDetails.size,
+        figureName: productDetails.figureName,
+        boxType: productDetails.box,
+        boxName: productDetails.boxName,
+        boxNumber: productDetails.boxNumber,
+        boxColor: productDetails.boxColor,
+        blindBox: productDetails.blindBox,
+        hironoAddons: productDetails.hironoAddons,
+        boxDesign: productDetails.boxDesign,
+        boxNickname: productDetails.boxNickname,
+        boxLetter: productDetails.boxLetter,
+        boxDateMonth: productDetails.boxDateMonth,
+        boxDateDay: productDetails.boxDateDay,
         rushFee: getCommissionRushFee(),
         clothingColors: collectClothingColors(activeState),
         funko: state.funko,
@@ -2702,6 +3171,23 @@ function restoreCustomizationFromStorage() {
         return false;
     }
 
+    productDetails = {
+        productKey: saved.productKey || "",
+        size: saved.figureSize || "",
+        figureName: saved.figureName || "",
+        box: saved.boxType || "none",
+        boxName: saved.boxName || "",
+        boxNumber: saved.boxNumber || "",
+        boxColor: saved.boxColor || "",
+        blindBox: saved.blindBox || "regular",
+        hironoAddons: Array.isArray(saved.hironoAddons) ? saved.hironoAddons : [],
+        boxDesign: saved.boxDesign || "checkered",
+        boxNickname: saved.boxNickname || "",
+        boxLetter: saved.boxLetter || "",
+        boxDateMonth: saved.boxDateMonth || "",
+        boxDateDay: saved.boxDateDay || ""
+    };
+
 
     Object.keys(
         categoryPanels
@@ -2743,6 +3229,7 @@ function restoreCustomizationFromStorage() {
     updateSectionVisibility();
     updateSelectedItemsUI();
     updatePriceDisplay();
+    renderProductDetailsPanel();
 
 
     void renderCurrentCategory();
@@ -3099,6 +3586,7 @@ async function renderCurrentCategory() {
     updateSectionVisibility();
     updateSelectedItemsUI();
     updatePriceDisplay();
+    saveCustomizationSnapshot(false, false);
 
 }
 
@@ -3141,6 +3629,7 @@ function selectCategory(category) {
 
     updateSectionVisibility();
     updateSelectedItemsUI();
+    renderProductDetailsPanel();
     updatePriceDisplay();
     saveCustomizationSnapshot(false, false);
 
@@ -3185,6 +3674,11 @@ function selectModel(card) {
             (item.name.toLowerCase().includes("keychain") ? "keychain" : "standee");
     }
 
+    if (category === "chibi") {
+        stateForCategory.productType =
+            card.dataset.productType || "standee";
+    }
+
 
     stateForCategory.model = item;
 
@@ -3202,12 +3696,37 @@ function selectModel(card) {
 
     updateSectionVisibility();
     updateSelectedItemsUI();
+    renderProductDetailsPanel();
     updatePriceDisplay();
     saveCustomizationSnapshot(false, false);
 
 
     void renderCurrentCategory();
 
+}
+
+
+function selectChibiType(card) {
+
+    const type =
+        card.dataset.productType || "standee";
+
+    clearCategoryState("chibi");
+    state.chibi.productType = type;
+    state.currentCategory = "chibi";
+
+    document
+        .querySelectorAll('[data-figure="chibi"][data-slot="model"]')
+        .forEach(modelCard => {
+            modelCard.hidden = modelCard.dataset.productType !== type;
+        });
+
+    markSelectedCard(card);
+    updateSectionVisibility();
+    updateSelectedItemsUI();
+    renderProductDetailsPanel();
+    updatePriceDisplay();
+    saveCustomizationSnapshot(false, false);
 }
 
 
@@ -3254,6 +3773,7 @@ function selectSkin(card) {
 
     updateSectionVisibility();
     updateSelectedItemsUI();
+    renderProductDetailsPanel();
     updatePriceDisplay();
     saveCustomizationSnapshot(false, false);
 
@@ -3499,6 +4019,14 @@ function handleCardClick(card) {
         card.dataset.slot;
 
 
+    if (slot === "chibiType") {
+        selectChibiType(
+            card
+        );
+        return;
+    }
+
+
     if (slot === "model") {
         selectModel(
             card
@@ -3570,6 +4098,22 @@ function initializeInteractions() {
                 state.funko = createCategoryState();
                 state.hirono = createCategoryState();
                 state.chibi = createCategoryState();
+                productDetails = {
+                    productKey: "",
+                    size: "",
+                    figureName: "",
+                    box: "none",
+                    boxName: "",
+                    boxNumber: "",
+                    boxColor: "",
+                    blindBox: "regular",
+                    hironoAddons: [],
+                    boxDesign: "checkered",
+                    boxNickname: "",
+                    boxLetter: "",
+                    boxDateMonth: "",
+                    boxDateDay: ""
+                };
 
                 clearCurrentScene();
                 clearCustomizationSnapshot();
@@ -3585,6 +4129,7 @@ function initializeInteractions() {
                 updateSectionVisibility();
                 updateSelectedItemsUI();
                 updatePriceDisplay();
+                renderProductDetailsPanel();
                 setFigurePromptVisible(
                     true
                 );
@@ -3594,11 +4139,28 @@ function initializeInteractions() {
         );
     }
 
+    [
+        [figureNameInput, "figureName"],
+        [boxNameInput, "boxName"],
+        [boxNumberInput, "boxNumber"],
+        [boxColorInput, "boxColor"]
+    ].forEach(([input, key]) => {
+        if (!input) {
+            return;
+        }
+
+        input.addEventListener("input", () => {
+            productDetails[key] = input.value;
+            renderProductDetailsPanel();
+            saveProductDetails();
+        });
+    });
+
 
     if (continueBtn) {
         continueBtn.addEventListener(
             "click",
-            function(event) {
+            async function(event) {
                 const activeState =
                     getActiveState();
 
@@ -3613,6 +4175,8 @@ function initializeInteractions() {
 
 
                 event.preventDefault();
+
+                await renderCurrentCategory();
 
                 saveCustomizationSnapshot(
                     true,
