@@ -15,9 +15,10 @@
     <link
         rel="stylesheet"
         href="commission.css"
-    >
+        
+    >       
 </head>
-
+    
 
 <body>
 
@@ -139,6 +140,12 @@
 <main class="page-container">
 
 
+<div
+    class="create-style-flow-container"
+    id="createStyleFlowContainer"
+>
+
+
 
 <!-- =====================================================
      STEP 01 — CREATION METHOD
@@ -160,7 +167,7 @@
         <div>
 
             <span class="label">
-                STEP 01
+                COMMISSION METHOD
             </span>
 
 
@@ -219,14 +226,13 @@
 
                 <p>
                     Create your figure using the Dress-Up
-                    Customizer. Choose this option to design
-                    your figure in 3D before continuing to
-                    your order schedule.
+                    Customizer. Choose this option to select
+                    your figure category and start designing.
                 </p>
 
 
                 <strong>
-                    Opens the Dress-Up Customizer
+                    Opens Figure Category
                 </strong>
 
             </div>
@@ -298,7 +304,7 @@
 
 <section
     class="commission-section hidden"
-    id="createSection"
+    id="legacyCreateSection"
 >
 
 
@@ -317,7 +323,7 @@
 
 
             <h2>
-                Choose Your Order Schedule
+                Legacy Create Flow
             </h2>
 
 
@@ -763,13 +769,8 @@
     </form>
 </section>
 
-<div
-    class="create-style-flow-container hidden"
-    id="createStyleFlowContainer"
->
-
 <section
-    class="commission-section hidden"
+    class="commission-section"
     id="orderTypeSection"
 >
 
@@ -784,7 +785,7 @@
         <div>
 
             <span class="label">
-                STEP 02
+                STEP 01
             </span>
 
 
@@ -804,53 +805,6 @@
 
     </div>
 
-
-
-    <div
-        class="customization-summary hidden"
-        id="customizationSummary"
-    >
-
-        <div class="summary-header">
-
-            <div>
-
-                <span class="label">
-                    SAVED DRESS-UP DESIGN
-                </span>
-
-                <h3 id="customizationSummaryTitle">
-                    Your design is ready
-                </h3>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="secondary-button"
-                id="editCustomizationBtn"
-            >
-                EDIT CUSTOMIZATION
-            </button>
-
-        </div>
-
-
-        <div
-            class="summary-tags"
-            id="customizationSummaryTags"
-        ></div>
-
-
-        <p
-            class="summary-price"
-            id="customizationSummaryPrice"
-        >
-            Estimated customization total will appear here.
-        </p>
-
-    </div>
 
 
     <div class="order-type-grid">
@@ -961,7 +915,7 @@
 ===================================================== -->
 
 <section
-    class="commission-section hidden"
+    class="commission-section"
     id="calendarSection"
 >
 
@@ -976,7 +930,7 @@
         <div>
 
             <span class="label">
-                STEP 03
+                STEP 02
             </span>
 
 
@@ -1148,7 +1102,13 @@
     </div>
 
 
-    <div class="figure-category-section">
+    </section>
+
+
+    <div
+        class="figure-category-section hidden"
+        id="figureCategorySection"
+    >
 
         <div class="section-title">
             <span class="decor">♡</span>
@@ -1168,7 +1128,7 @@
                 data-figure-category="funko"
                 onclick="selectFigureCategory('funko')"
             >
-                <img src="DressUp/images/Funko pop-default.png" alt="Funko Pop">
+                <img src="../Image/funko.jpg" alt="Funko Pop">
                 <span>Funko Pop</span>
             </button>
 
@@ -1178,7 +1138,7 @@
                 data-figure-category="hirono"
                 onclick="selectFigureCategory('hirono')"
             >
-                <img src="DressUp/images/Hirono Standee.png" alt="Hirono">
+                <img src="../Image/Hirono.jpg" alt="Hirono">
                 <span>Hirono</span>
             </button>
 
@@ -1188,20 +1148,28 @@
                 data-figure-category="chibi"
                 onclick="selectFigureCategory('chibi')"
             >
-                <img src="DressUp/images/Chibi Boy.png" alt="Chibi">
+                <img src="../Image/chibi.jpg" alt="Chibi">
                 <span>Chibi</span>
             </button>
 
         </div>
 
+        <div
+            class="customization-embed hidden"
+            id="customizationEmbed"
+        >
+            <iframe
+                class="customization-frame"
+                id="customizationFrame"
+                title="Figure customization"
+                src="about:blank"
+            ></iframe>
+        </div>
+
     </div>
 
 
-</section>
-
-
 </div>
-
 
 
 <!-- =====================================================
@@ -1604,12 +1572,15 @@
                         <span>Booking Date</span>
                         <strong id="customerSummaryBookingDate">Not selected</strong>
                     </div>
+                    <div class="customer-summary-design-block">
+                        <span class="label">Selected Design</span>
+                        <div class="customer-summary-design-rows" id="customerSummaryDesignRows"></div>
+                    </div>
                     <div class="design-review-row total">
                         <span>Estimated total</span>
                         <strong id="customerSummaryTotal">₱0</strong>
                     </div>
                 </div>
-                <div class="summary-tags" id="customerSummaryTags"></div>
             </div>
         </div>
 

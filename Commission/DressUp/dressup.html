@@ -109,40 +109,30 @@
                 </div>
 
 
-                <div
-                    class="summary-tags"
-                    id="summaryDesignTags"
-                ></div>
+                <div class="selected-items">
 
-            </div>
+                    <h3>Selected Design</h3>
 
 
-            <!-- ================= SELECTED ITEMS ================= -->
+                    <div id="selectedList">
 
-            <div class="selected-items">
+                        <span class="empty-text">
+                            No customization selected yet.
+                        </span>
 
-                <h3>Selected Design</h3>
-
-
-                <div id="selectedList">
-
-                    <span class="empty-text">
-                        No customization selected yet.
-                    </span>
+                    </div>
 
                 </div>
 
-            </div>
+
+                <div class="price-box">
+
+                    <span>Estimated Total</span>
 
 
-            <!-- ================= PRICE ================= -->
+                    <strong id="totalPrice">₱0</strong>
 
-            <div class="price-box">
-
-                <span>Estimated Total</span>
-
-
-                <strong id="totalPrice">?0</strong>
+                </div>
 
             </div>
 
@@ -159,11 +149,6 @@
 
                 <span>STEP 01</span>
 
-
-                <h1>How Would You Like To Create It?</h1>
-
-
-                <p>Choose how you want us to create your figure.</p>
 
             </div>
 
@@ -1649,28 +1634,6 @@
                         </button>
 
 
-                        <button
-                            type="button"
-                            class="figure-model-card"
-                            data-figure="hirono"
-                            data-slot="model"
-                            data-mode="headKeychain"
-                            data-name="Hirono Head Keychain"
-                            data-model="GLB_files/Hirono KeyChain model.glb"
-                            data-image="images/Hirono KeyChain.png"
-                            data-price="0"
-                            data-billable="false"
-                        >
-                            <div class="option-image">
-                                <img
-                                    src="images/Hirono KeyChain.png"
-                                    alt="Hirono Head Keychain"
-                                >
-                            </div>
-                            <span class="figure-model-name">Hirono Head Keychain</span>
-                            <small>No size option</small>
-                        </button>
-
                     </div>
 
                 </div>
@@ -1897,6 +1860,22 @@
                             <small>Preview asset</small>
                         </button>
 
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="top-color-picker custom-color-only-section"
+                    id="hironoOutfitColorSection"
+                    data-figure="hirono"
+                    data-slot="outfitColor"
+                    hidden
+                >
+
+                    <div class="section-title">
+                        <h2>HIRONO OUTFIT COLOR</h2>
+                        <span>Choose a color</span>
                     </div>
 
                 </div>
@@ -2407,13 +2386,34 @@
             </section>
 
 
-            <a
-                href="final-preview.html"
-                class="continue-btn"
-                id="continueBtn"
+            <div
+                class="design-step-navigation"
+                id="designStepNavigation"
+                hidden
             >
-                Continue to Preview
-            </a>
+                <button
+                    type="button"
+                    class="step-navigation-button"
+                    id="previousDesignStep"
+                >
+                    &larr; Previous
+                </button>
+                <button
+                    type="button"
+                    class="step-navigation-button"
+                    id="nextDesignStep"
+                >
+                    Next &rarr;
+                </button>
+                <a
+                    href="final-preview.html"
+                    class="continue-btn"
+                    id="continueBtn"
+                    hidden
+                >
+                    Continue to Preview
+                </a>
+            </div>
 
         </section>
 

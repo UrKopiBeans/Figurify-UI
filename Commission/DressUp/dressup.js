@@ -122,6 +122,7 @@ const sectionIds = {
         hair: "hironoHairSection",
         hairColor: "hironoHairColorSection",
         outfit: "hironoOutfitSection",
+        outfitColor: "hironoOutfitColorSection",
         pants: "hironoPantsSection",
         pantsColor: "hironoPantsColorSection",
         shoes: "hironoShoesSection",
@@ -404,6 +405,8 @@ let productDetails = {
     boxDateDay: ""
 };
 
+let navigationSlot = null;
+
 
 const ACCESSORY_COLOR_SLOT = {
     hair: "hairColor",
@@ -431,19 +434,23 @@ const SLOT_ORDER = {
         "model",
         "skin",
         "girlHair",
+        "girlHairColor",
         "girlTop",
+        "girlTopColor",
         "girlBottom",
-        "bottomColor"
+        "girlBottomColor"
     ],
     chibiBoy: [
         "model",
         "skin",
-        "hair"
+        "hair",
+        "hairColor"
     ],
     chibiGirl: [
         "model",
         "skin",
-        "girlHair"
+        "girlHair",
+        "girlHairColor"
     ],
     hironoStandee: [
         "model",
@@ -451,6 +458,7 @@ const SLOT_ORDER = {
         "hair",
         "hairColor",
         "outfit",
+        "outfitColor",
         "pants",
         "pantsColor",
         "shoes",
@@ -462,6 +470,7 @@ const SLOT_ORDER = {
         "hair",
         "hairColor",
         "outfit",
+        "outfitColor",
         "pants",
         "pantsColor",
         "shoes",
@@ -821,6 +830,7 @@ function getProductDetailsAddon() {
 
 function saveProductDetails() {
     saveCustomizationSnapshot(false, false);
+    updateSelectedItemsUI();
     updatePriceDisplay();
 }
 
@@ -831,11 +841,25 @@ function renderProductDetailsPanel() {
         return;
     }
 
+    if (navigationSlot !== "productDetails") {
+        productDetailsPanel.hidden = true;
+        return;
+    }
+
     const activeState = getActiveState();
     const config = getProductDetailsConfig();
     const productKey = getProductDetailsKey();
 
     if (!activeState || !activeState.model || !activeState.skin || !config) {
+        productDetailsPanel.hidden = true;
+        return;
+    }
+
+    const requiredSlots = state.currentCategory === "chibi"
+        ? ["productType", "model", "skin"]
+        : ["model", "skin"];
+
+    if (!requiredSlots.every(slot => Boolean(activeState[slot]))) {
         productDetailsPanel.hidden = true;
         return;
     }
@@ -2038,9 +2062,9 @@ function renderPreviewSummary() {
         );
 
     const categoryValue =
-        getFigureLabel(state.currentCategory) ||
+        (state.currentCategory && getFigureLabel(state.currentCategory)) ||
         data?.figureCategory ||
-        getCommissionFigureCategoryLabel();
+        "Not selected";
 
     const orderTypeValue =
         data?.orderType ||
@@ -2177,16 +2201,59 @@ function updateSelectedItemsUI() {
 
 
     const items =
-        getActiveSlotOrder().map(
+        getActiveSlotOrder()
+        .filter(slot => slot !== "skin" && !slot.endsWith("Color"))
+        .map(
             function(slot) {
                 return activeState[slot];
             }
         ).filter(
-            Boolean
+            item => item && item.name !== "Custom Color"
         );
 
+    const detailItems = [];
+    const config = getProductDetailsConfig();
+    const selectedBox = config?.boxes?.find(box => box.id === productDetails.box);
 
-    if (!items.length) {
+    if (productDetails.size) {
+        detailItems.push(`Size: ${productDetails.size}`);
+    }
+
+    if (selectedBox) {
+        detailItems.push(selectedBox.label);
+    }
+
+    if (productDetails.figureName.trim()) {
+        detailItems.push(`Figure name: ${productDetails.figureName.trim()}`);
+    }
+
+    if (productDetails.boxName.trim()) {
+        detailItems.push(`Box name: ${productDetails.boxName.trim()}`);
+    }
+
+    if (productDetails.boxNumber.trim()) {
+        detailItems.push(`Box number: ${productDetails.boxNumber.trim()}`);
+    }
+
+    if (productDetails.boxColor.trim()) {
+        detailItems.push(`Box color: ${productDetails.boxColor.trim()}`);
+    }
+
+    if (productDetails.blindBox === "set") {
+        detailItems.push("Blind Box Set");
+    }
+
+    if (Array.isArray(productDetails.hironoAddons)) {
+        const addonLabels = {
+            tearPaper: "Tear Paper",
+            pouch: "Pouch",
+            digitalArt: "Digital Art"
+        };
+        detailItems.push(...productDetails.hironoAddons.map(addon => addonLabels[addon] || addon));
+    }
+
+
+    if (!items.length && !detailItems.length) {
         const emptyText =
             document.createElement(
                 "span"
@@ -2235,6 +2302,13 @@ function updateSelectedItemsUI() {
         }
     );
 
+    detailItems.forEach(label => {
+        const tag = document.createElement("span");
+        tag.className = "selected-tag";
+        tag.textContent = label;
+        selectedList.appendChild(tag);
+    });
+
 }
 
 
@@ -2257,6 +2331,19 @@ function updateSectionVisibility() {
 
 
     if (!activeCategory) {
+        if (continueBtn) {
+            continueBtn.hidden = true;
+        }
+
+        if (productDetailsPanel) {
+            productDetailsPanel.hidden = true;
+        }
+
+        const navigation = document.getElementById("designStepNavigation");
+        if (navigation) {
+            navigation.hidden = true;
+        }
+
         return;
     }
 
@@ -2279,6 +2366,10 @@ function updateSectionVisibility() {
 
     const activeState =
         state[activeCategory];
+
+    if (continueBtn) {
+        continueBtn.hidden = true;
+    }
 
     Object.values(
         sectionIds
@@ -2308,6 +2399,187 @@ function updateSectionVisibility() {
             }
         );
     };
+
+
+    let sequentialSlots = null;
+
+    if (activeCategory === "funko") {
+        sequentialSlots = activeState.model && isFunkoGirlModel(activeState.model)
+            ? ["model", "skin", "girlHair", "girlTop", "girlBottom"]
+            : ["model", "skin", "hair", "top", "bottom"];
+    }
+
+    if (activeCategory === "chibi") {
+        sequentialSlots = !activeState.productType
+            ? ["productType"]
+            : activeState.model && isChibiGirlModel(activeState.model)
+                ? ["productType", "model", "skin", "girlHair"]
+                : ["productType", "model", "skin", "hair"];
+    }
+
+    if (activeCategory === "hirono") {
+        const hironoMode = getHironoMode();
+        sequentialSlots = hironoMode === "headKeychain"
+            ? ["model", "skin", "keychainHair", "keychainHat"]
+            : ["model", "skin", "hair", "outfit", "pants", "shoes"];
+    }
+
+    if (sequentialSlots) {
+        const sequentialSections = {
+            productType: sectionIds.chibi.type,
+            model: `${activeCategory}ModelSection`,
+            skin: sectionIds[activeCategory].skin,
+            hair: sectionIds.funko.hair,
+            hairColor: sectionIds.funko.hairColor,
+            top: sectionIds.funko.top,
+            topColor: sectionIds.funko.topColor,
+            bottom: sectionIds.funko.bottom,
+            pantsColor: sectionIds.funko.pantsColor,
+            girlHair: sectionIds.funko.girlHair,
+            girlHairColor: sectionIds.funko.hairColor,
+            girlTop: sectionIds.funko.girlTop,
+            girlTopColor: sectionIds.funko.girlTopColor,
+            girlBottom: sectionIds.funko.girlBottom,
+            girlBottomColor: sectionIds.funko.girlBottomColor,
+            keychainHair: sectionIds.hirono.keychainHair,
+            keychainHairColor: sectionIds.hirono.keychainHairColor,
+            keychainHat: sectionIds.hirono.keychainHat,
+            outfit: sectionIds.hirono.outfit,
+            outfitColor: sectionIds.hirono.outfitColor,
+            pants: sectionIds.hirono.pants,
+            shoes: sectionIds.hirono.shoes,
+            shoesColor: sectionIds.hirono.shoesColor
+        };
+
+        if (activeCategory === "chibi") {
+            Object.assign(sequentialSections, {
+                skin: sectionIds.chibi.skin,
+                hair: sectionIds.chibi.hair,
+                hairColor: sectionIds.chibi.hairColor,
+                girlHair: sectionIds.chibi.girlHair,
+                girlHairColor: sectionIds.chibi.girlHairColor
+            });
+        }
+
+        if (activeCategory === "hirono") {
+            Object.assign(sequentialSections, {
+                hair: sectionIds.hirono.hair,
+                hairColor: sectionIds.hirono.hairColor,
+                outfit: sectionIds.hirono.outfit,
+                pants: sectionIds.hirono.pants,
+                pantsColor: sectionIds.hirono.pantsColor,
+                shoes: sectionIds.hirono.shoes,
+                shoesColor: sectionIds.hirono.shoesColor,
+                keychainHair: sectionIds.hirono.keychainHair,
+                keychainHairColor: sectionIds.hirono.keychainHairColor,
+                keychainHat: sectionIds.hirono.keychainHat,
+                outfitColor: sectionIds.hirono.outfitColor
+            });
+        }
+
+        const designSlotByColor = activeCategory === "funko"
+            ? {
+                hairColor: isFunkoGirlModel(activeState.model) ? "girlHair" : "hair",
+                topColor: isFunkoGirlModel(activeState.model) ? "girlTop" : "top",
+                bottomColor: "girlBottom",
+                pantsColor: "bottom"
+            }
+            : activeCategory === "chibi"
+                ? {
+                    hairColor: isChibiGirlModel(activeState.model) ? "girlHair" : "hair",
+                    girlHairColor: "girlHair"
+                }
+                : {
+                    hairColor: "hair",
+                    outfitColor: "outfit",
+                    pantsColor: "pants",
+                    shoesColor: "shoes",
+                    keychainHairColor: "keychainHair"
+                };
+        const requestedSlot = designSlotByColor[navigationSlot] || navigationSlot;
+        const nextSlot = sequentialSlots.find(slot => !activeState[slot]);
+        const slotToShow = requestedSlot && sequentialSlots.includes(requestedSlot)
+            ? requestedSlot
+            : nextSlot || sequentialSlots[sequentialSlots.length - 1];
+        const slotBefore = slotToShow === "skin" || slotToShow.endsWith("Color")
+            ? sequentialSlots[sequentialSlots.indexOf(slotToShow) - 1]
+            : null;
+        const colorSlotByDesign = {
+            hair: "hairColor",
+            girlHair: "girlHairColor",
+            top: "topColor",
+            girlTop: "girlTopColor",
+            bottom: "pantsColor",
+            girlBottom: "girlBottomColor",
+            pants: "pantsColor",
+            shoes: "shoesColor",
+            outfit: "outfitColor",
+            keychainHair: "keychainHairColor"
+        };
+        const slotAfter = colorSlotByDesign[slotToShow];
+        const designsComplete = !nextSlot;
+        const detailsStep = navigationSlot === "productDetails";
+
+        if (continueBtn) {
+            continueBtn.hidden = !detailsStep;
+        }
+
+        if (productDetailsPanel) {
+            productDetailsPanel.hidden = !detailsStep;
+        }
+
+        if (detailsStep) {
+            Object.values(sequentialSections).forEach(id => {
+                setVisibleById(id, false);
+            });
+
+            renderProductDetailsPanel();
+            renderDesignNavigation(
+                sequentialSlots,
+                sequentialSections,
+                activeState,
+                sequentialSlots[sequentialSlots.length - 1]
+            );
+
+            return;
+        }
+
+        setVisibleById(
+            sequentialSections.model,
+            slotToShow === "model"
+        );
+
+        setVisibleById(
+            sequentialSections[slotBefore],
+            Boolean(slotBefore)
+        );
+
+        setVisibleById(
+            sequentialSections[slotToShow],
+            Boolean(slotToShow)
+        );
+
+        setVisibleById(
+            sequentialSections[slotAfter],
+            Boolean(slotAfter)
+        );
+
+        if (designsComplete) {
+            setVisibleById(
+                sequentialSections[slotToShow],
+                true
+            );
+        }
+
+        renderDesignNavigation(
+            sequentialSlots,
+            sequentialSections,
+            activeState,
+            slotToShow
+        );
+
+        return;
+    }
 
 
     if (activeCategory === "funko") {
@@ -2410,6 +2682,51 @@ function updateSectionVisibility() {
 
     const hironoMode =
         getHironoMode();
+
+
+    if (activeCategory === "hirono") {
+
+        const hironoSequence =
+            hironoMode === "headKeychain"
+                ? ["model", "skin", "keychainHair", "keychainHairColor", "keychainHat"]
+                : ["model", "skin", "hair", "hairColor", "outfit", "pants", "pantsColor", "shoes", "shoesColor"];
+
+        const hironoSections = {
+            model: "hironoModelSection",
+            skin: sectionIds.hirono.skin,
+            hair: sectionIds.hirono.hair,
+            hairColor: sectionIds.hirono.hairColor,
+            outfit: sectionIds.hirono.outfit,
+            pants: sectionIds.hirono.pants,
+            pantsColor: sectionIds.hirono.pantsColor,
+            shoes: sectionIds.hirono.shoes,
+            shoesColor: sectionIds.hirono.shoesColor,
+            keychainHair: sectionIds.hirono.keychainHair,
+            keychainHairColor: sectionIds.hirono.keychainHairColor,
+            keychainHat: sectionIds.hirono.keychainHat
+        };
+
+        const nextSlot =
+            hironoSequence.find(slot => !activeState[slot]);
+
+        const designsComplete = !nextSlot;
+
+        if (productDetailsPanel) {
+            productDetailsPanel.hidden = !designsComplete;
+        }
+
+        setVisibleById(
+            hironoSections.model,
+            nextSlot === "model"
+        );
+
+        setVisibleById(
+            hironoSections[nextSlot],
+            Boolean(nextSlot)
+        );
+
+        return;
+    }
 
 
     if (hironoMode === "headKeychain") {
@@ -2686,6 +3003,7 @@ function applyCustomColor(category, slot, color, input) {
 
     input.closest(".custom-color-control").querySelector("output").textContent = color;
     state.currentCategory = category;
+    navigationSlot = getColorAccessorySlot(category, slot);
     updateSectionVisibility();
     updateSelectedItemsUI();
     renderProductDetailsPanel();
@@ -2698,7 +3016,7 @@ function applyCustomColor(category, slot, color, input) {
 function initializeCustomColorPickers() {
 
     document.querySelectorAll(
-        ".top-color-picker"
+        ".top-color-picker, .custom-color-only-section"
     ).forEach(
         function(section) {
             if (section.querySelector(".custom-color-control")) {
@@ -2745,7 +3063,7 @@ function initializeCustomColorPickers() {
 function syncCustomColorPickers() {
 
     document.querySelectorAll(
-        ".top-color-picker"
+        ".top-color-picker, .custom-color-only-section"
     ).forEach(
         function(section) {
             const slotCard =
@@ -2883,6 +3201,57 @@ function getSelectedItemNames(activeState) {
 }
 
 
+function getSelectionDetails(activeState) {
+
+    if (!activeState) {
+        return [];
+    }
+
+    const labels = {
+        model: "Figure type",
+        skin: "Skin color",
+        hair: "Hair",
+        girlHair: "Hair",
+        keychainHair: "Hair",
+        top: "Top",
+        girlTop: "Top",
+        outfit: "Outfit",
+        bottom: "Bottom",
+        girlBottom: "Bottom",
+        pants: "Pants",
+        shoes: "Shoes",
+        hat: "Hat",
+        accessory: "Accessory"
+    };
+
+    return getActiveSlotOrder().reduce((details, slot) => {
+        if (slot === "skin" || slot.endsWith("Color")) {
+            return details;
+        }
+
+        const item = activeState[slot];
+
+        if (!item || !labels[slot]) {
+            return details;
+        }
+
+        const value = getSummarySelectionValue(
+            slot,
+            item,
+            activeState
+        );
+
+        details.push({
+            label: labels[slot],
+            value
+        });
+
+        return details;
+    }, []);
+
+}
+
+
 function getAccessoryNames(activeState) {
 
     if (!activeState) {
@@ -2915,6 +3284,123 @@ function getPrimarySelectionName(activeState) {
 
     return activeState.model.name || "";
 
+}
+
+
+function toSummarySlug(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/-([0-9]+)/g, "$1")
+        .replace(/^-+|-+$/g, "");
+}
+
+
+function getFileBaseName(value) {
+    return String(value || "")
+        .split(/[\\/]/)
+        .pop()
+        .replace(/\.[^.]+$/, "");
+}
+
+
+function getSummaryToken(item) {
+    if (!item) {
+        return "";
+    }
+
+    return toSummarySlug(
+        getFileBaseName(item.model || item.name || item.color || "")
+    );
+}
+
+
+function getSummaryColorToken(item) {
+    if (!item) {
+        return "";
+    }
+
+    return toSummarySlug(
+        item.name || item.color || ""
+    );
+}
+
+
+function getFigureTypeSummaryValue(activeState) {
+    const category = toSummarySlug(getFigureLabel(state.currentCategory));
+    const model = getSummaryToken(activeState?.model);
+    const modelName = toSummarySlug(activeState?.model?.name);
+
+    if (!category) {
+        return model;
+    }
+
+    let suffix = model;
+
+    if (category === "funko-pop") {
+        suffix = suffix
+            .replace(/^funko-pop-?/, "")
+            .replace(/^funko-?/, "")
+            .replace(/^pop-?/, "");
+
+        if (suffix === "default") {
+            suffix = "boy";
+        }
+    }
+    else if (category === "hirono") {
+        return modelName || (suffix ? `${category}-${suffix.replace(/^hirono-?/, "")}` : category);
+    }
+    else if (category === "chibi") {
+        return modelName || (suffix ? `${category}-${suffix.replace(/^chibi-?/, "")}` : category);
+    }
+
+    return suffix ? `${category}-${suffix}` : category;
+}
+
+
+function getSummarySelectionValue(slot, item, activeState) {
+    if (!item) {
+        return "";
+    }
+
+    if (slot === "model") {
+        return getFigureTypeSummaryValue(activeState);
+    }
+
+    if (slot === "skin") {
+        return getSummaryColorToken(item);
+    }
+
+    const colorSlot = {
+        hair: "hairColor",
+        girlHair: "girlHairColor",
+        keychainHair: "keychainHairColor",
+        top: "topColor",
+        girlTop: "girlTopColor",
+        bottom: "pantsColor",
+        girlBottom: "girlBottomColor",
+        pants: "pantsColor",
+        outfit: "outfitColor",
+        shoes: "shoesColor",
+        hat: "hatColor",
+        accessory: "accessoryColor"
+    }[slot];
+
+    const color =
+        colorSlot ? activeState?.[colorSlot] : null;
+
+    const itemToken =
+        getSummaryToken(item);
+
+    const colorToken =
+        color && color.name !== "Custom Color"
+            ? getSummaryColorToken(color)
+            : "";
+
+    return colorToken
+        ? `${itemToken}-${colorToken}`
+        : itemToken;
 }
 
 
@@ -3054,6 +3540,7 @@ function buildCustomizationSnapshot(isCompleted, isConfirmed) {
         shoes: activeState.shoes ? activeState.shoes.name : "",
         accessories: getAccessoryNames(activeState),
         selectedItems,
+        selectionDetails: getSelectionDetails(activeState),
         previewImage: canvas ? canvas.toDataURL("image/png") : "",
         estimatedPrice,
         productKey: productDetails.productKey,
@@ -3591,6 +4078,62 @@ async function renderCurrentCategory() {
 }
 
 
+function renderDesignNavigation(sequence, sections, activeState, currentSlot) {
+
+    const navigation = document.getElementById("designStepNavigation");
+    const previousButton = document.getElementById("previousDesignStep");
+    const nextButton = document.getElementById("nextDesignStep");
+    const detailsStep = navigationSlot === "productDetails";
+
+    if (!navigation || !previousButton || !nextButton || !sequence?.length || !currentSlot) {
+        if (navigation) {
+            navigation.hidden = true;
+        }
+        return;
+    }
+
+    const currentIndex = Math.max(
+        0,
+        sequence.indexOf(currentSlot)
+    );
+
+    navigation.hidden = false;
+    previousButton.disabled = detailsStep ? false : currentIndex === 0;
+    nextButton.hidden = detailsStep;
+    const canSkipCurrentSlot = !["model", "skin", "productType"].includes(currentSlot);
+    nextButton.disabled =
+        detailsStep ||
+        (!activeState[currentSlot] && !canSkipCurrentSlot);
+
+    previousButton.onclick = () => {
+        if (detailsStep) {
+            navigationSlot = sequence[sequence.length - 1];
+            updateSectionVisibility();
+            return;
+        }
+
+        if (currentIndex <= 0) {
+            return;
+        }
+
+        navigationSlot = sequence[currentIndex - 1];
+        updateSectionVisibility();
+    };
+
+    nextButton.onclick = () => {
+        if (!activeState[currentSlot] && !canSkipCurrentSlot) {
+            return;
+        }
+
+        navigationSlot = currentIndex >= sequence.length - 1
+            ? "productDetails"
+            : sequence[currentIndex + 1];
+        updateSectionVisibility();
+    };
+
+}
+
+
 function selectCategory(category) {
 
     if (!categoryPanels[category]) {
@@ -3613,6 +4156,7 @@ function selectCategory(category) {
 
     state.currentCategory =
         category;
+    navigationSlot = null;
 
     syncCustomColorPickers();
 
@@ -3655,9 +4199,14 @@ function selectModel(card) {
         );
 
 
+    const requestedMode = category === "hirono"
+        ? card.dataset.mode || (item.name.toLowerCase().includes("keychain") ? "keychain" : "standee")
+        : "";
+
     if (
         stateForCategory.model &&
-        stateForCategory.model.model === item.model
+        stateForCategory.model.model === item.model &&
+        (category !== "hirono" || stateForCategory.mode === requestedMode)
     ) {
         return;
     }
@@ -3670,8 +4219,7 @@ function selectModel(card) {
 
     if (category === "hirono") {
         stateForCategory.mode =
-            card.dataset.mode ||
-            (item.name.toLowerCase().includes("keychain") ? "keychain" : "standee");
+            requestedMode;
     }
 
     if (category === "chibi") {
@@ -3764,6 +4312,7 @@ function selectSkin(card) {
 
     state.currentCategory =
         category;
+    navigationSlot = "skin";
 
 
     applySkinColor(
@@ -3788,6 +4337,8 @@ async function selectAccessory(card) {
 
     const slot =
         card.dataset.slot;
+
+    navigationSlot = slot;
 
 
     const item =
@@ -3944,6 +4495,7 @@ function selectColor(card) {
 
     state.currentCategory =
         category;
+    navigationSlot = slot;
 
 
     let accessorySlot =
@@ -4006,6 +4558,8 @@ function selectColor(card) {
 
 
 function handleCardClick(card) {
+
+    navigationSlot = null;
 
     if (card.dataset.tab === "figure") {
         selectCategory(
@@ -4094,7 +4648,10 @@ function initializeInteractions() {
         resetBtn.addEventListener(
             "click",
             function() {
-                state.currentCategory = null;
+                const resetCategory = state.currentCategory;
+
+                state.currentCategory = resetCategory;
+                navigationSlot = null;
                 state.funko = createCategoryState();
                 state.hirono = createCategoryState();
                 state.chibi = createCategoryState();
@@ -4120,8 +4677,9 @@ function initializeInteractions() {
 
                 styleCards.forEach(
                     function(card) {
-                        card.classList.remove(
-                            "selected"
+                        card.classList.toggle(
+                            "selected",
+                            card.dataset.figure === resetCategory
                         );
                     }
                 );
@@ -4130,9 +4688,7 @@ function initializeInteractions() {
                 updateSelectedItemsUI();
                 updatePriceDisplay();
                 renderProductDetailsPanel();
-                setFigurePromptVisible(
-                    true
-                );
+                setFigurePromptVisible(true);
 
                 void renderCurrentCategory();
             }
@@ -4183,8 +4739,10 @@ function initializeInteractions() {
                     false
                 );
 
-                window.location.href =
-                    "final-preview.html";
+                window.top.location.href = new URL(
+                    "final-preview.html",
+                    window.location.href
+                ).href;
 
             }
         );
@@ -4416,19 +4974,6 @@ else {
             selectCategory(
                 storedCommissionCategory
             );
-
-            // Start with the first model for the category selected on the
-            // commission page so the 3D preview is populated immediately.
-            const defaultModelCard =
-                document.querySelector(
-                    `[data-figure="${storedCommissionCategory}"][data-slot="model"]`
-                );
-
-            if (defaultModelCard) {
-                selectModel(
-                    defaultModelCard
-                );
-            }
         }
         else {
 

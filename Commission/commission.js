@@ -41,7 +41,7 @@ let designDetails = {
 function showSection(sectionId) {
 
     document
-        .querySelectorAll(".commission-section, .create-style-flow-container")
+        .querySelectorAll(".commission-section, .create-style-flow-container, .figure-category-section")
         .forEach(section => {
 
             section.classList.add("hidden");
@@ -74,10 +74,44 @@ function showSection(sectionId) {
 }
 
 
+function showSetupFlow(scrollToTop = false) {
+
+    document.querySelector(".commission-hero")?.classList.remove("hidden");
+
+    document
+        .querySelectorAll(".commission-section, .create-style-flow-container, .figure-category-section")
+        .forEach(section => section.classList.add("hidden"));
+
+    const flowContainer =
+        document.getElementById("createStyleFlowContainer");
+
+    if (flowContainer) {
+        flowContainer.classList.remove("hidden");
+    }
+
+    [
+        "orderTypeSection",
+        "calendarSection",
+        "creationSection"
+    ].forEach(sectionId => {
+        document.getElementById(sectionId)?.classList.remove("hidden");
+    });
+
+    initializeCalendar();
+    updateCalendarExtrasVisibility();
+    updateOrderTypeInstruction();
+
+    if (scrollToTop) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+}
+
+
 function showCreateStyleFlow(scrollToTop = true) {
 
     document
-        .querySelectorAll(".commission-section, .create-style-flow-container")
+        .querySelectorAll(".commission-section, .create-style-flow-container, .figure-category-section")
         .forEach(section => {
             section.classList.add("hidden");
         });
@@ -193,15 +227,11 @@ function getCustomizationItems(data) {
     pushItem("Top", data.top);
     pushItem("Bottom", data.bottom);
     pushItem("Shoes", data.shoes);
-    pushItem("Top color", data.clothingColors?.top);
-    pushItem("Bottom color", data.clothingColors?.bottom);
+    pushItem("Top color", data.clothingColors?.top?.name || data.clothingColors?.top);
+    pushItem("Bottom color", data.clothingColors?.bottom?.name || data.clothingColors?.bottom);
 
     if (Array.isArray(data.accessories) && data.accessories.length) {
         pushItem("Accessories", data.accessories.join(", "));
-    }
-
-    if (Array.isArray(data.selectedItems) && data.selectedItems.length) {
-        pushItem("Selected", data.selectedItems.join(", "));
     }
 
     return items;
@@ -331,6 +361,58 @@ function isHironoStandee(data) {
         !String(data?.figureModel || "").toLowerCase().includes("keychain");
 }
 
+function getCustomerSummaryDesignDetails(data) {
+
+    if (Array.isArray(data?.selectionDetails) && data.selectionDetails.length) {
+        return data.selectionDetails.filter(item =>
+            item?.label &&
+            item?.value &&
+            item.label !== "Skin color" &&
+            !item.label.toLowerCase().includes("color") &&
+            item.value !== "Custom Color"
+        );
+    }
+
+    const legacyLabels = {
+        Figure: "Figure type",
+        Model: "Figure type",
+        Skin: "Skin color",
+        Hair: "Hair",
+        Top: "Top",
+        Bottom: "Bottom",
+        Shoes: "Shoes",
+        "Top color": "Top color",
+        "Bottom color": "Bottom color"
+    };
+
+    return getCustomizationItems(data)
+        .filter(item =>
+            item.label !== "Figure" &&
+            item.label !== "Skin" &&
+            !item.label.toLowerCase().includes("color") &&
+            item.value !== "Custom Color"
+        )
+        .map(item => ({
+            ...item,
+            label: legacyLabels[item.label] || item.label
+        }));
+
+}
+
+function getCustomerOrderEstimatedTotal(data) {
+
+    restoreDesignDetails();
+
+    const designPrice = Number(data?.estimatedPrice || 0);
+    const savedBasePrice = Number(designDetails.basePrice || 0);
+    const savedTotal = Number(designDetails.total || 0);
+
+    return creationMethod === "create" && savedTotal > 0 && savedBasePrice === designPrice
+        ? savedTotal
+        : designPrice;
+
+}
+
 function saveDesignDetails() {
     try {
         localStorage.setItem(COMMISSION_DESIGN_DETAILS_KEY, JSON.stringify(designDetails));
@@ -414,7 +496,7 @@ function renderDesignDetails() {
 
 function renderCustomerOrderSummary() {
     const data = getCustomizationState();
-    const tags = document.getElementById("customerSummaryTags");
+    const designRows = document.getElementById("customerSummaryDesignRows");
     const preview = document.getElementById("customerSummaryPreview");
     const total = document.getElementById("customerSummaryTotal");
     const category = document.getElementById("customerSummaryCategory");
@@ -422,7 +504,7 @@ function renderCustomerOrderSummary() {
     const bookingDate = document.getElementById("customerSummaryBookingDate");
     const title = document.getElementById("customerSummaryTitle");
 
-    if (!data || !tags) return;
+    if (!data || !designRows) return;
 
     if (title) {
         title.textContent = data.figureCategory
@@ -430,19 +512,23 @@ function renderCustomerOrderSummary() {
             : "Your figure order";
     }
 
-    tags.innerHTML = "";
+    designRows.innerHTML = "";
 
-    const selectedItems =
-        data.selectedItems && data.selectedItems.length
-            ? data.selectedItems
-            : getCustomizationItems(data).map(item => item.value);
+    const summaryItems = getCustomerSummaryDesignDetails(data);
 
-    selectedItems.filter(Boolean).forEach(value => {
+    if (summaryItems.length) {
+        summaryItems.forEach(item => {
+            const chip = document.createElement("span");
+            chip.className = "summary-chip";
+            chip.textContent = `${item.label}: ${item.value}`;
+            designRows.appendChild(chip);
+        });
+    } else {
         const chip = document.createElement("span");
         chip.className = "summary-chip";
-        chip.textContent = value;
-        tags.appendChild(chip);
-    });
+        chip.textContent = "No selected design saved yet.";
+        designRows.appendChild(chip);
+    }
 
     if (preview && data.previewImage) {
         preview.src = data.previewImage;
@@ -461,7 +547,7 @@ function renderCustomerOrderSummary() {
         bookingDate.textContent = getSelectedBookingDateLabel();
     }
 
-    if (total) total.textContent = formatMoney(Number(data.estimatedPrice || 0));
+    if (total) total.textContent = formatMoney(getCustomerOrderEstimatedTotal(data));
 }
 
 function openDesignDetails() {
@@ -552,7 +638,7 @@ function renderCustomizationSummary() {
     summaryTags.innerHTML = "";
 
 
-    getCustomizationItems(data).forEach(item => {
+    getCustomerSummaryDesignDetails(data).forEach(item => {
 
         const chip = document.createElement("span");
 
@@ -599,15 +685,22 @@ function selectFigureCategory(category) {
         return;
     }
 
+    try {
+        localStorage.removeItem("figurifyCustomization");
+    }
+    catch (error) {
+        console.warn("Unable to reset previous category design:", error);
+    }
+
     if (!orderType) {
         alert("Please select an order type first.");
-        showSection("orderTypeSection");
+        showSetupFlow(true);
         return;
     }
 
     if (!selectedDate) {
         alert("Please choose an available booking date.");
-        showSection("calendarSection");
+        showSetupFlow(true);
         return;
     }
 
@@ -642,19 +735,19 @@ function openDressUpCustomizer(category) {
 
     if (!orderType) {
         alert("Please select an order type first.");
-        showSection("orderTypeSection");
+        showSetupFlow(true);
         return;
     }
 
     if (!selectedDate) {
         alert("Please choose an available booking date.");
-        showSection("calendarSection");
+        showSetupFlow(true);
         return;
     }
 
     if (!figureCategory) {
         alert("Please choose a figure category.");
-        showSection("calendarSection");
+        showSection("figureCategorySection");
         return;
     }
 
@@ -673,7 +766,108 @@ function openDressUpCustomizer(category) {
         figureCategory
     );
 
-    window.location.href = "DressUp/dressup.html";
+    const customizationFrame =
+        document.getElementById("customizationFrame");
+
+    document.querySelector(".commission-hero")?.classList.add("hidden");
+    showSection("figureCategorySection");
+
+    setFigureCategoryView(true);
+
+    if (customizationFrame) {
+        customizationFrame.onload = () => {
+            try {
+                const editorDocument = customizationFrame.contentDocument;
+
+                if (!editorDocument || editorDocument.getElementById("embeddedEditorStyles")) {
+                    return;
+                }
+
+                const embeddedStyles = editorDocument.createElement("style");
+                embeddedStyles.id = "embeddedEditorStyles";
+                embeddedStyles.textContent = `
+                    html, body {
+                        height: 100% !important;
+                        min-height: 100%;
+                        margin: 0 !important;
+                        background: transparent !important;
+                        background-image: none !important;
+                        overflow: hidden !important;
+                    }
+                    .navbar,
+                    .back-link,
+                    .hero,
+                    .commission-hero,
+                    footer {
+                        display: none !important;
+                    }
+                    .top-color-picker .top-color-card {
+                        display: none !important;
+                    }
+                    .customizer {
+                        width: 100% !important;
+                        max-width: none !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        height: 100% !important;
+                        max-height: 100% !important;
+                        overflow: hidden !important;
+                        border: 0 !important;
+                        border-radius: 0 !important;
+                        background: transparent !important;
+                        box-shadow: none !important;
+                    }
+                    .preview-container,
+                    .options-container {
+                        height: 100% !important;
+                        max-height: 100% !important;
+                    }
+                `;
+                editorDocument.head.appendChild(embeddedStyles);
+
+                customizationFrame.style.height = "min(760px, calc(100vh - 170px))";
+            }
+            catch (error) {
+                console.warn("Unable to style embedded customization editor:", error);
+            }
+        };
+        customizationFrame.src = "DressUp/dressup.html";
+    }
+
+}
+
+
+function showFigureCategoryStep() {
+
+    creationMethod = "create";
+    document.querySelector(".commission-hero")?.classList.add("hidden");
+    restoreFigureCategorySelection();
+    showSection("figureCategorySection");
+    setFigureCategoryView(false);
+
+}
+
+
+function setFigureCategoryView(showCategory) {
+
+    const categorySection =
+        document.getElementById("figureCategorySection");
+
+    const categoryTitle =
+        categorySection?.querySelector(".section-title");
+
+    const categoryGrid =
+        categorySection?.querySelector(".figure-category-grid");
+
+    const customizationEmbed =
+        document.getElementById("customizationEmbed");
+
+    categoryTitle?.classList.remove("hidden");
+    categoryGrid?.classList.remove("hidden");
+    customizationEmbed?.classList.toggle("hidden", !showCategory);
+    customizationEmbed?.closest(".create-style-flow-container")?.classList.remove(
+        "customizer-active"
+    );
 
 }
 
@@ -775,36 +969,9 @@ function selectCreationMethod(method) {
     }
 
 
-    /* =====================================================
-       CREATE & STYLE
-
-       This now opens the new Create & Style
-       schedule flow before the Dress-Up customizer.
-    ===================================================== */
-
     if (method === "create") {
 
-        creationMethod = "create";
-
-        orderType = "";
-        selectedDate = null;
-
-        [
-            COMMISSION_ORDER_TYPE_KEY,
-            COMMISSION_BOOKING_DATE_KEY,
-            COMMISSION_FIGURE_CATEGORY_KEY
-        ].forEach(key => localStorage.removeItem(key));
-
-        document
-            .querySelectorAll(".order-card, .figure-category-card")
-            .forEach(card => card.classList.remove("selected"));
-
-        showCreateStyleFlow();
-
-        updateOrderTypeInstruction();
-        updateCalendarExtrasVisibility();
-        renderCustomizationSummary();
-
+        showFigureCategoryStep();
         return;
 
     }
@@ -851,23 +1018,9 @@ function selectCreationMethod(method) {
 
 function continueFromCreation(method) {
 
-    /*
-        Create & Style opens the Dress-Up
-        customizer.
-    */
-
     if (method === "create") {
 
-        creationMethod = "create";
-
-        showCreateStyleFlow(false);
-
-        updateOrderTypeInstruction();
-        restoreOrderTypeSelection();
-        restoreBookingDateSelection();
-        restoreFigureCategorySelection();
-        updateCalendarExtrasVisibility();
-        renderCustomizationSummary();
+        showFigureCategoryStep();
 
         return;
 
@@ -883,11 +1036,6 @@ function continueFromCreation(method) {
 ========================================================= */
 
 function continueFromReference() {
-
-    /*
-        Make sure the user has selected
-        Customer Reference.
-    */
 
     creationMethod = "reference";
 
@@ -906,18 +1054,10 @@ function continueFromReference() {
 
     }
 
-
-    showSection(
-        "orderTypeSection"
-    );
+    prepareScheduleInformation();
 
 
-    updateOrderTypeInstruction();
-
-    restoreOrderTypeSelection();
-    updateCalendarExtrasVisibility();
-
-    renderCustomizationSummary();
+    showSection("quotationWaitingSection");
 
 }
 
@@ -1016,24 +1156,7 @@ function selectOrderType(type) {
     }
 
 
-    /*
-        Go to calendar after selecting
-        the order type.
-    */
-
-    if (creationMethod === "create") {
-        showCreateStyleFlow(false);
-
-        document
-            .getElementById("calendarSection")
-            ?.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-    }
-    else {
-        showSection("calendarSection");
-    }
+    showSetupFlow();
 
     initializeCalendar();
     updateCalendarExtrasVisibility();
@@ -1061,28 +1184,8 @@ function updateOrderTypeInstruction() {
     }
 
 
-    if (creationMethod === "create") {
-
-        instruction.textContent =
-            "Create & Style selected and confirmed. Choose whether your order is Rush or Non-Rush.";
-
-    }
-
-    else if (
-        creationMethod === "reference"
-    ) {
-
-        instruction.textContent =
-            "Choose whether you need your Customer Reference order sooner or prefer our regular schedule.";
-
-    }
-
-    else {
-
-        instruction.textContent =
-            "Choose whether you need your figure sooner or prefer our regular schedule.";
-
-    }
+    instruction.textContent =
+        "Choose whether you need your figure sooner or prefer our regular schedule.";
 
 }
 
@@ -1204,28 +1307,10 @@ function updateCalendarMessage(text) {
 
 function updateCalendarExtrasVisibility() {
 
-    const showExtras =
-        creationMethod === "create";
-
-    const showFigureCategory =
-        showExtras;
-
     document
         .querySelectorAll(".calendar-note")
         .forEach(element => {
-            element.classList.toggle(
-                "hidden",
-                !showExtras
-            );
-        });
-
-    document
-        .querySelectorAll(".figure-category-section")
-        .forEach(element => {
-            element.classList.toggle(
-                "hidden",
-                !showFigureCategory
-            );
+            element.classList.remove("hidden");
         });
 
 }
@@ -1627,30 +1712,20 @@ function selectCalendarDate(date) {
     }
 
 
-    if (creationMethod === "reference") {
+    updateCalendarMessage(
+        "Selected date: " +
+        selectedDate.toLocaleDateString(
+            "en-PH",
+            {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
+        )
+    );
 
-        setTimeout(() => {
-            continueAfterCalendar();
-        }, 300);
-
-    }
-    else {
-        updateCalendarMessage(
-            "Selected date: " +
-            selectedDate.toLocaleDateString(
-                "en-PH",
-                {
-                    weekday: "long",
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric"
-                }
-            )
-        );
-
-        // Reveal the notes and figure category after a valid date is chosen.
-        updateCalendarExtrasVisibility();
-    }
+    showSetupFlow();
 
 }
 
@@ -1689,29 +1764,8 @@ function continueAfterCalendar() {
     }
 
 
-    /*
-        Your existing page does not have
-        another common form between the calendar
-        and quotation stage.
-
-        Customer Reference continues to its
-        existing quotation waiting flow.
-
-        Create & Style also continues to the
-        quotation waiting flow because the
-        customization form was intentionally removed.
-    */
-
     prepareScheduleInformation();
-
-    if (creationMethod === "create") {
-        renderCustomerOrderSummary();
-        updateCustomerPaymentInstruction();
-        showSection("customerSection");
-        return;
-    }
-
-    showSection("quotationWaitingSection");
+    showSetupFlow();
 
 }
 
@@ -2315,7 +2369,7 @@ if (designDetailsForm) {
         updateOrderTypeInstruction();
         restoreOrderTypeSelection();
         renderCustomizationSummary();
-        showSection("orderTypeSection");
+        showSetupFlow();
     });
 }
 
@@ -2478,14 +2532,7 @@ document.addEventListener(
             );
 
             creationMethod = "";
-            /*
-                Keep only the first section
-                visible when the page loads.
-            */
-
-            showSection(
-                "creationSection"
-            );
+            showSetupFlow(true);
 
         }
 
