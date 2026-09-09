@@ -784,6 +784,15 @@ body {
     font-weight: 400;
 }
 
+.detail-card-image {
+    display: block;
+    width: 100%;
+    height: 96px;
+    margin: 0 0 10px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
 .product-detail-input {
     width: 100%;
     padding: 12px 14px;
@@ -797,6 +806,11 @@ body {
 .product-detail-input:focus {
     border-color: #df65a6;
     box-shadow: 0 0 0 3px #f8c5df;
+}
+
+.product-detail-input:disabled {
+    cursor: not-allowed;
+    opacity: .55;
 }
 
 .detail-hint {

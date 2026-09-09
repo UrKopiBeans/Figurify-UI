@@ -61,6 +61,7 @@ function populatePreview(snapshot) {
 
     const boxLabels = {
         none: "Without box",
+        with: "Custom Funko Box",
         solo: "Solo Box",
         couple: "Couple Box",
         display: "Display Box",

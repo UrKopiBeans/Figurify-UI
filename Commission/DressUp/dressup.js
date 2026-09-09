@@ -388,6 +388,18 @@ const PRODUCT_DETAIL_CONFIGS = {
 };
 
 
+const PRODUCT_SIZE_PRICES = {
+    funkoBoy: { "3 inches": 900, "4 inches": 1200, "5 inches": 1500 },
+    funkoGirl: { "3 inches": 900, "4 inches": 1200, "5 inches": 1500 },
+    chibiBoy: { "2 inches": 500, "3 inches": 680, "4 inches": 900, "5 inches": 1200 },
+    chibiGirl: { "2 inches": 500, "3 inches": 680, "4 inches": 900, "5 inches": 1200 },
+    chibiBoyKeychain: { "2 inches": 500 },
+    chibiGirlKeychain: { "2 inches": 500 },
+    hironoStandee: { "2 inches": 600, "3.5 inches": 950 },
+    hironoKeychain: { "2 inches": 600 }
+};
+
+
 let productDetails = {
     productKey: "",
     size: "",
@@ -401,8 +413,7 @@ let productDetails = {
     boxDesign: "checkered",
     boxNickname: "",
     boxLetter: "",
-    boxDateMonth: "",
-    boxDateDay: ""
+    boxDateYmd: ""
 };
 
 let navigationSlot = null;
@@ -796,6 +807,16 @@ function getProductDetailsConfig() {
 }
 
 
+function getProductSizePrice() {
+
+    const prices =
+        PRODUCT_SIZE_PRICES[getProductDetailsKey()] || {};
+
+    return prices[productDetails.size] || 0;
+
+}
+
+
 function getProductDetailsAddon() {
 
     const config = getProductDetailsConfig();
@@ -880,8 +901,7 @@ function renderProductDetailsPanel() {
             boxDesign: "checkered",
             boxNickname: "",
             boxLetter: "",
-            boxDateMonth: "",
-            boxDateDay: ""
+            boxDateYmd: ""
         };
     }
 
@@ -902,7 +922,8 @@ function renderProductDetailsPanel() {
     sizeChoiceGrid.innerHTML = config.sizes.length
         ? config.sizes.map(size => `
         <button type="button" class="detail-choice-card${productDetails.size === size ? " selected" : ""}" data-size="${size}">
-            ${size.replace(" inches", "\"")}
+            <strong>${size.replace(" inches", "\"")}</strong>
+            <span>PHP ${PRODUCT_SIZE_PRICES[productKey]?.[size] || 0}</span>
         </button>
     `).join("")
         : `<p class="detail-hint">No size requirement for this product type.</p>`;
@@ -925,9 +946,14 @@ function renderProductDetailsPanel() {
 
     const boxDetailFields = document.getElementById("boxDetailFields");
     const selectedBox = config.boxes.find(box => box.id === productDetails.box);
+    const canEditFunkoBoxDetails = Boolean(selectedBox?.details);
     if (boxDetailFields) {
-        boxDetailFields.hidden = config.hirono || !selectedBox?.details;
+        boxDetailFields.hidden = config.hirono || !canEditFunkoBoxDetails;
     }
+
+    [boxNameInput, boxNumberInput, boxColorInput].forEach(input => {
+        if (input) input.disabled = !canEditFunkoBoxDetails;
+    });
 
     const hironoFields = document.getElementById("hironoDetailFields");
     const hironoBlindBoxGrid = document.getElementById("hironoBlindBoxGrid");
@@ -939,10 +965,11 @@ function renderProductDetailsPanel() {
 
     if (config.hirono && hironoBlindBoxGrid && hironoAddonGrid && hironoBoxDesignGrid && hironoBoxFields) {
         hironoBlindBoxGrid.innerHTML = [
-            { id: "regular", label: "Regular Blind Box", price: 150 },
-            { id: "set", label: "Blind Box Set", price: 350 }
-        ].map(({ id, label, price }) => `
+            { id: "regular", label: "Regular Blind Box", price: 150, image: "Hirono.jpg" },
+            { id: "set", label: "Blind Box Set", price: 350, image: "blindboxset.jpg" }
+        ].map(({ id, label, price, image }) => `
             <button type="button" class="detail-choice-card box-choice-card${productDetails.blindBox === id ? " selected" : ""}" data-blind-box="${id}">
+                <img class="detail-card-image" src="../../Image/${image}" alt="${label}">
                 <strong>${label}</strong>
                 <span>PHP ${price}</span>
             </button>
@@ -952,20 +979,22 @@ function renderProductDetailsPanel() {
             { id: "tearPaper", label: "Tear Blind Paper", price: 50 },
             { id: "pouch", label: "Pouch", price: 50 },
             { id: "digitalArt", label: "Digital Art (Soft Copy) w/ Photo Card", price: 150 }
-        ];
+        ].map(addon => ({ ...addon, image: "Hirono.jpg" }));
 
-        hironoAddonGrid.innerHTML = addons.map(({ id, label, price }) => `
+        hironoAddonGrid.innerHTML = addons.map(({ id, label, price, image }) => `
             <button type="button" class="detail-choice-card box-choice-card${productDetails.hironoAddons.includes(id) ? " selected" : ""}" data-addon="${id}">
+                <img class="detail-card-image" src="../../Image/${image}" alt="${label}">
                 <strong>${label}</strong>
                 <span>PHP ${price}</span>
             </button>
         `).join("");
 
         hironoBoxDesignGrid.innerHTML = [
-            { id: "checkered", label: "Checkered" },
-            { id: "peek", label: "Hirono Peek" }
-        ].map(({ id, label }) => `
+            { id: "checkered", label: "Checkered", image: "checkered.jpg" },
+            { id: "peek", label: "Hirono Peek", image: "peek.jpg" }
+        ].map(({ id, label, image }) => `
             <button type="button" class="detail-choice-card box-choice-card${productDetails.boxDesign === id ? " selected" : ""}" data-box-design="${id}">
+                <img class="detail-card-image" src="../../Image/${image}" alt="${label}">
                 <strong>${label}</strong>
                 <span>Choose box design</span>
             </button>
@@ -979,8 +1008,7 @@ function renderProductDetailsPanel() {
             <label><span class="detail-label">Box Color</span>${colorField}</label>
             <label><span class="detail-label">Nickname</span><input class="product-detail-input" data-detail-field="boxNickname" value="${productDetails.boxNickname}" maxlength="30" placeholder="Example: Bubbles"></label>
             <label><span class="detail-label">Letter (Short Love Letter)</span><textarea class="product-detail-input" data-detail-field="boxLetter" rows="4" maxlength="180" placeholder="Write a short love letter/message here...">${productDetails.boxLetter}</textarea></label>
-            <label><span class="detail-label">Date (Month)</span><select class="product-detail-input" data-detail-field="boxDateMonth"><option value="">Month</option>${Array.from({ length: 12 }, (_, index) => `<option value="${index + 1}" ${productDetails.boxDateMonth === String(index + 1) ? "selected" : ""}>${index + 1}</option>`).join("")}</select></label>
-            <label><span class="detail-label">Date (Day)</span><select class="product-detail-input" data-detail-field="boxDateDay"><option value="">Day</option>${Array.from({ length: 31 }, (_, index) => `<option value="${index + 1}" ${productDetails.boxDateDay === String(index + 1) ? "selected" : ""}>${index + 1}</option>`).join("")}</select></label>
+            <label><span class="detail-label">Date</span><input class="product-detail-input" data-detail-field="boxDateYmd" type="date" value="${productDetails.boxDateYmd}"></label>
         `;
 
         hironoAddonGrid.querySelectorAll("[data-addon]").forEach(button => {
@@ -1025,6 +1053,11 @@ function renderProductDetailsPanel() {
     boxChoiceGrid.querySelectorAll("[data-box]").forEach(button => {
         button.addEventListener("click", () => {
             productDetails.box = button.dataset.box;
+            if (productDetails.box === "none") {
+                productDetails.boxName = "";
+                productDetails.boxNumber = "";
+                productDetails.boxColor = "";
+            }
             renderProductDetailsPanel();
             saveProductDetails();
         });
@@ -1997,6 +2030,7 @@ function getCurrentOrderTotal(activeState) {
     }
 
     return getActiveStateTotal(activeState) +
+        getProductSizePrice() +
         getProductDetailsAddon() +
         getCommissionRushFee();
 
@@ -2216,7 +2250,9 @@ function updateSelectedItemsUI() {
     const selectedBox = config?.boxes?.find(box => box.id === productDetails.box);
 
     if (productDetails.size) {
-        detailItems.push(`Size: ${productDetails.size}`);
+        detailItems.push(
+            `Size: ${productDetails.size} (PHP ${getProductSizePrice()})`
+        );
     }
 
     if (selectedBox) {
@@ -3555,8 +3591,7 @@ function buildCustomizationSnapshot(isCompleted, isConfirmed) {
         boxDesign: productDetails.boxDesign,
         boxNickname: productDetails.boxNickname,
         boxLetter: productDetails.boxLetter,
-        boxDateMonth: productDetails.boxDateMonth,
-        boxDateDay: productDetails.boxDateDay,
+        boxDateYmd: productDetails.boxDateYmd,
         rushFee: getCommissionRushFee(),
         clothingColors: collectClothingColors(activeState),
         funko: state.funko,
@@ -3671,8 +3706,7 @@ function restoreCustomizationFromStorage() {
         boxDesign: saved.boxDesign || "checkered",
         boxNickname: saved.boxNickname || "",
         boxLetter: saved.boxLetter || "",
-        boxDateMonth: saved.boxDateMonth || "",
-        boxDateDay: saved.boxDateDay || ""
+        boxDateYmd: saved.boxDateYmd || ""
     };
 
 
@@ -4668,8 +4702,7 @@ function initializeInteractions() {
                     boxDesign: "checkered",
                     boxNickname: "",
                     boxLetter: "",
-                    boxDateMonth: "",
-                    boxDateDay: ""
+                    boxDateYmd: ""
                 };
 
                 clearCurrentScene();
