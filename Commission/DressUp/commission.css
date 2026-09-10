@@ -430,6 +430,22 @@ button {
     display: none !important;
 }
 
+/* Customer information now lives on order details.html. */
+body[data-page="commission"] #customerSection {
+    display: none !important;
+}
+
+/* Order type and booking date are handled later in the commission flow. */
+#orderTypeSection,
+#calendarSection {
+    display: none !important;
+}
+
+/* Figure details are handled by DressUp/figure-details.html. */
+#designDetailsSection {
+    display: none !important;
+}
+
 
 .create-style-flow-container {
     display: flex;

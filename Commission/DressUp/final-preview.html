@@ -8,35 +8,18 @@
     <link rel="stylesheet" href="final-preview.css">
 </head>
 <body data-page="preview">
-    <nav class="navbar">
-        <a href="../../Home/Home.html" class="brand">
-            <div class="brand-photo">
-                <img src="../../Image/Clay and Stuff- Logo.jpg" alt="Clay and Stuff">
-            </div>
-            <span>Figurify</span>
-        </a>
-        <div class="nav-links">
-            <a href="../../Home/Home.html">OVERVIEW</a>
-            <a href="../../Collection/collection.html">COLLECTIONS</a>
-            <a href="../commission.html" class="active">COMMISSION</a>
-            <a href="../../Login/Login.html" class="profile" aria-label="Account">
-                <img src="../../Image/Profile Icon.png" alt="Profile">
-            </a>
-        </div>
-    </nav>
+
     <main class="final-review-page">
         <section class="preview-container preview-stage">
             <div class="preview-header">
-                <p class="eyebrow">Review before confirming</p>
-                <h1>Your Final Design</h1>
-                <p class="preview-intro">Here is the 3D figure you customized. Review the details below, then confirm your design to continue.</p>
+                 <h1>Final Design</h1>
             </div>
             <div class="figure-area">
                 <canvas id="figureViewer" class="figure-viewer"></canvas>
             </div>
-            <div class="review-card">
+            <div class="review-card legacy-preview-fields">
                 <div class="review-row">
-                    <span>Figure Category</span>
+                    <span>Figure Style</span>
                     <strong id="previewCategory">Not selected</strong>
                 </div>
                 <div class="review-row">
@@ -64,11 +47,14 @@
                     <strong id="previewPrice">₱0</strong>
                 </div>
             </div>
-            <p class="preview-status" id="previewStatus">Your design is ready for confirmation.</p>
+            <div class="review-card receipt-summary" id="previewReceipt">
+                <div class="receipt-empty">No customization selected yet.</div>
+            </div>
             <div class="preview-actions">
-                <button type="button" class="secondary-button" id="editDesignBtn">Edit Design</button>
+                <button type="button" class="secondary-button" id="editDesignBtn">Edit Figure</button>
+                <button type="button" class="secondary-button download-button" id="downloadDesignBtn">Download Design</button>
                 <button type="button" class="main-button" id="confirmDesignBtn">
-                    Confirm Design <span aria-hidden="true">&rarr;</span>
+                    Confirm
                 </button>
             </div>
         </section>

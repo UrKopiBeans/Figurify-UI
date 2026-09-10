@@ -28,7 +28,7 @@
 
         <a href="../../Home/Home.html" class="brand">
             <div class="brand-photo">
-                <img src="../../Image/Clay and Stuff- Logo.jpg" alt="Clay and Stuff">
+                <img src="Image/Clay and Stuff- Logo.jpg" alt="Clay and Stuff">
             </div>
             <span>Figurify</span>
         </a>
@@ -36,9 +36,9 @@
         <div class="nav-links">
             <a href="../../Home/Home.html">OVERVIEW</a>
             <a href="../../Collection/collection.html">COLLECTIONS</a>
-            <a href="../commission.html" class="active">COMMISSION</a>
+            <a href="commission.html" class="active">COMMISSION</a>
             <a href="../../Login/Login.html" class="profile" aria-label="Account">
-                <img src="../../Image/Profile Icon.png" alt="Profile">
+                <img src="Image/Profile Icon.png" alt="Profile">
             </a>
         </div>
 
@@ -48,9 +48,6 @@
     <!-- ================= MAIN ================= -->
 
     <main class="customizer">
-
-        <a class="back-link" href="../commission.html">&larr; Back to Commission</a>
-
 
         <!-- ================= LEFT PREVIEW ================= -->
 
@@ -91,43 +88,14 @@
                 </div>
 
 
-                <div class="preview-summary-row">
-                    <span>Figure Category</span>
-                    <strong id="summaryFigureCategory">Not selected</strong>
-                </div>
-
-
-                <div class="preview-summary-row">
-                    <span>Order Type</span>
-                    <strong id="summaryOrderType">Not selected</strong>
-                </div>
-
-
-                <div class="preview-summary-row">
-                    <span>Booking Date</span>
-                    <strong id="summaryBookingDate">Not selected</strong>
-                </div>
-
-
-                <div class="selected-items">
-
-                    <h3>Selected Design</h3>
-
-
-                    <div id="selectedList">
-
-                        <span class="empty-text">
-                            No customization selected yet.
-                        </span>
-
-                    </div>
-
+                <div class="receipt-summary" id="summaryReceiptItems">
+                    <div class="receipt-empty">No customization selected yet.</div>
                 </div>
 
 
                 <div class="price-box">
 
-                    <span>Estimated Total</span>
+                    <span>Total Price</span>
 
 
                     <strong id="totalPrice">₱0</strong>
@@ -145,10 +113,49 @@
         <section class="options-container">
 
 
-            <div class="page-title">
+            <!-- ================= FIGURE STYLE ================= -->
 
-                <span>STEP 01</span>
+            <div
+                class="option-section figure-style-section"
+                id="figureStyleSection"
+            >
 
+                <span class="figure-style-kicker">FIGURE STYLE</span>
+                <h2 class="figure-style-heading">Choose Your Figure Style</h2>
+
+                <div class="figure-style-grid">
+
+                    <button
+                        type="button"
+                        class="figure-style-card"
+                        data-tab="figure"
+                        data-figure="funko"
+                    >
+                        <img src="Image/funko.jpg" alt="Funko Pop">
+                        <span>Funko Pop</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="figure-style-card"
+                        data-tab="figure"
+                        data-figure="hirono"
+                    >
+                        <img src="Image/Hirono.jpg" alt="Hirono">
+                        <span>Hirono</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="figure-style-card"
+                        data-tab="figure"
+                        data-figure="chibi"
+                    >
+                        <img src="Image/chibi.jpg" alt="Chibi">
+                        <span>Chibi</span>
+                    </button>
+
+                </div>
 
             </div>
 
@@ -164,10 +171,11 @@
                 <div
                     class="option-section"
                     id="funkoModelSection"
+                    hidden
                 >
 
                     <div class="section-title">
-                        <h2>FUNKO POP MODEL</h2>
+                        <h2>FIGURE TYPE</h2>
                         <span>Choose one</span>
                     </div>
 
@@ -192,7 +200,6 @@
                                 >
                             </div>
                             <span class="figure-model-name">Funko Boy</span>
-                            <small>Funko pop-default.glb</small>
                         </button>
 
 
@@ -214,7 +221,6 @@
                                 >
                             </div>
                             <span class="figure-model-name">Funko Girl</span>
-                            <small>Funko pop-girl.glb</small>
                         </button>
 
                     </div>
@@ -227,11 +233,6 @@
                     id="funkoSkinSection"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>SKIN</h2>
-                        <span>Choose one</span>
-                    </div>
 
 
                     <div class="skin-grid">
@@ -299,8 +300,7 @@
                                     alt="Hair 01"
                                 >
                             </div>
-                            <span>Hair 01</span>
-                            <small>+ ?50</small>
+                            <span>Hair 1</span>
                         </button>
 
 
@@ -321,8 +321,7 @@
                                     alt="Hair 02"
                                 >
                             </div>
-                            <span>Hair 02</span>
-                            <small>+ ?50</small>
+                            <span>Hair 2</span>
                         </button>
 
 
@@ -344,7 +343,6 @@
                                 >
                             </div>
                             <span>Hair 03</span>
-                            <small>+ ?50</small>
                         </button>
 
                     </div>
@@ -384,7 +382,7 @@
                                 >
                             </div>
                             <span>Girl Shirt 01</span>
-                            <small>+ ?80</small>
+                            <small>180</small>
                         </button>
 
 
@@ -406,7 +404,7 @@
                                 >
                             </div>
                             <span>Girl Shirt 02</span>
-                            <small>+ ?100</small>
+                            <small>200</small>
                         </button>
 
 
@@ -428,7 +426,7 @@
                                 >
                             </div>
                             <span>Girl Shirt 03</span>
-                            <small>+ ?100</small>
+                            <small>300</small>
                         </button>
 
                     </div>
@@ -443,12 +441,6 @@
                     data-slot="topColor"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>FUNKO GIRL TOP COLOR</h2>
-                        <span>Choose a color</span>
-                    </div>
-
 
                     <div class="top-color-grid">
 
@@ -583,13 +575,6 @@
                     id="funkoGirlBottomColorSection"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>Bottom Color</h2>
-                        <span>Choose a color</span>
-                    </div>
-
-
                     <div class="top-color-grid">
 
                         <button
@@ -687,8 +672,7 @@
                                     alt="Hair 01"
                                 >
                             </div>
-                            <span>Hair 01</span>
-                            <small>+ ?50</small>
+                            <span>Hair 1</span>
                         </button>
 
 
@@ -709,8 +693,7 @@
                                     alt="Hair 02"
                                 >
                             </div>
-                            <span>Hair 02</span>
-                            <small>+ ?50</small>
+                            <span>Hair 2</span>
                         </button>
 
                     </div>
@@ -724,10 +707,6 @@
                     hidden
                 >
 
-                    <div class="section-title">
-                        <h2>Hair Color</h2>
-                        <span>Choose a color</span>
-                    </div>
 
 
                     <div class="top-color-grid">
@@ -828,7 +807,7 @@
                                 >
                             </div>
                             <span>T-Shirt</span>
-                            <small>+ ?80</small>
+                            <small>180</small>
                         </button>
 
 
@@ -850,7 +829,7 @@
                                 >
                             </div>
                             <span>Hoodie</span>
-                            <small>+ ?100</small>
+                            <small>200</small>
                         </button>
 
                     </div>
@@ -864,10 +843,6 @@
                     hidden
                 >
 
-                    <div class="section-title">
-                        <h2>Top Color</h2>
-                        <span>Choose a color</span>
-                    </div>
 
 
                     <div class="top-color-grid">
@@ -968,7 +943,7 @@
                                 >
                             </div>
                             <span>Pants + Shoes</span>
-                            <small>+ ?90</small>
+                            <small>190</small>
                         </button>
 
                     </div>
@@ -981,12 +956,6 @@
                     id="funkoBottomPantsColorSection"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>Pants Color</h2>
-                        <span>Choose a color</span>
-                    </div>
-
 
                     <div class="top-color-grid">
 
@@ -1070,7 +1039,7 @@
                 >
 
                     <div class="section-title">
-                        <h2>CHIBI TYPE</h2>
+                        <h2>FIGURE TYPE</h2>
                         <span>Choose one</span>
                     </div>
 
@@ -1088,7 +1057,7 @@
                             data-billable="false"
                         >
                             <div class="option-image">
-                                <img src="../../Image/ch-fbs.jpg" alt="Chibi Full Body Standee">
+                                <img src="Image/ch-fbs.jpg" alt="Chibi Full Body Standee">
                             </div>
                             <span>Full Body Standee</span>
                         </button>
@@ -1105,10 +1074,9 @@
                             data-billable="false"
                         >
                             <div class="option-image">
-                                <img src="../../Image/ch-fbk.jpg" alt="Chibi Full Body Keychain">
+                                <img src="Image/ch-fbk.jpg" alt="Chibi Full Body Keychain">
                             </div>
                             <span>Full Body Keychain</span>
-                            <small>2 inches</small>
                         </button>
 
                     </div>
@@ -1148,7 +1116,6 @@
                                 >
                             </div>
                             <span class="figure-model-name">Boy</span>
-                            <small>Chibi Default.glb</small>
                         </button>
 
 
@@ -1171,7 +1138,6 @@
                                 >
                             </div>
                             <span class="figure-model-name">Girl</span>
-                            <small>Chibi Girl.glb</small>
                         </button>
 
 
@@ -1191,7 +1157,6 @@
                                 <img src="images/Chibi Boy.png" alt="Chibi Boy Keychain">
                             </div>
                             <span class="figure-model-name">Boy</span>
-                            <small>Chibi Default.glb</small>
                         </button>
 
 
@@ -1211,7 +1176,6 @@
                                 <img src="images/Chibi Girl.png" alt="Chibi Girl Keychain">
                             </div>
                             <span class="figure-model-name">Girl</span>
-                            <small>Chibi Girl.glb</small>
                         </button>
 
                     </div>
@@ -1225,10 +1189,6 @@
                     hidden
                 >
 
-                    <div class="section-title">
-                        <h2>CHIBI SKIN COLOR</h2>
-                        <span>Choose one</span>
-                    </div>
 
 
                     <div class="skin-grid">
@@ -1297,7 +1257,6 @@
                                 >
                             </div>
                             <span>Hair 1</span>
-                            <small>+ ?50</small>
                         </button>
 
 
@@ -1319,7 +1278,6 @@
                                 >
                             </div>
                             <span>Hair 2</span>
-                            <small>+ ?50</small>
                         </button>
 
 
@@ -1341,7 +1299,6 @@
                                 >
                             </div>
                             <span>Hair 3</span>
-                            <small>+ ?50</small>
                         </button>
 
                     </div>
@@ -1381,7 +1338,6 @@
                                 >
                             </div>
                             <span>Girl Hair 1</span>
-                            <small>+ ?50</small>
                         </button>
 
 
@@ -1403,7 +1359,6 @@
                                 >
                             </div>
                             <span>Girl Hair 2</span>
-                            <small>+ ?50</small>
                         </button>
 
                     </div>
@@ -1418,11 +1373,6 @@
                     data-slot="hairColor"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>CHIBI HAIR COLOR</h2>
-                        <span>Choose a color</span>
-                    </div>
 
 
                     <div class="top-color-grid">
@@ -1498,13 +1448,6 @@
                     data-slot="girlHairColor"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>CHIBI GIRL HAIR COLOR</h2>
-                        <span>Choose a color</span>
-                    </div>
-
-
                     <div class="top-color-grid">
 
                         <button
@@ -1584,10 +1527,11 @@
                 <div
                     class="option-section"
                     id="hironoModelSection"
+                    hidden
                 >
 
                     <div class="section-title">
-                        <h2>HIRONO STANDEE / KEYCHAIN</h2>
+                        <h2>FIGURE TYPE</h2>
                         <span>Choose one</span>
                     </div>
 
@@ -1613,7 +1557,6 @@
                                 >
                             </div>
                             <span class="figure-model-name">Hirono Standee</span>
-                            <small>Hirono default.glb</small>
                         </button>
 
 
@@ -1636,7 +1579,6 @@
                                 >
                             </div>
                             <span class="figure-model-name">Hirono Full Body Keychain</span>
-                            <small>2 inches</small>
                         </button>
 
 
@@ -1650,11 +1592,6 @@
                     id="hironoSkinSection"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>SKIN</h2>
-                        <span>Choose one</span>
-                    </div>
 
 
                     <div class="skin-grid">
@@ -1723,7 +1660,6 @@
                                 >
                             </div>
                             <span>Hirono Hair</span>
-                            <small>+ ?50</small>
                         </button>
 
                     </div>
@@ -1736,12 +1672,6 @@
                     id="hironoHairColorSection"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>Hair Color</h2>
-                        <span>Choose a color</span>
-                    </div>
-
 
                     <div class="top-color-grid">
 
@@ -1841,7 +1771,7 @@
                                 >
                             </div>
                             <span>Hirono Polo</span>
-                            <small>+ ?80</small>
+                            <small>280</small>
                         </button>
 
 
@@ -1863,7 +1793,7 @@
                                 >
                             </div>
                             <span>Hirono Jersey</span>
-                            <small>Preview asset</small>
+                            <small>200</small>
                         </button>
 
                     </div>
@@ -1878,11 +1808,6 @@
                     data-slot="outfitColor"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>HIRONO OUTFIT COLOR</h2>
-                        <span>Choose a color</span>
-                    </div>
 
                 </div>
 
@@ -1919,7 +1844,7 @@
                                 >
                             </div>
                             <span>Hirono Pants</span>
-                            <small>+ ?90</small>
+                            <small>100</small>
                         </button>
 
                     </div>
@@ -1932,11 +1857,6 @@
                     id="hironoPantsColorSection"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>Pants Color</h2>
-                        <span>Choose a color</span>
-                    </div>
 
 
                     <div class="top-color-grid">
@@ -2037,7 +1957,7 @@
                                 >
                             </div>
                             <span>Hirono Shoes</span>
-                            <small>+ ?80</small>
+                            <small>100</small>
                         </button>
 
                     </div>
@@ -2050,12 +1970,6 @@
                     id="hironoShoesColorSection"
                     hidden
                 >
-
-                    <div class="section-title">
-                        <h2>Shoes Color</h2>
-                        <span>Choose a color</span>
-                    </div>
-
 
                     <div class="top-color-grid">
 
@@ -2155,7 +2069,6 @@
                                 >
                             </div>
                             <span>Hirono Hair</span>
-                            <small>+ ?50</small>
                         </button>
 
                     </div>
@@ -2342,7 +2255,7 @@
                     <div class="size-choice-grid" id="sizeChoiceGrid"></div>
                 </div>
 
-                <label class="product-detail-group">
+                <label class="product-detail-group" id="figureNameField">
                     <span class="detail-label">Figure Name <small>(optional)</small></span>
                     <input class="product-detail-input" id="figureNameInput" type="text" maxlength="40" placeholder="Example: Omar123">
                     <small class="detail-hint">PHP 50 if you add a name</small>
@@ -2397,19 +2310,23 @@
                 id="designStepNavigation"
                 hidden
             >
+                <label class="design-step-jump" for="designStepPicker">
+                    <span>DESIGN SECTION</span>
+                    <select id="designStepPicker" aria-label="Jump to design section"></select>
+                </label>
                 <button
                     type="button"
                     class="step-navigation-button"
                     id="previousDesignStep"
                 >
-                    &larr; Previous
+                    Previous
                 </button>
                 <button
                     type="button"
-                    class="step-navigation-button"
+                    class="continue-btn step-navigation-button"
                     id="nextDesignStep"
                 >
-                    Next &rarr;
+                    Continue to Figure Details
                 </button>
                 <a
                     href="final-preview.html"
@@ -2425,6 +2342,37 @@
 
 
     </main>
+
+    <footer>
+        <div class="footer-brand">
+            <strong>Figurify</strong>
+            <p>Made with little bits of joy.</p>
+        </div>
+
+        <div class="footer-links">
+            <div>
+                <b>Quick Links</b>
+                <a href="../../Home/Home.html">Overview</a>
+                <a href="../../Collection/collection.html">Collection</a>
+                <a href="commission.html">Commission</a>
+            </div>
+
+            <div>
+                <b>Commission</b>
+                <span>Create &amp; Style</span>
+                <span>Custom Reference</span>
+            </div>
+
+            <div>
+                <b>Contact</b>
+                <span>Calamba City, Laguna</span>
+                <span>09XX XXX XXXX</span>
+                <span>clayandstuff@gmail.com</span>
+            </div>
+        </div>
+
+        <div class="copyright">© 2026 Figurify. All Rights Reserved.</div>
+    </footer>
 
 
     <!-- ================= THREE.JS ================= -->
@@ -2444,5 +2392,4 @@
         src="dressup.js"
     ></script>
 </body>
-
 </html>

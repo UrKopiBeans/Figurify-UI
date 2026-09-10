@@ -20,7 +20,7 @@
 </head>
     
 
-<body>
+<body data-page="commission">
 
 
 <!-- =====================================================
@@ -30,14 +30,14 @@
 <nav class="navbar">
 
     <a
-        href="../Home/Home.html"
+        href="../../Home/Home.html"
         class="brand"
     >
 
         <div class="brand-photo">
 
                 <img
-                    src="../Image/Clay and Stuff- Logo.jpg"
+                    src="Image/Clay and Stuff- Logo.jpg"
                     alt="Figurify"
                 >
 
@@ -52,11 +52,11 @@
 
     <div class="nav-links">
 
-        <a href="../Home/Home.html">
+        <a href="../../Home/Home.html">
             OVERVIEW
         </a>
 
-        <a href="../Collection/collection.html">
+        <a href="../../Collection/collection.html">
             COLLECTIONS
         </a>
 
@@ -68,13 +68,13 @@
         </a>
 
         <a
-            href="../Login/Login.html"
+            href="../../Login/Login.html"
             class="profile"
             aria-label="Account"
         >
 
             <img
-                src="../Image/Profile Icon.png"
+                    src="Image/Profile Icon.png"
                 alt="Profile"
             >
 
@@ -227,12 +227,12 @@
                 <p>
                     Create your figure using the Dress-Up
                     Customizer. Choose this option to select
-                    your figure category and start designing.
+                    your figure style and start designing.
                 </p>
 
 
                 <strong>
-                    Opens Figure Category
+                    Opens Figure Style
                 </strong>
 
             </div>
@@ -1110,52 +1110,20 @@
         id="figureCategorySection"
     >
 
-        <div class="section-title">
-            <span class="decor">♡</span>
-            <div>
-                <span class="label">FIGURE CATEGORY</span>
-                <h2>Choose Your Figure Category</h2>
-                <p>Select the figure style you want to customize.</p>
-            </div>
-        </div>
+        <!--
+            The Funko Pop / Hirono / Chibi style picker now lives
+            INSIDE the DressUp customizer (see dressup.html,
+            "FIGURE STYLE" section inside .options-container), so
+            that it renders in the same box as "FIGURE TYPE".
 
-
-        <div class="figure-category-grid">
-
-            <button
-                type="button"
-                class="figure-category-card"
-                data-figure-category="funko"
-                onclick="selectFigureCategory('funko')"
-            >
-                <img src="../Image/funko.jpg" alt="Funko Pop">
-                <span>Funko Pop</span>
-            </button>
-
-            <button
-                type="button"
-                class="figure-category-card"
-                data-figure-category="hirono"
-                onclick="selectFigureCategory('hirono')"
-            >
-                <img src="../Image/Hirono.jpg" alt="Hirono">
-                <span>Hirono</span>
-            </button>
-
-            <button
-                type="button"
-                class="figure-category-card"
-                data-figure-category="chibi"
-                onclick="selectFigureCategory('chibi')"
-            >
-                <img src="../Image/chibi.jpg" alt="Chibi">
-                <span>Chibi</span>
-            </button>
-
-        </div>
+            This section now only hosts the iframe itself. Clicking
+            "Create & Style" opens this iframe immediately, showing
+            the "Your Figure" preview and the "FIGURE STYLE" /
+            "FIGURE TYPE" container together.
+        -->
 
         <div
-            class="customization-embed hidden"
+            class="customization-embed"
             id="customizationEmbed"
         >
             <iframe
@@ -1561,7 +1529,7 @@
                 <img class="order-summary-preview hidden" id="customerSummaryPreview" alt="Customized figure preview">
                 <div class="customer-summary-meta">
                     <div class="design-review-row">
-                        <span>Figure Category</span>
+                        <span>Figure Style</span>
                         <strong id="customerSummaryCategory">Not selected</strong>
                     </div>
                     <div class="design-review-row">
@@ -1787,7 +1755,7 @@
             <div class="tracking-status"><b>02</b><span>Processing</span></div>
             <div class="tracking-status"><b>03</b><span>For delivery</span></div>
         </div>
-        <a class="main-button" href="../Home/Home.html">BACK TO HOMEPAGE <span>&rarr;</span></a>
+        <a class="main-button" href="../../Home/Home.html">BACK TO HOMEPAGE <span>&rarr;</span></a>
     </div>
 </section>
 
@@ -1829,12 +1797,12 @@
             </b>
 
 
-            <a href="../Home/Home.html">
+            <a href="../../Home/Home.html">
                 Overview
             </a>
 
 
-            <a href="../Collection/collection.html">
+            <a href="../../Collection/collection.html">
                 Collection
             </a>
 

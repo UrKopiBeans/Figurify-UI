@@ -73,6 +73,12 @@ const pageMode =
 const isPreviewPage =
     pageMode === "preview";
 
+const isDetailsPage =
+    pageMode === "details";
+
+const isEditPage =
+    new URLSearchParams(window.location.search).get("edit") === "1";
+
 const styleCards =
     Array.from(
         document.querySelectorAll(
@@ -409,14 +415,16 @@ let productDetails = {
     boxNumber: "",
     boxColor: "",
     blindBox: "regular",
+    blindBoxSelected: false,
     hironoAddons: [],
     boxDesign: "checkered",
+    boxDesignSelected: false,
     boxNickname: "",
     boxLetter: "",
     boxDateYmd: ""
 };
 
-let navigationSlot = null;
+let navigationSlot = isDetailsPage ? "productDetails" : null;
 
 
 const ACCESSORY_COLOR_SLOT = {
@@ -829,7 +837,9 @@ function getProductDetailsAddon() {
         config.boxes.find(box => box.id === productDetails.box);
 
     if (config.hirono) {
-        const blindBoxPrice = productDetails.blindBox === "set" ? 350 : 150;
+        const blindBoxPrice = productDetails.blindBoxSelected
+            ? (productDetails.blindBox === "set" ? 350 : 150)
+            : 0;
         const addonPrices = {
             tearPaper: 50,
             pouch: 50,
@@ -891,37 +901,50 @@ function renderProductDetailsPanel() {
         productDetails = {
             productKey,
             size: "",
+            sizeSelected: false,
             figureName: "",
             box: "none",
+            boxSelected: false,
             boxName: "",
             boxNumber: "",
             boxColor: "",
             blindBox: "regular",
+            blindBoxSelected: false,
             hironoAddons: [],
             boxDesign: "checkered",
+            boxDesignSelected: false,
             boxNickname: "",
             boxLetter: "",
             boxDateYmd: ""
         };
     }
 
-    if (!config.sizes.includes(productDetails.size)) {
-        productDetails.size = config.sizes[0];
+    // Keep size empty until the customer explicitly chooses one. The first
+    // size must not be treated as an automatic selection.
+    if (productDetails.size && !config.sizes.includes(productDetails.size)) {
+        productDetails.size = "";
     }
 
-    if (config.boxes.length && !config.boxes.some(box => box.id === productDetails.box)) {
-        productDetails.box = config.boxes[0].id;
+    if (productDetails.box && !config.boxes.some(box => box.id === productDetails.box)) {
+        productDetails.box = "none";
     }
 
     const title = document.getElementById("productDetailsTitle");
     const description = document.getElementById("productDetailsDescription");
+    const detailsSkinSwatch = document.getElementById("detailsSkinSwatch");
 
     if (title) title.textContent = config.title;
     if (description) description.textContent = config.description;
 
+    if (detailsSkinSwatch) {
+        const skinColor = activeState.skin?.color || "";
+        detailsSkinSwatch.hidden = !skinColor;
+        detailsSkinSwatch.style.backgroundColor = skinColor || "transparent";
+    }
+
     sizeChoiceGrid.innerHTML = config.sizes.length
         ? config.sizes.map(size => `
-        <button type="button" class="detail-choice-card${productDetails.size === size ? " selected" : ""}" data-size="${size}">
+        <button type="button" class="detail-choice-card${productDetails.sizeSelected && productDetails.size === size ? " selected" : ""}" data-size="${size}">
             <strong>${size.replace(" inches", "\"")}</strong>
             <span>PHP ${PRODUCT_SIZE_PRICES[productKey]?.[size] || 0}</span>
         </button>
@@ -929,11 +952,16 @@ function renderProductDetailsPanel() {
         : `<p class="detail-hint">No size requirement for this product type.</p>`;
 
     boxChoiceGrid.innerHTML = config.boxes.map(box => `
-        <button type="button" class="detail-choice-card box-choice-card${productDetails.box === box.id ? " selected" : ""}" data-box="${box.id}">
+        <button type="button" class="detail-choice-card box-choice-card${productDetails.boxSelected && productDetails.box === box.id ? " selected" : ""}" data-box="${box.id}">
             <strong>${box.label}</strong>
             <span>${box.price ? `PHP ${box.price}` : "No additional fee"}</span>
         </button>
     `).join("");
+
+    const figureNameField = document.getElementById("figureNameField");
+    if (figureNameField) {
+        figureNameField.hidden = Boolean(config.hirono);
+    }
 
     const boxChoiceGroup = document.getElementById("boxChoiceGroup");
     if (boxChoiceGroup) {
@@ -948,7 +976,9 @@ function renderProductDetailsPanel() {
     const selectedBox = config.boxes.find(box => box.id === productDetails.box);
     const canEditFunkoBoxDetails = Boolean(selectedBox?.details);
     if (boxDetailFields) {
-        boxDetailFields.hidden = config.hirono || !canEditFunkoBoxDetails;
+        // Funko box fields remain visible for both box choices, but are
+        // read-only when the customer selects Without box.
+        boxDetailFields.hidden = config.hirono;
     }
 
     [boxNameInput, boxNumberInput, boxColorInput].forEach(input => {
@@ -968,8 +998,8 @@ function renderProductDetailsPanel() {
             { id: "regular", label: "Regular Blind Box", price: 150, image: "Hirono.jpg" },
             { id: "set", label: "Blind Box Set", price: 350, image: "blindboxset.jpg" }
         ].map(({ id, label, price, image }) => `
-            <button type="button" class="detail-choice-card box-choice-card${productDetails.blindBox === id ? " selected" : ""}" data-blind-box="${id}">
-                <img class="detail-card-image" src="../../Image/${image}" alt="${label}">
+            <button type="button" class="detail-choice-card box-choice-card${productDetails.blindBoxSelected && productDetails.blindBox === id ? " selected" : ""}" data-blind-box="${id}">
+                <img class="detail-card-image" src="Image/${image}" alt="${label}">
                 <strong>${label}</strong>
                 <span>PHP ${price}</span>
             </button>
@@ -983,7 +1013,7 @@ function renderProductDetailsPanel() {
 
         hironoAddonGrid.innerHTML = addons.map(({ id, label, price, image }) => `
             <button type="button" class="detail-choice-card box-choice-card${productDetails.hironoAddons.includes(id) ? " selected" : ""}" data-addon="${id}">
-                <img class="detail-card-image" src="../../Image/${image}" alt="${label}">
+                <img class="detail-card-image" src="Image/${image}" alt="${label}">
                 <strong>${label}</strong>
                 <span>PHP ${price}</span>
             </button>
@@ -993,8 +1023,8 @@ function renderProductDetailsPanel() {
             { id: "checkered", label: "Checkered", image: "checkered.jpg" },
             { id: "peek", label: "Hirono Peek", image: "peek.jpg" }
         ].map(({ id, label, image }) => `
-            <button type="button" class="detail-choice-card box-choice-card${productDetails.boxDesign === id ? " selected" : ""}" data-box-design="${id}">
-                <img class="detail-card-image" src="../../Image/${image}" alt="${label}">
+            <button type="button" class="detail-choice-card box-choice-card${productDetails.boxDesignSelected && productDetails.boxDesign === id ? " selected" : ""}" data-box-design="${id}">
+                <img class="detail-card-image" src="Image/${image}" alt="${label}">
                 <strong>${label}</strong>
                 <span>Choose box design</span>
             </button>
@@ -1004,11 +1034,27 @@ function renderProductDetailsPanel() {
             ? `<select class="product-detail-input" data-detail-field="boxColor"><option value="">Select Box Color</option><option value="Wood">Wood</option><option value="Black & White">Black &amp; White</option></select>`
             : `<input class="product-detail-input" data-detail-field="boxColor" value="${productDetails.boxColor}" maxlength="30" placeholder="Example: Cream White">`;
 
+        const formattedBoxDate = formatMonthDay(productDetails.boxDateYmd);
+        const [selectedMonth = "", selectedDay = ""] = formattedBoxDate.split("/");
+        const monthOptions = [
+            ["01", "January"], ["02", "February"], ["03", "March"],
+            ["04", "April"], ["05", "May"], ["06", "June"],
+            ["07", "July"], ["08", "August"], ["09", "September"],
+            ["10", "October"], ["11", "November"], ["12", "December"]
+        ].map(([value, label]) => `<option value="${value}"${selectedMonth === value ? " selected" : ""}>${label}</option>`).join("");
+        const dayOptions = Array.from({ length: 31 }, (_, index) => {
+            const value = String(index + 1).padStart(2, "0");
+            return `<option value="${value}"${selectedDay === value ? " selected" : ""}>${index + 1}</option>`;
+        }).join("");
+
         hironoBoxFields.innerHTML = `
             <label><span class="detail-label">Box Color</span>${colorField}</label>
             <label><span class="detail-label">Nickname</span><input class="product-detail-input" data-detail-field="boxNickname" value="${productDetails.boxNickname}" maxlength="30" placeholder="Example: Bubbles"></label>
-            <label><span class="detail-label">Letter (Short Love Letter)</span><textarea class="product-detail-input" data-detail-field="boxLetter" rows="4" maxlength="180" placeholder="Write a short love letter/message here...">${productDetails.boxLetter}</textarea></label>
-            <label><span class="detail-label">Date</span><input class="product-detail-input" data-detail-field="boxDateYmd" type="date" value="${productDetails.boxDateYmd}"></label>
+            <label><span class="detail-label">Letter (Short Love Letter)</span><textarea class="product-detail-input" data-detail-field="boxLetter" rows="4" placeholder="Write a short love letter/message here...">${productDetails.boxLetter}</textarea></label>
+            <div class="product-detail-date-row">
+                <label><span class="detail-label">Month</span><select class="product-detail-input" id="boxDateMonth"><option value="">Choose month</option>${monthOptions}</select></label>
+                <label><span class="detail-label">Day</span><select class="product-detail-input" id="boxDateDay"><option value="">Choose day</option>${dayOptions}</select></label>
+            </div>
         `;
 
         hironoAddonGrid.querySelectorAll("[data-addon]").forEach(button => {
@@ -1022,9 +1068,10 @@ function renderProductDetailsPanel() {
             });
         });
 
-        hironoBlindBoxGrid.querySelectorAll("[data-blind-box]").forEach(button => {
+            hironoBlindBoxGrid.querySelectorAll("[data-blind-box]").forEach(button => {
             button.addEventListener("click", () => {
                 productDetails.blindBox = button.dataset.blindBox;
+                productDetails.blindBoxSelected = true;
                 renderProductDetailsPanel();
                 saveProductDetails();
             });
@@ -1033,6 +1080,7 @@ function renderProductDetailsPanel() {
         hironoBoxDesignGrid.querySelectorAll("[data-box-design]").forEach(button => {
             button.addEventListener("click", () => {
                 productDetails.boxDesign = button.dataset.boxDesign;
+                productDetails.boxDesignSelected = true;
                 if (productDetails.boxDesign === "peek" && !["Wood", "Black & White"].includes(productDetails.boxColor)) {
                     productDetails.boxColor = "";
                 }
@@ -1042,17 +1090,19 @@ function renderProductDetailsPanel() {
         });
     }
 
-    sizeChoiceGrid.querySelectorAll("[data-size]").forEach(button => {
+        sizeChoiceGrid.querySelectorAll("[data-size]").forEach(button => {
         button.addEventListener("click", () => {
             productDetails.size = button.dataset.size;
+            productDetails.sizeSelected = true;
             renderProductDetailsPanel();
             saveProductDetails();
         });
     });
 
-    boxChoiceGrid.querySelectorAll("[data-box]").forEach(button => {
+        boxChoiceGrid.querySelectorAll("[data-box]").forEach(button => {
         button.addEventListener("click", () => {
             productDetails.box = button.dataset.box;
+            productDetails.boxSelected = true;
             if (productDetails.box === "none") {
                 productDetails.boxName = "";
                 productDetails.boxNumber = "";
@@ -1068,7 +1118,7 @@ function renderProductDetailsPanel() {
     if (boxNumberInput) boxNumberInput.value = productDetails.boxNumber;
     if (boxColorInput) boxColorInput.value = productDetails.boxColor;
 
-    productDetailsPanel.querySelectorAll("[data-detail-field]").forEach(input => {
+        productDetailsPanel.querySelectorAll("[data-detail-field]").forEach(input => {
         input.value = productDetails[input.dataset.detailField] || "";
         input.oninput = () => {
             productDetails[input.dataset.detailField] = input.value;
@@ -2090,9 +2140,9 @@ function renderPreviewSummary() {
             "summaryBookingDate"
         );
 
-    const designTags =
+    const receiptItems =
         document.getElementById(
-            "summaryDesignTags"
+            "summaryReceiptItems"
         );
 
     const categoryValue =
@@ -2123,54 +2173,186 @@ function renderPreviewSummary() {
             bookingDateValue;
     }
 
-    if (designTags) {
-        designTags.innerHTML = "";
-
-        const selectedItems =
-            activeState
-                ? getActiveSlotOrder().map(
-                    function(slot) {
-                        return activeState[slot];
-                    }
-                ).filter(Boolean)
-                : [];
-
-        const values =
-            selectedItems.length
-                ? selectedItems.map(
-                    function(item) {
-                        return item.billable === false
-                            ? item.name
-                            : `${item.name} + ${formatMoney(item.price)}`;
-                    }
-                )
-                : (data?.selectedItems?.length
-                    ? data.selectedItems
-                    : ["No customization selected yet."]);
-
-        values.forEach(
-            function(value) {
-
-                const chip =
-                    document.createElement(
-                        "span"
-                    );
-
-                chip.className =
-                    "summary-chip";
-
-                chip.textContent =
-                    value;
-
-                designTags.appendChild(
-                    chip
-                );
-
-            }
-        );
-
+    if (!receiptItems) {
+        return;
     }
 
+    receiptItems.innerHTML = "";
+
+    const rows = [];
+    const addRow = (label, value, price = null) => {
+        if (!label || (!value && price === null)) {
+            return;
+        }
+
+        rows.push({ label, value, price });
+    };
+
+    addRow("Order Type", orderTypeValue);
+    addRow("Booking date", bookingDateValue);
+    addRow("Figure Style", categoryValue);
+
+    if (state.currentCategory === "funko") {
+        addRow("Figure Name", productDetails.figureName.trim());
+        addRow("Box Name", productDetails.boxName.trim());
+        addRow("Box Number", productDetails.boxNumber.trim());
+        addRow("Box Color", productDetails.boxColor.trim());
+    }
+
+    if (state.currentCategory === "chibi") {
+        addRow("Figure Name", productDetails.figureName.trim());
+    }
+
+    if (state.currentCategory === "hirono") {
+        addRow("Nickname", productDetails.boxNickname.trim());
+        if (productDetails.boxDesign === "peek") {
+            addRow(
+                "Box Design",
+                "Hirono Peek"
+            );
+        }
+        addRow("Box Color", productDetails.boxColor.trim());
+        addRow("Date", formatMonthDay(productDetails.boxDateYmd));
+    }
+
+    rows.push({ divider: true });
+
+    if (activeState) {
+        getActiveSlotOrder()
+            .filter(slot => !["model", "skin"].includes(slot) && !slot.endsWith("Color"))
+            .forEach(slot => {
+                const item = activeState[slot];
+                if (!item) {
+                    return;
+                }
+
+                const isBillable = item.billable !== false;
+                const label = isBillable
+                    ? item.name
+                    : ({
+                        hair: "Hair",
+                        girlHair: "Hair",
+                        top: "T-Shirt",
+                        girlTop: "T-Shirt",
+                        bottom: "Bottom",
+                        girlBottom: "Bottom",
+                        pants: "Pants",
+                        shoes: "Shoes",
+                        outfit: "Outfit"
+                    }[slot] || item.name);
+
+                addRow(label, isBillable ? "" : item.name, isBillable ? item.price : null);
+            });
+    }
+
+    const sizePrice = getProductSizePrice();
+    if (state.currentCategory !== "chibi" && activeState?.model && productDetails.size && sizePrice) {
+        addRow(`Size ${productDetails.size.replace(" inches", "")}`, "", sizePrice);
+    }
+
+    if (state.currentCategory === "hirono") {
+        if (productDetails.blindBoxSelected && productDetails.blindBox === "set") {
+            addRow("Blind Box Set", "", 350);
+        } else if (productDetails.blindBoxSelected && productDetails.blindBox === "regular") {
+            addRow("Regular Blind Box", "", 150);
+        }
+
+        const addonOptions = {
+            tearPaper: { label: "Tear Blind Paper", price: 50 },
+            pouch: { label: "Pouch", price: 50 },
+            digitalArt: { label: "Digital Art (Soft Copy) w/ Photo Card", price: 150 }
+        };
+
+        productDetails.hironoAddons.forEach(addon => {
+            const selectedAddon = addonOptions[addon];
+            if (selectedAddon) {
+                addRow(selectedAddon.label, "", selectedAddon.price);
+            }
+        });
+
+        const boxDateMonth = document.getElementById("boxDateMonth");
+        const boxDateDay = document.getElementById("boxDateDay");
+        const updateBoxDate = () => {
+            productDetails.boxDateYmd = boxDateMonth?.value && boxDateDay?.value
+                ? `${boxDateMonth.value}/${boxDateDay.value}`
+                : "";
+            saveProductDetails();
+        };
+        boxDateMonth?.addEventListener("change", updateBoxDate);
+        boxDateDay?.addEventListener("change", updateBoxDate);
+    }
+
+    const config = getProductDetailsConfig();
+    const selectedBox = config?.boxes?.find(box => box.id === productDetails.box);
+    if (selectedBox && selectedBox.id !== "none") {
+        addRow(selectedBox.label, "", selectedBox.price);
+    }
+
+    const rushFee = getCommissionRushFee();
+    if (rushFee) {
+        addRow("Rush Fee", "", rushFee);
+    }
+
+    if (!rows.length) {
+        receiptItems.innerHTML = '<div class="receipt-empty">No customization selected yet.</div>';
+        return;
+    }
+
+    rows.forEach(rowData => {
+        if (rowData.divider) {
+            const divider = document.createElement("div");
+            divider.className = "receipt-divider";
+            receiptItems.appendChild(divider);
+            return;
+        }
+
+        const { label, value, price } = rowData;
+        const row = document.createElement("div");
+        row.className = "receipt-row";
+
+        const labelElement = document.createElement("span");
+        labelElement.textContent = `${label}:`;
+        row.appendChild(labelElement);
+
+        const valueElement = document.createElement("strong");
+        if (price !== null && price !== undefined && Number(price) > 0) {
+            valueElement.textContent = formatMoney(price);
+        }
+        else {
+            valueElement.textContent = value;
+        }
+        row.appendChild(valueElement);
+
+        receiptItems.appendChild(row);
+    });
+
+}
+
+
+function formatMonthDay(value) {
+    if (!value) {
+        return "";
+    }
+
+    if (/^\d{1,2}\/\d{1,2}$/.test(value)) {
+        const [month, day] = value.split("/").map(Number);
+        return `${String(month).padStart(2, "0")}/${String(day).padStart(2, "0")}`;
+    }
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        const parsed = new Date(value);
+        if (!Number.isNaN(parsed.getTime())) {
+            return `${String(parsed.getMonth() + 1).padStart(2, "0")}/${String(parsed.getDate()).padStart(2, "0")}`;
+        }
+        return value;
+    }
+
+    const date = new Date(`${value}T00:00:00`);
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    return `${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")}`;
 }
 
 
@@ -2364,6 +2546,39 @@ function updateSectionVisibility() {
             }
         }
     );
+
+
+    if (isDetailsPage) {
+        // The details page is a focused review step: keep the preview and
+        // order summary, but remove all figure-style/category controls.
+        Object.values(categoryPanels).forEach(panel => {
+            if (panel) {
+                panel.hidden = true;
+            }
+        });
+
+        if (!activeCategory) {
+            if (productDetailsPanel) {
+                productDetailsPanel.hidden = true;
+            }
+            return;
+        }
+
+        if (productDetailsPanel) {
+            productDetailsPanel.hidden = false;
+        }
+
+        const navigation = document.getElementById("designStepNavigation");
+        if (navigation) {
+            navigation.hidden = true;
+        }
+
+        if (continueBtn) {
+            continueBtn.hidden = false;
+        }
+
+        return;
+    }
 
 
     if (!activeCategory) {
@@ -3037,9 +3252,9 @@ function applyCustomColor(category, slot, color, input) {
     }
 
 
-    input.closest(".custom-color-control").querySelector("output").textContent = color;
     state.currentCategory = category;
     navigationSlot = getColorAccessorySlot(category, slot);
+    syncCustomColorPickers();
     updateSectionVisibility();
     updateSelectedItemsUI();
     renderProductDetailsPanel();
@@ -3049,13 +3264,54 @@ function applyCustomColor(category, slot, color, input) {
 }
 
 
+const customColorDesignSectionIds = {
+    funkoHairColorSection: ["funkoHairSection", "funkoGirlHairSection"],
+    funkoGirlTopColorSection: ["funkoGirlTopSection"],
+    funkoTopColorSection: ["funkoTopSection"],
+    funkoGirlBottomColorSection: ["funkoGirlBottomSection"],
+    funkoBottomPantsColorSection: ["funkoBottomSection"],
+    hironoHairColorSection: ["hironoHairSection"],
+    hironoOutfitColorSection: ["hironoOutfitSection"],
+    hironoPantsColorSection: ["hironoPantsSection"],
+    hironoShoesColorSection: ["hironoShoesSection"],
+    hironoKeychainHairColorSection: ["hironoKeychainHairSection"],
+    chibiHairColorSection: ["chibiHairSection"],
+    chibiGirlHairColorSection: ["chibiGirlHairSection"]
+};
+
+
+function getCustomColorMounts(section) {
+    const siblings = Array.from(section.parentElement.children);
+    const designSectionIds = customColorDesignSectionIds[section.id];
+
+    if (designSectionIds) {
+        return designSectionIds
+            .map(id => document.getElementById(id))
+            .filter(Boolean)
+            .map(designSection => designSection.querySelector(".section-title"))
+            .filter(Boolean);
+    }
+
+    const designSection = siblings
+        .slice(0, siblings.indexOf(section))
+        .reverse()
+        .find(candidate => candidate.classList.contains("option-section"));
+
+    const mount = designSection?.querySelector(".section-title");
+
+    return mount ? [mount] : [section];
+}
+
+
 function initializeCustomColorPickers() {
 
     document.querySelectorAll(
         ".top-color-picker, .custom-color-only-section"
     ).forEach(
         function(section) {
-            if (section.querySelector(".custom-color-control")) {
+            const mounts = getCustomColorMounts(section);
+
+            if (mounts.every(mount => mount.querySelector(".custom-color-control"))) {
                 return;
             }
 
@@ -3075,21 +3331,26 @@ function initializeCustomColorPickers() {
             }
 
 
-            const label = document.createElement("label");
-            label.className = "custom-color-control";
-            label.innerHTML = `Custom color <input type="color" value="#ffffff" aria-label="Choose custom ${slot} color"><output>#ffffff</output>`;
-
-
-            const input = label.querySelector("input");
-            input.addEventListener(
-                "input",
-                function() {
-                    applyCustomColor(category, slot, input.value, input);
+            mounts.forEach(mount => {
+                if (mount.querySelector(".custom-color-control")) {
+                    return;
                 }
-            );
 
+                const label = document.createElement("label");
+                label.className = "custom-color-control";
+                label.innerHTML = `<span class="custom-color-wheel" aria-hidden="true"></span><span class="custom-color-label">Custom color</span><input type="color" value="#ffffff" aria-label="Choose custom ${slot} color">`;
 
-            section.appendChild(label);
+                mount.appendChild(label);
+
+                const input = label.querySelector("input");
+                input.addEventListener(
+                    "input",
+                    function() {
+                        applyCustomColor(category, slot, input.value, input);
+                    }
+                );
+            });
+
         }
     );
 
@@ -3113,27 +3374,21 @@ function syncCustomColorPickers() {
                 (slotCard && slotCard.dataset.figure) ||
                 section.dataset.figure;
 
-            const input =
-                section.querySelector(
+            const inputs = getCustomColorMounts(section)
+                .map(mount => mount.querySelector(
                     ".custom-color-control input[type='color']"
-                );
-
-            const output =
-                section.querySelector(
-                    ".custom-color-control output"
-                );
+                ))
+                .filter(Boolean);
 
             const savedColor =
                 category && slot && state[category] && state[category][slot]
                     ? state[category][slot].color
                     : "";
 
-            if (input && /^#[0-9a-f]{6}$/i.test(savedColor || "")) {
-                input.value = savedColor;
-
-                if (output) {
-                    output.textContent = savedColor;
-                }
+            if (/^#[0-9a-f]{6}$/i.test(savedColor || "")) {
+                inputs.forEach(input => {
+                    input.value = savedColor;
+                });
             }
         }
     );
@@ -3581,14 +3836,18 @@ function buildCustomizationSnapshot(isCompleted, isConfirmed) {
         estimatedPrice,
         productKey: productDetails.productKey,
         figureSize: productDetails.size,
+        figureSizeSelected: Boolean(productDetails.sizeSelected),
         figureName: productDetails.figureName,
         boxType: productDetails.box,
+        boxSelected: Boolean(productDetails.boxSelected),
         boxName: productDetails.boxName,
         boxNumber: productDetails.boxNumber,
         boxColor: productDetails.boxColor,
         blindBox: productDetails.blindBox,
+        blindBoxSelected: Boolean(productDetails.blindBoxSelected),
         hironoAddons: productDetails.hironoAddons,
         boxDesign: productDetails.boxDesign,
+        boxDesignSelected: Boolean(productDetails.boxDesignSelected),
         boxNickname: productDetails.boxNickname,
         boxLetter: productDetails.boxLetter,
         boxDateYmd: productDetails.boxDateYmd,
@@ -3695,15 +3954,19 @@ function restoreCustomizationFromStorage() {
 
     productDetails = {
         productKey: saved.productKey || "",
-        size: saved.figureSize || "",
+        size: saved.figureSizeSelected ? (saved.figureSize || "") : "",
+        sizeSelected: Boolean(saved.figureSizeSelected),
         figureName: saved.figureName || "",
-        box: saved.boxType || "none",
+        box: saved.boxSelected ? (saved.boxType || "none") : "none",
+        boxSelected: Boolean(saved.boxSelected),
         boxName: saved.boxName || "",
         boxNumber: saved.boxNumber || "",
         boxColor: saved.boxColor || "",
-        blindBox: saved.blindBox || "regular",
+        blindBox: saved.blindBoxSelected ? (saved.blindBox || "regular") : "regular",
+        blindBoxSelected: Boolean(saved.blindBoxSelected),
         hironoAddons: Array.isArray(saved.hironoAddons) ? saved.hironoAddons : [],
-        boxDesign: saved.boxDesign || "checkered",
+        boxDesign: saved.boxDesignSelected ? (saved.boxDesign || "checkered") : "checkered",
+        boxDesignSelected: Boolean(saved.boxDesignSelected),
         boxNickname: saved.boxNickname || "",
         boxLetter: saved.boxLetter || "",
         boxDateYmd: saved.boxDateYmd || ""
@@ -3741,6 +4004,21 @@ function restoreCustomizationFromStorage() {
 
     if (!state.currentCategory) {
         return true;
+    }
+
+    if (isEditPage) {
+        if (state.currentCategory === "funko") {
+            navigationSlot = isFunkoGirlModel(state.funko.model) ? "girlHair" : "hair";
+        }
+        else if (state.currentCategory === "chibi") {
+            navigationSlot = isChibiGirlModel(state.chibi.model) ? "girlHair" : "hair";
+        }
+        else if (getHironoMode() === "headKeychain") {
+            navigationSlot = "keychainHair";
+        }
+        else {
+            navigationSlot = "hair";
+        }
     }
 
 
@@ -4112,11 +4390,80 @@ async function renderCurrentCategory() {
 }
 
 
+function getDesignStepLabel(slot) {
+    const labels = {
+        productType: "Figure Type",
+        model: "Gender / Model",
+        skin: "Skin Color",
+        hair: "Hair",
+        girlHair: "Hair",
+        top: "Shirt",
+        girlTop: "Shirt",
+        outfit: "Outfit",
+        bottom: "Pants",
+        girlBottom: "Pants",
+        pants: "Pants",
+        shoes: "Shoes",
+        keychainHair: "Hair",
+        keychainHat: "Hat"
+    };
+
+    return labels[slot] || slot
+        .replace(/([A-Z])/g, " $1")
+        .replace(/^./, character => character.toUpperCase());
+}
+
+
+function placeDesignStepPicker(currentSlot, sections) {
+    const jump = document.querySelector(".design-step-jump");
+    const navigation = document.getElementById("designStepNavigation");
+    const optionsContainer = document.querySelector(".options-container");
+
+    if (!jump || !navigation || !optionsContainer) {
+        return;
+    }
+
+    const designSlots = new Set([
+        "hair",
+        "girlHair",
+        "top",
+        "girlTop",
+        "outfit",
+        "bottom",
+        "girlBottom",
+        "pants",
+        "shoes",
+        "keychainHair",
+        "keychainHat"
+    ]);
+
+    if (!designSlots.has(currentSlot)) {
+        navigation.appendChild(jump);
+        jump.hidden = true;
+        return;
+    }
+
+    jump.hidden = false;
+
+    const activeSection = document.getElementById(sections?.[currentSlot]);
+    const activeTitle = activeSection?.querySelector(":scope > .section-title");
+
+    if (activeTitle) {
+        const customColor = activeTitle.querySelector(".custom-color-control");
+        activeTitle.insertBefore(jump, customColor || null);
+    }
+    else {
+        optionsContainer.appendChild(jump);
+    }
+}
+
+
 function renderDesignNavigation(sequence, sections, activeState, currentSlot) {
 
     const navigation = document.getElementById("designStepNavigation");
     const previousButton = document.getElementById("previousDesignStep");
     const nextButton = document.getElementById("nextDesignStep");
+    const stepPicker = document.getElementById("designStepPicker");
     const detailsStep = navigationSlot === "productDetails";
 
     if (!navigation || !previousButton || !nextButton || !sequence?.length || !currentSlot) {
@@ -4130,10 +4477,34 @@ function renderDesignNavigation(sequence, sections, activeState, currentSlot) {
         0,
         sequence.indexOf(currentSlot)
     );
+    const isLastDesignStep = currentIndex >= sequence.length - 1;
+
+    if (stepPicker) {
+        stepPicker.replaceChildren();
+
+        sequence
+            .filter(slot => !["productType", "model", "skin"].includes(slot))
+            .forEach(slot => {
+            const option = document.createElement("option");
+            option.value = slot;
+            option.textContent = getDesignStepLabel(slot);
+            option.selected = slot === currentSlot;
+            stepPicker.appendChild(option);
+            });
+
+        stepPicker.onchange = () => {
+            navigationSlot = stepPicker.value;
+            updateSectionVisibility();
+        };
+    }
 
     navigation.hidden = false;
+    placeDesignStepPicker(currentSlot, sections);
     previousButton.disabled = detailsStep ? false : currentIndex === 0;
     nextButton.hidden = detailsStep;
+    nextButton.textContent = isLastDesignStep
+        ? "Continue to Figure Details"
+        : "Next";
     const canSkipCurrentSlot = !["model", "skin", "productType"].includes(currentSlot);
     nextButton.disabled =
         detailsStep ||
@@ -4154,14 +4525,20 @@ function renderDesignNavigation(sequence, sections, activeState, currentSlot) {
         updateSectionVisibility();
     };
 
-    nextButton.onclick = () => {
+    nextButton.onclick = async () => {
         if (!activeState[currentSlot] && !canSkipCurrentSlot) {
             return;
         }
 
-        navigationSlot = currentIndex >= sequence.length - 1
-            ? "productDetails"
-            : sequence[currentIndex + 1];
+        if (isLastDesignStep) {
+            saveCustomizationSnapshot(true, false);
+            window.top.location.assign(
+                new URL("figure-details.html", window.location.href).href
+            );
+            return;
+        }
+
+        navigationSlot = sequence[currentIndex + 1];
         updateSectionVisibility();
     };
 
@@ -4187,6 +4564,11 @@ function selectCategory(category) {
         );
     }
 
+
+    // Choosing a style starts that category's flow from the beginning.
+    // This prevents an old model selection from skipping the required type
+    // choice (Funko boy/girl, Hirono standee/keychain, or Chibi product type).
+    clearCategoryState(category);
 
     state.currentCategory =
         category;
@@ -4692,14 +5074,18 @@ function initializeInteractions() {
                 productDetails = {
                     productKey: "",
                     size: "",
+                    sizeSelected: false,
                     figureName: "",
                     box: "none",
+                    boxSelected: false,
                     boxName: "",
                     boxNumber: "",
                     boxColor: "",
                     blindBox: "regular",
+                    blindBoxSelected: false,
                     hironoAddons: [],
                     boxDesign: "checkered",
+                    boxDesignSelected: false,
                     boxNickname: "",
                     boxLetter: "",
                     boxDateYmd: ""
@@ -4814,7 +5200,8 @@ function init3D() {
             {
                 canvas,
                 alpha: true,
-                antialias: true
+                antialias: true,
+                preserveDrawingBuffer: true
             }
         );
     }
@@ -4979,15 +5366,15 @@ setFigurePromptVisible(
 );
 init3D();
 
-const restoredCustomization =
-    restoreCustomizationFromStorage();
-
-const storedCommissionCategory =
-    getCommissionFigureCategoryValue();
-
+// The editor must always start with no selected style. Saved customization is
+// only restored by the preview/details pages, where an existing design is
+// intentionally being reviewed.
+const restoredCustomization = (isPreviewPage || isDetailsPage || isEditPage)
+    ? restoreCustomizationFromStorage()
+    : false;
 
 if (
-    isPreviewPage &&
+    (isPreviewPage || isDetailsPage) &&
     !restoredCustomization
 ) {
 
@@ -4998,33 +5385,9 @@ if (
 }
 else {
 
-    if (!restoredCustomization) {
-
-        if (
-            storedCommissionCategory &&
-            categoryPanels[storedCommissionCategory]
-        ) {
-            selectCategory(
-                storedCommissionCategory
-            );
-        }
-        else {
-
-            const defaultFunkoCard =
-                document.querySelector(
-                    '[data-figure="funko"][data-slot="model"][data-name="Funko Pop-Girl"]'
-                );
-
-
-            if (defaultFunkoCard) {
-                selectModel(
-                    defaultFunkoCard
-                );
-            }
-
-        }
-
-    }
+    // The editor always starts at FIGURE STYLE. Do not restore the category
+    // saved by the commission page here, otherwise FIGURE TYPE is shown
+    // before the user chooses a style in this session.
 
     animate();
 

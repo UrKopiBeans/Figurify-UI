@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figurify - Order Details</title>
+    <link rel="stylesheet" href="commission.css">
+    <link rel="stylesheet" href="order-details.css">
+</head>
+<body data-page="order-details">
+    <main class="page-container order-details-page">
+        <section class="commission-section" id="customerSection">
+            <div class="section-title">
+                <span class="decor">♡</span>
+                <div>
+                    <span class="label">FINAL DETAILS</span>
+                    <h2>Your Information</h2>
+                    <p>Fill in your personal information and payment details.</p>
+                </div>
+            </div>
+
+            <form id="customerForm">
+                <div class="form-grid">
+                    <label>Full Name
+                        <input class="field" type="text" id="customerName" placeholder="Your name" required>
+                    </label>
+                    <label>Email Address
+                        <input class="field" type="email" id="customerEmail" placeholder="you@email.com" required>
+                    </label>
+                    <label>Contact Number
+                        <input class="field" type="tel" id="customerPhone" placeholder="09XXXXXXXXX" required>
+                    </label>
+                    <label>Preferred Contact Method
+                        <select class="field" id="contactMethod" required>
+                            <option value="">Choose</option>
+                            <option value="Email">Email</option>
+                            <option value="Messenger">Messenger</option>
+                            <option value="SMS">SMS</option>
+                        </select>
+                    </label>
+                </div>
+
+                <label>Complete Address
+                    <textarea class="field textarea" id="customerAddress" rows="4" placeholder="Your complete address" required></textarea>
+                </label>
+
+                <div class="customer-order-summary" id="customerOrderSummary">
+                    <span class="label">ORDER SUMMARY</span>
+                    <div class="customer-receipt-rows" id="customerReceiptRows"></div>
+                </div>
+
+                <div class="form-grid">
+                    <label>Shipping Method
+                        <select class="field" id="shippingMethod" required>
+                            <option value="">Choose</option>
+                            <option value="LBC">LBC</option>
+                            <option value="Lalamove">Lalamove</option>
+                        </select>
+                    </label>
+                    <label>Payment Method
+                        <select class="field" id="paymentMethod" required>
+                            <option value="GCash">GCash</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="payment-box">
+                    <span class="label">PAYMENT</span>
+                    <h3>Payment Information</h3>
+                    <p id="paymentInstruction">Please send your payment using our available payment method and upload your receipt.</p>
+                    <div class="gcash"><strong>GCASH</strong><span>09XX XXX XXXX</span></div>
+                    <label>Payment Receipt
+                        <input class="field file" type="file" id="paymentReceipt" accept="image/*" required>
+                    </label>
+                </div>
+
+                <button class="main-button" type="submit">SUBMIT ORDER <span>→</span></button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        localStorage.setItem("figurifyCommissionReturn", "customerSection");
+    </script>
+    <script src="commission.js"></script>
+    <script src="order_details.js"></script>
+</body>
+</html>

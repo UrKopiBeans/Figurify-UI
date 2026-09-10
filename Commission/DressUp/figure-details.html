@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figurify - Figure Details</title>
+    <link rel="stylesheet" href="dressup.css">
+</head>
+
+<body data-page="details">
+    <nav class="navbar">
+        <a href="../../Home/Home.html" class="brand">
+            <div class="brand-photo">
+                <img src="Image/Clay and Stuff- Logo.jpg" alt="Clay and Stuff">
+            </div>
+            <span>Figurify</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="../../Home/Home.html">OVERVIEW</a>
+            <a href="../../Collection/collection.html">COLLECTIONS</a>
+            <a href="commission.html" class="active">COMMISSION</a>
+            <a href="../../Login/Login.html" class="profile" aria-label="Account">
+                <img src="Image/Profile Icon.png" alt="Profile">
+            </a>
+        </div>
+    </nav>
+
+    <main class="customizer">
+        <section class="preview-container">
+            <div class="preview-header">
+                <h2>Your Figure</h2>
+                <a class="edit-design-btn" href="dressup.html?edit=1">Edit Design</a>
+            </div>
+
+            <div class="figure-area">
+                <canvas id="figureViewer" class="figure-viewer"></canvas>
+            </div>
+
+            <div class="preview-summary">
+                <div class="summary-kicker">ORDER SUMMARY</div>
+
+                <div class="receipt-summary" id="summaryReceiptItems">
+                    <div class="receipt-empty">No customization selected yet.</div>
+                </div>
+
+                <div class="price-box">
+                    <span>Total Price</span>
+                    <strong id="totalPrice">&#8369;0</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="options-container">
+            <section class="product-details-panel" id="productDetailsPanel" hidden>
+                <div class="section-title">
+                    <div>
+                        <span class="details-kicker">FIGURE DETAILS</span>
+                        <h2 id="productDetailsTitle">Choose Your Figure Details</h2>
+                        <p id="productDetailsDescription">Choose the size and box for your selected product.</p>
+                    </div>
+                </div>
+
+                <div class="product-detail-group">
+                    <label class="detail-label">Size</label>
+                    <div class="size-choice-grid" id="sizeChoiceGrid"></div>
+                </div>
+
+                <label class="product-detail-group" id="figureNameField">
+                    <span class="detail-label">Figure Name <small>(optional)</small></span>
+                    <input class="product-detail-input" id="figureNameInput" type="text" maxlength="40" placeholder="Example: Omar123">
+                </label>
+
+                <div class="product-detail-group" id="boxChoiceGroup">
+                    <span class="detail-label">Box</span>
+                    <div class="box-choice-grid" id="boxChoiceGrid"></div>
+                </div>
+
+                <div class="box-detail-fields" id="boxDetailFields" hidden>
+                    <label>
+                        <span class="detail-label">Name to print on box <small>(optional)</small></span>
+                        <input class="product-detail-input" id="boxNameInput" data-detail-field="boxName" type="text" maxlength="40" placeholder="Example: Omar">
+                    </label>
+                    <label>
+                        <span class="detail-label">Box Number <small>(optional)</small></span>
+                        <input class="product-detail-input" id="boxNumberInput" data-detail-field="boxNumber" type="text" maxlength="20" placeholder="Example: 001">
+                    </label>
+                    <label>
+                        <span class="detail-label">Box Color <small>(optional)</small></span>
+                        <input class="product-detail-input" id="boxColorInput" data-detail-field="boxColor" type="text" maxlength="30" placeholder="Example: Pastel Pink">
+                    </label>
+                </div>
+
+                <div class="hirono-detail-fields" id="hironoDetailFields" hidden>
+                    <div class="product-detail-group">
+                        <span class="detail-label">Blind Box Type</span>
+                        <div class="box-choice-grid" id="hironoBlindBoxGrid"></div>
+                    </div>
+                    <div class="product-detail-group">
+                        <span class="detail-label">Optional Extras</span>
+                        <div class="box-choice-grid" id="hironoAddonGrid"></div>
+                    </div>
+                    <div class="product-detail-group">
+                        <span class="detail-label">Box Design</span>
+                        <div class="box-choice-grid" id="hironoBoxDesignGrid"></div>
+                    </div>
+                    <div class="box-detail-fields" id="hironoBoxFields"></div>
+                </div>
+
+                <a href="final-preview.html" class="continue-btn" id="continueBtn">Continue to Preview</a>
+            </section>
+        </section>
+    </main>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "../../node_modules/three/build/three.module.js",
+            "three/addons/": "../../node_modules/three/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module" src="dressup.js"></script>
+</body>
+
+</html>

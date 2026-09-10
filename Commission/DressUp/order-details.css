@@ -1,0 +1,155 @@
+.order-details-page {
+    width: min(980px, 94%);
+    margin-top: 32px;
+    margin-bottom: 56px;
+    padding: 32px;
+    border: 1px solid #efc8df;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 12px 0 rgba(221, 184, 207, .25), 0 24px 45px rgba(143, 73, 111, .1);
+}
+
+.order-details-page .commission-section {
+    margin-bottom: 0;
+}
+
+.order-details-page .section-title {
+    margin-bottom: 24px;
+}
+
+.order-details-page .main-button {
+    width: 100%;
+    margin-top: 24px;
+}
+
+/* Receipt-style order summary, matching the Final Preview summary. */
+.order-details-page .customer-order-summary {
+    margin: 24px 0;
+    padding: 22px;
+    border: 2px solid #ead7e5;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #fff8fc, #f4ecff);
+    box-shadow: 0 5px 0 rgba(183, 131, 165, .12);
+}
+
+.order-details-page .customer-order-summary > h3 {
+    margin: 5px 0 16px;
+    color: #8c3764;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+}
+
+.order-details-page .customer-receipt-rows {
+    margin-top: 14px;
+}
+
+.order-details-page .customer-receipt-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 9px 0;
+    color: #8a5870;
+    font-size: 14px;
+}
+
+.order-details-page .customer-receipt-row strong {
+    color: #7b355b;
+    font-weight: 800;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.order-details-page .customer-receipt-divider {
+    margin: 9px 0 7px;
+    border-top: 1px dashed rgba(162, 74, 120, .35);
+}
+
+.order-details-page .customer-receipt-row.total {
+    padding-top: 14px;
+    color: #7b355b;
+    font-weight: 800;
+}
+
+.order-details-page .order-summary-content {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.order-details-page .order-summary-preview {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 14px;
+    background: #fffaff;
+}
+
+.order-details-page .customer-summary-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-details-page .design-review-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(162, 74, 120, .18);
+    color: #8a5870;
+    font-size: 12px;
+}
+
+.order-details-page .design-review-row strong {
+    color: #7b355b;
+    text-align: right;
+}
+
+.order-details-page .customer-summary-design-block {
+    padding: 14px 0 10px;
+}
+
+.order-details-page .customer-summary-design-rows {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 8px;
+}
+
+.order-details-page .summary-chip {
+    display: inline-flex;
+    padding: 6px 10px;
+    border: 1px solid #e5b7d2;
+    border-radius: 999px;
+    background: #fffafd;
+    color: #8b5270;
+    font-size: 11px;
+}
+
+.order-details-page .design-review-row.total {
+    margin-top: 8px;
+    padding-top: 14px;
+    border-top: 2px solid rgba(162, 74, 120, .15);
+    border-bottom: 0;
+    font-weight: 800;
+}
+
+@media (max-width: 600px) {
+    .order-details-page .order-summary-content {
+        grid-template-columns: 1fr;
+    }
+
+    .order-details-page .order-summary-preview {
+        width: 100%;
+        height: 180px;
+    }
+}
+
+@media (max-width: 700px) {
+    .order-details-page {
+        width: min(100% - 24px, 620px);
+        margin-top: 18px;
+        padding: 18px 14px 24px;
+    }
+}

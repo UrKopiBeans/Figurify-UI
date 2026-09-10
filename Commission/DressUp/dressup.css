@@ -38,7 +38,8 @@ body {
 .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 0;
     font-weight: bold;
     font-size: 18px;
     color: #7e315b;
@@ -376,6 +377,8 @@ body {
     margin-top: 20px;
 
     padding: 18px;
+
+    border-top: 1px dashed rgba(162, 74, 120, 0.42);
 
     border-radius: 15px;
 
@@ -813,6 +816,12 @@ body {
     opacity: .55;
 }
 
+.product-detail-date-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
 .detail-hint {
     display: block;
     margin-top: 5px;
@@ -1109,6 +1118,176 @@ body {
 
 
 /* =====================================================
+   FIGURE STYLE
+   (Funko Pop / Hirono / Chibi — lives inside the same
+   options-container box as FIGURE TYPE)
+===================================================== */
+
+.figure-style-section {
+
+    padding-bottom: 24px;
+
+    margin-bottom: 24px;
+
+    border-bottom: 1px solid #f1d5e5;
+}
+
+.figure-style-kicker {
+
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    color: #db72ad;
+
+    margin-bottom: 4px;
+}
+
+.figure-style-heading {
+
+    font-family: Georgia, serif;
+
+    font-size: 22px;
+
+    color: #8c3764;
+
+    margin-bottom: 15px;
+}
+
+.figure-style-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+.figure-style-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 130px;
+
+    padding: 0;
+
+    border: 2px solid #f1d5e5;
+
+    background: linear-gradient(180deg, #fffaff 0%, #fff0f7 100%);
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+    text-align: left;
+
+    color: #7b4c65;
+
+    font-family: inherit;
+}
+
+.figure-style-card:hover {
+
+    transform: translateY(-3px);
+
+    border-color: #ec8abd;
+}
+
+.figure-style-card.selected {
+
+    border-color: #df65a6;
+
+    box-shadow: 0 0 0 3px #f8c5df;
+}
+
+.figure-style-card::after {
+
+    content: "✓";
+
+    position: absolute;
+
+    top: 8px;
+
+    right: 8px;
+
+    width: 20px;
+
+    height: 20px;
+
+    border-radius: 50%;
+
+    background: #f4a4ca;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    opacity: 0;
+
+    transform: scale(.75);
+
+    transition: .2s;
+}
+
+.figure-style-card.selected::after {
+
+    opacity: 1;
+
+    transform: scale(1);
+}
+
+.figure-style-card img {
+
+    width: 100%;
+
+    height: 96px;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.figure-style-card span {
+
+    display: block;
+
+    padding: 6px 8px 8px;
+
+    font-family: Georgia, serif;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #893960;
+}
+
+@media (max-width: 640px) {
+
+    .figure-style-grid {
+
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =====================================================
    MOBILE
 ===================================================== */
 
@@ -1220,9 +1399,107 @@ body {
         0 0 0 3px #f8c5df;
 }
 
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    margin-top: 30px;
+    padding: 35px 7% 20px;
+    background: #f8acd2;
+    color: #82345f;
+    border-top: 3px solid white;
+}
+
+.footer-brand strong {
+    font-family: Georgia, serif;
+    font-size: 18px;
+}
+
+.footer-brand p {
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin: 25px 0;
+}
+
+.footer-links div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.footer-links b {
+    font-size: 10px;
+    margin-bottom: 4px;
+}
+
+.footer-links a,
+.footer-links span {
+    color: #95466f;
+    text-decoration: none;
+    font-size: 10px;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.copyright {
+    padding-top: 15px;
+    border-top: 1px solid rgba(130, 52, 95, .15);
+    text-align: center;
+    font-size: 9px;
+}
+
+@media (max-width: 700px) {
+    .footer-links {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .footer-links {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Show only the skin-color swatch; remove the larger round card container. */
+.skin-card {
+    width: 42px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.skin-card:hover {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.skin-card.selected {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.skin-card.selected .skin-swatch {
+    box-shadow: none;
+}
+
 .skin-swatch {
-    width: 34px;
-    height: 34px;
+    width: 42px;
+    height: 42px;
 
     display: block;
 
@@ -1230,10 +1507,9 @@ body {
 
     border-radius: 50%;
 
-    border: 2px solid rgba(102, 61, 85, 0.18);
+    border: 2px solid #ffffff;
 
-    box-shadow:
-        inset 0 2px 5px rgba(255, 255, 255, 0.35);
+    box-shadow: none;
 }
 
 .skin-name {
@@ -1296,31 +1572,133 @@ body {
 }
 
 .custom-color-control {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 12px;
-    padding: 6px;
-    border: 1px dashed #e3b8d0;
-    border-radius: 50%;
+    justify-content: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
     color: #7d4a66;
     font-size: 12px;
     font-weight: 700;
-    margin-left: 0;
-    width: fit-content;
-}
-
-.custom-color-control input[type="color"] {
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    border: 1px solid #e3b8d0;
-    border-radius: 50%;
-    background: #fff;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    align-self: center;
     cursor: pointer;
 }
 
+.custom-color-label {
+    display: none;
+}
+
+.custom-color-wheel {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: conic-gradient(
+        #f33 0deg,
+        #ff0 60deg,
+        #2f2 120deg,
+        #0dd 180deg,
+        #35f 240deg,
+        #d2f 300deg,
+        #f33 360deg
+    );
+    box-shadow: none;
+}
+
+.custom-color-wheel::after {
+    display: none;
+}
+
+/* Hide the inner highlight so the control is only the color wheel. */
+.custom-color-wheel::after {
+    content: none;
+}
+
+/* Legacy highlight declarations are intentionally overridden above. */
+/*
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    margin: 10px;
+    border: 1px solid rgba(125, 74, 102, .2);
+    border-radius: 50%;
+    background: #fff;
+*/
+
+.custom-color-control input[type="color"] {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 42px;
+    height: 42px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-color-control:focus-within .custom-color-wheel {
+    outline: 3px solid rgba(223, 101, 166, .35);
+    outline-offset: 3px;
+}
+
+/* Keep skin choices beside the figure type choices. */
+#funkoPanel:has(#funkoSkinSection:not([hidden])),
+#hironoPanel:has(#hironoSkinSection:not([hidden])),
+#chibiPanel:has(#chibiSkinSection:not([hidden])) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 24px;
+    align-items: start;
+}
+
+#funkoPanel:has(#funkoSkinSection:not([hidden])) > *,
+#hironoPanel:has(#hironoSkinSection:not([hidden])) > *,
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > * {
+    grid-column: 1 / -1;
+}
+
+#funkoPanel:has(#funkoSkinSection:not([hidden])) > #funkoModelSection,
+#hironoPanel:has(#hironoSkinSection:not([hidden])) > #hironoModelSection,
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiModelSection {
+    grid-column: 1;
+}
+
+#funkoPanel:has(#funkoSkinSection:not([hidden])) > #funkoSkinSection,
+#hironoPanel:has(#hironoSkinSection:not([hidden])) > #hironoSkinSection,
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection {
+    grid-column: 2;
+    margin-top: 0;
+}
+
+/* Keep Chibi skin choices beside the second gender card (Girl), not beside
+   the first card (Boy) at the top of the model column. */
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection {
+    align-self: end;
+    padding-bottom: 8px;
+}
+
+.skin-section .section-title {
+    display: flex;
+}
+
 @media (max-width: 500px) {
+    #chibiPanel:has(#chibiSkinSection:not([hidden])) {
+        grid-template-columns: 1fr;
+    }
+
+    #chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection {
+        grid-column: 1;
+        align-self: start;
+        padding-bottom: 0;
+    }
+
     #funkoModelSection:not([hidden]),
     #funkoSkinSection:not([hidden]),
     #hironoModelSection:not([hidden]),
@@ -1534,35 +1912,16 @@ body {
     min-height: 0;
     height: 100%;
     max-height: 100%;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     overflow-x: hidden;
     align-self: stretch;
-    direction: rtl;
-    scrollbar-gutter: stable;
 }
 
-.preview-container > * {
-    direction: ltr;
-}
-
-.preview-container::-webkit-scrollbar {
-    width: 10px;
-}
-
-.preview-container::-webkit-scrollbar-track {
-    background: #fff1f8;
-    border-radius: 999px;
-}
-
-.preview-container::-webkit-scrollbar-thumb {
-    background: #e6a4c8;
-    border: 2px solid #fff1f8;
-    border-radius: 999px;
-}
-
-.preview-container {
-    scrollbar-color: #e6a4c8 #fff1f8;
-    scrollbar-width: thin;
+.preview-container .preview-header,
+.preview-container .figure-area {
+    flex: 0 0 auto;
 }
 
 .options-container {
@@ -1592,6 +1951,31 @@ body {
 .options-container {
     scrollbar-color: #e6a4c8 #fff1f8;
     scrollbar-width: thin;
+}
+
+.preview-summary {
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+    scrollbar-color: #e6a4c8 #fff1f8;
+    scrollbar-width: thin;
+}
+
+.preview-summary::-webkit-scrollbar {
+    width: 10px;
+}
+
+.preview-summary::-webkit-scrollbar-track {
+    background: #fff1f8;
+    border-radius: 999px;
+}
+
+.preview-summary::-webkit-scrollbar-thumb {
+    background: #e6a4c8;
+    border: 2px solid #fff1f8;
+    border-radius: 999px;
 }
 
 .design-step-navigation {
@@ -1629,6 +2013,17 @@ body {
     font-size: inherit;
 }
 
+/* Match the editor's Figure Details action to the final preview action. */
+.design-step-navigation #nextDesignStep.continue-btn {
+    border: none;
+    background: #e889bd;
+    color: #ffffff;
+}
+
+.design-step-navigation #nextDesignStep.continue-btn:hover {
+    background: #d56ca5;
+}
+
 .preview-header h2,
 .page-title h1,
 .section-title h2 {
@@ -1638,6 +2033,33 @@ body {
 
 .preview-header h2 {
     font-size: 24px;
+}
+
+.details-skin-swatch {
+    display: inline-block !important;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: none;
+}
+
+.edit-design-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: #f8d5e8;
+    color: #814d69;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.edit-design-btn:hover {
+    background: #f2b9d7;
 }
 
 .page-title span {
@@ -1840,5 +2262,529 @@ body {
 
     .box-detail-fields label:last-child {
         grid-column: auto;
+    }
+}
+
+/* =====================================================
+   FOCUSED FIGURE DETAILS REVIEW
+===================================================== */
+
+/* The details step is presented as one contained review card. */
+body[data-page="details"] .navbar {
+    display: flex;
+}
+
+body[data-page="details"] .customizer {
+    width: min(1280px, 94%);
+    max-width: none;
+    height: min(760px, calc(100vh - 150px));
+    max-height: min(760px, calc(100vh - 150px));
+    margin: 24px auto 0;
+    padding: 0;
+    grid-template-columns: minmax(320px, 420px) 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 24px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+}
+
+/* Merge "Your Figure / Order Summary" and "Figure Details" into a single
+   container box: the outer .customizer now carries the border/shadow, and
+   the two panels sit inside it as plain columns separated by a divider. */
+body[data-page="details"] .preview-container,
+body[data-page="details"] .options-container {
+    height: 100%;
+    max-height: 100%;
+    border: 1px solid #efd2e3;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 12px 28px rgba(129, 72, 103, .1);
+    backdrop-filter: none;
+}
+
+body[data-page="details"] .preview-container {
+    padding: 28px 28px 28px 30px;
+}
+
+body[data-page="details"] .options-container {
+    padding: 28px 30px 28px 28px;
+}
+
+body[data-page="details"] .product-details-panel {
+    height: 100%;
+    margin-top: 0;
+    overflow-y: auto;
+    padding: 0 2px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+}
+
+/* Lengthen the Order Summary: keep the figure preview compact so the
+   summary card gets more vertical room instead of scrolling/cutting off. */
+body[data-page="details"] .preview-header,
+body[data-page="details"] .figure-area {
+    flex: 0 0 auto;
+}
+
+body[data-page="details"] .figure-area {
+    max-height: 230px;
+}
+
+body[data-page="details"] .preview-summary {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.receipt-summary {
+    margin-top: 18px;
+    padding: 14px 0;
+    border-top: 1px dashed rgba(162, 74, 120, 0.25);
+    border-bottom: 1px dashed rgba(162, 74, 120, 0.25);
+}
+
+.receipt-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 5px 0;
+    color: #8a5870;
+    font-size: 12px;
+}
+
+.receipt-row strong {
+    color: #7b355b;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.receipt-divider {
+    margin: 9px 0 7px;
+    border-top: 1px dashed rgba(162, 74, 120, 0.42);
+}
+
+.receipt-empty {
+    color: #a5748e;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Never let a hidden Figure Type section appear before a style is chosen. */
+.category-panel[hidden],
+.option-section[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 900px) {
+    body[data-page="details"] .customizer {
+        width: min(680px, calc(100% - 24px));
+        height: auto;
+        max-height: none;
+        margin: 12px auto 24px;
+        grid-template-columns: 1fr;
+        overflow: visible;
+    }
+
+    body[data-page="details"] .preview-container,
+    body[data-page="details"] .options-container,
+    body[data-page="details"] .product-details-panel {
+        height: auto;
+        max-height: none;
+    }
+
+    body[data-page="details"] .preview-container {
+        padding: 22px;
+    }
+
+    body[data-page="details"] .options-container {
+        padding: 22px;
+        overflow: visible;
+    }
+
+    body[data-page="details"] .figure-area {
+        max-height: none;
+    }
+}
+
+/* Chibi gender cards must stay side by side when skin choices appear. */
+#chibiPanel:has(#chibiSkinSection:not([hidden])) {
+    grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr);
+}
+
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiModelSection {
+    grid-column: 1;
+}
+
+#chibiPanel:has(#chibiSkinSection:not([hidden])) .figure-model-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+#chibiPanel:has(#chibiSkinSection:not([hidden])) .figure-model-card {
+    width: auto;
+    min-width: 0;
+}
+
+@media (max-width: 500px) {
+    #chibiPanel:has(#chibiSkinSection:not([hidden])) {
+        grid-template-columns: 1fr;
+    }
+
+    #chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection {
+        grid-column: 1;
+    }
+}
+
+/* Final skin swatch override: no outer oval/card, color circle only. */
+.skin-card,
+.skin-card:hover,
+.skin-card.selected {
+    width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.skin-card .skin-swatch,
+.skin-card.selected .skin-swatch {
+    width: 42px;
+    height: 42px;
+    border: 2px solid #ffffff;
+    box-shadow: none;
+}
+
+/* Keep Chibi's skin and custom-color controls identical to the other styles. */
+#chibiPanel .skin-card,
+#chibiPanel .skin-card:hover,
+#chibiPanel .skin-card.selected {
+    width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#chibiPanel .custom-color-control {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+#chibiPanel .custom-color-label {
+    display: none;
+}
+
+/* Keep every Figure Type card the same size, including after skin appears. */
+#funkoModelSection:not([hidden]) .figure-model-grid,
+#hironoModelSection:not([hidden]) .figure-model-grid,
+#chibiModelSection:not([hidden]) .figure-model-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    align-items: stretch;
+}
+
+#chibiModelSection:not([hidden]) {
+    width: 100%;
+}
+
+/* Chibi Gender starts wide for selection, then becomes a compact box layout
+   after a gender has been chosen. */
+#chibiModelSection:not([hidden]):has(.figure-model-card.selected) {
+    width: calc(100% - 160px);
+}
+
+#chibiModelSection:not([hidden]):has(.figure-model-card.selected) .figure-model-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: start;
+}
+
+#chibiModelSection:not([hidden]):has(.figure-model-card.selected) .figure-model-card {
+    width: 100% !important;
+}
+
+#funkoModelSection:not([hidden]) .figure-model-card,
+#hironoModelSection:not([hidden]) .figure-model-card,
+#chibiModelSection:not([hidden]) .figure-model-card {
+    width: 100% !important;
+    min-width: 0;
+    min-height: 225px;
+    height: 225px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 500px) {
+    #funkoModelSection:not([hidden]) .figure-model-grid,
+    #hironoModelSection:not([hidden]) .figure-model-grid,
+    #chibiModelSection:not([hidden]) .figure-model-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Chibi: place the skin circles on the same top line as FIGURE TYPE. */
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection {
+    align-self: start !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection .section-title {
+    display: none !important;
+}
+
+@media (max-width: 500px) {
+    #chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection {
+        padding-top: 0 !important;
+    }
+}
+
+/* Place Chibi skin swatches at the upper-right of the gender cards. */
+
+/* Direct section navigation for the design flow. */
+.options-container {
+    position: relative;
+}
+
+.design-step-jump {
+    position: static;
+    z-index: auto;
+    display: block;
+    margin: 0;
+}
+
+.section-title:has(.design-step-jump) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    justify-content: initial;
+    gap: 12px;
+}
+
+.section-title:has(.design-step-jump) .custom-color-control {
+    margin-left: 0;
+}
+
+.design-step-jump > span {
+    display: none;
+}
+
+.design-step-jump select {
+    min-height: 36px;
+    min-width: 155px;
+    padding: 7px 28px 7px 12px;
+    border: 1px solid #edb4d1;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #9f3d73;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 4px 10px rgba(218, 107, 165, .16);
+    transition: border-color .2s, box-shadow .2s, background-color .2s;
+}
+
+.design-step-jump select:hover,
+.design-step-jump select:focus {
+    border-color: #df65a6;
+    background-color: #fff8fc;
+    box-shadow: 0 0 0 3px rgba(248, 197, 223, .55);
+}
+
+.skin-card.selected .skin-swatch {
+    outline: 3px solid #df65a6;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px rgba(248, 197, 223, .72);
+}
+
+@media (max-width: 650px) {
+    .section-title:has(.design-step-jump) {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        gap: 8px;
+    }
+
+    .design-step-navigation {
+        flex-wrap: wrap;
+    }
+
+    .design-step-jump {
+        margin-top: 8px;
+    }
+
+    .design-step-jump select {
+        min-width: 135px;
+    }
+}
+
+/* Keep every figure choice aligned, regardless of label length or selection. */
+#funkoModelSection:not([hidden]) .figure-model-grid,
+#hironoModelSection:not([hidden]) .figure-model-grid,
+#chibiTypeSection:not([hidden]) .option-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    align-items: stretch;
+}
+
+#funkoModelSection:not([hidden]) .figure-model-card,
+#hironoModelSection:not([hidden]) .figure-model-card,
+#chibiTypeSection:not([hidden]) .option-card {
+    width: 100% !important;
+    min-width: 0;
+    min-height: 225px;
+    height: 225px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+
+#funkoModelSection:not([hidden]) .figure-model-card .option-image,
+#hironoModelSection:not([hidden]) .figure-model-card .option-image,
+#chibiTypeSection:not([hidden]) .option-card .option-image {
+    height: 150px;
+    min-height: 150px;
+    flex: 0 0 150px;
+}
+
+#funkoModelSection:not([hidden]) .figure-model-name,
+#hironoModelSection:not([hidden]) .figure-model-name,
+#chibiTypeSection:not([hidden]) .option-card > span {
+    margin-top: 8px;
+    min-height: 20px;
+    line-height: 1.25;
+}
+
+/* Selection feedback stays inside the card footprint instead of changing its
+   apparent size and shifting the neighboring card. */
+#funkoModelSection:not([hidden]) .figure-model-card.selected,
+#hironoModelSection:not([hidden]) .figure-model-card.selected,
+#chibiTypeSection:not([hidden]) .option-card.selected {
+    border-width: 2px;
+    box-shadow: inset 0 0 0 2px #f8c5df,
+                0 8px 0 rgba(221, 184, 207, .35);
+}
+
+@media (max-width: 500px) {
+    #funkoModelSection:not([hidden]) .figure-model-grid,
+    #hironoModelSection:not([hidden]) .figure-model-grid,
+    #chibiTypeSection:not([hidden]) .option-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Match Chibi Gender to the same layout as the other figure pickers:
+   full-width cards with the skin colors aligned at the upper-right. */
+#chibiPanel:has(#chibiSkinSection:not([hidden])) {
+    display: block;
+    position: relative;
+}
+
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiModelSection {
+    width: 100%;
+    grid-column: auto;
+}
+
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    width: auto;
+    margin: 0;
+    padding: 0 !important;
+}
+
+#chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection .skin-grid {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Chibi Gender cards use the exact same dimensions as Funko/Hirono model cards. */
+#chibiModelSection:not([hidden]) .figure-model-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    align-items: stretch;
+}
+
+#chibiModelSection:not([hidden]) .figure-model-card {
+    width: 100% !important;
+    min-width: 0;
+    min-height: 225px;
+    height: 225px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+
+#chibiModelSection:not([hidden]) .figure-model-card .option-image {
+    height: 150px;
+    min-height: 150px;
+    flex: 0 0 150px;
+}
+
+#chibiModelSection:not([hidden]) .figure-model-name {
+    margin-top: 8px;
+    min-height: 20px;
+    line-height: 1.25;
+}
+
+#chibiModelSection:not([hidden]) .figure-model-card.selected {
+    border-width: 2px;
+    box-shadow: inset 0 0 0 2px #f8c5df,
+                0 8px 0 rgba(221, 184, 207, .35);
+}
+
+@media (max-width: 500px) {
+    #chibiModelSection:not([hidden]) {
+        width: 100%;
+    }
+
+    #chibiModelSection:not([hidden]):has(.figure-model-card.selected) .figure-model-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #chibiModelSection:not([hidden]):has(.figure-model-card.selected) .figure-model-card {
+        width: 100% !important;
+    }
+
+    #chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiSkinSection {
+        position: static;
+        width: 100%;
+        margin-top: 12px;
+    }
+}
+
+/* Final selected-state width override: clicking Boy/Girl shrinks the entire
+   Chibi Gender card row to match the compact reference layout. */
+@media (min-width: 501px) {
+    #chibiPanel:has(#chibiSkinSection:not([hidden])) > #chibiModelSection:has(.figure-model-card.selected) {
+        width: calc(100% - 160px) !important;
     }
 }

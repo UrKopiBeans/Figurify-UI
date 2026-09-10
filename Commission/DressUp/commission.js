@@ -692,13 +692,13 @@ function selectFigureCategory(category) {
         console.warn("Unable to reset previous category design:", error);
     }
 
-    if (!orderType) {
+    if (creationMethod !== "create" && !orderType) {
         alert("Please select an order type first.");
         showSetupFlow(true);
         return;
     }
 
-    if (!selectedDate) {
+    if (creationMethod !== "create" && !selectedDate) {
         alert("Please choose an available booking date.");
         showSetupFlow(true);
         return;
@@ -733,38 +733,47 @@ function openDressUpCustomizer(category) {
         category ||
         getSelectedCategory();
 
-    if (!orderType) {
+    if (creationMethod !== "create" && !orderType) {
         alert("Please select an order type first.");
         showSetupFlow(true);
         return;
     }
 
-    if (!selectedDate) {
+    if (creationMethod !== "create" && !selectedDate) {
         alert("Please choose an available booking date.");
         showSetupFlow(true);
         return;
     }
 
-    if (!figureCategory) {
-        alert("Please choose a figure category.");
-        showSection("figureCategorySection");
-        return;
+    /*
+        The Funko Pop / Hirono / Chibi style picker now lives
+        INSIDE the DressUp customizer itself (inside the same
+        box as "FIGURE TYPE"), so we no longer require a
+        category to be chosen before opening the customizer —
+        the iframe opens right away and the user picks their
+        style there.
+    */
+
+    if (orderType) {
+        saveCommissionValue(
+            COMMISSION_ORDER_TYPE_KEY,
+            orderType
+        );
     }
 
-    saveCommissionValue(
-        COMMISSION_ORDER_TYPE_KEY,
-        orderType
-    );
+    if (selectedDate) {
+        saveCommissionValue(
+            COMMISSION_BOOKING_DATE_KEY,
+            formatDateForStorage(selectedDate)
+        );
+    }
 
-    saveCommissionValue(
-        COMMISSION_BOOKING_DATE_KEY,
-        formatDateForStorage(selectedDate)
-    );
-
-    saveCommissionValue(
-        COMMISSION_FIGURE_CATEGORY_KEY,
-        figureCategory
-    );
+    if (figureCategory) {
+        saveCommissionValue(
+            COMMISSION_FIGURE_CATEGORY_KEY,
+            figureCategory
+        );
+    }
 
     const customizationFrame =
         document.getElementById("customizationFrame");
@@ -779,7 +788,11 @@ function openDressUpCustomizer(category) {
             try {
                 const editorDocument = customizationFrame.contentDocument;
 
-                if (!editorDocument || editorDocument.getElementById("embeddedEditorStyles")) {
+                if (!editorDocument) {
+                    return;
+                }
+
+                if (editorDocument.getElementById("embeddedEditorStyles")) {
                     return;
                 }
 
@@ -831,7 +844,7 @@ function openDressUpCustomizer(category) {
                 console.warn("Unable to style embedded customization editor:", error);
             }
         };
-        customizationFrame.src = "DressUp/dressup.html";
+        customizationFrame.src = "dressup.html";
     }
 
 }
@@ -840,34 +853,47 @@ function openDressUpCustomizer(category) {
 function showFigureCategoryStep() {
 
     creationMethod = "create";
-    document.querySelector(".commission-hero")?.classList.add("hidden");
-    restoreFigureCategorySelection();
-    showSection("figureCategorySection");
-    setFigureCategoryView(false);
+
+    // "Create & Style" starts a brand-new design. Clear any previous
+    // customization/category so the embedded editor opens with no style
+    // card selected.
+    try {
+        localStorage.removeItem(CUSTOMIZATION_STORAGE_KEY);
+        localStorage.removeItem(COMMISSION_FIGURE_CATEGORY_KEY);
+    }
+    catch (error) {
+        console.warn("Unable to reset previous customization:", error);
+    }
+
+    if (orderType) {
+        saveCommissionValue(
+            COMMISSION_ORDER_TYPE_KEY,
+            orderType
+        );
+    }
+
+    if (selectedDate) {
+        saveCommissionValue(
+            COMMISSION_BOOKING_DATE_KEY,
+            formatDateForStorage(selectedDate)
+        );
+    }
+
+    // Open the full Dress-Up page instead of embedding it in the commission
+    // page, while keeping the order information in localStorage.
+    window.location.assign(
+        new URL("dressup.html", window.location.href).href
+    );
 
 }
 
 
 function setFigureCategoryView(showCategory) {
 
-    const categorySection =
-        document.getElementById("figureCategorySection");
-
-    const categoryTitle =
-        categorySection?.querySelector(".section-title");
-
-    const categoryGrid =
-        categorySection?.querySelector(".figure-category-grid");
-
     const customizationEmbed =
         document.getElementById("customizationEmbed");
 
-    categoryTitle?.classList.remove("hidden");
-    categoryGrid?.classList.remove("hidden");
     customizationEmbed?.classList.toggle("hidden", !showCategory);
-    customizationEmbed?.closest(".create-style-flow-container")?.classList.remove(
-        "customizer-active"
-    );
 
 }
 
